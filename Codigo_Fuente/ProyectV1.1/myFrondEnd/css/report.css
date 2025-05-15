@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    padding-top: 80px;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+    color: #333;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); /* Diseño adaptable */
+    gap: 20px; /* Espacio entre secciones */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar el contenido */
+}
+
+.report {
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.report h2 {
+    text-align: center;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+}
+
+.btn-pdf {
+    display: inline-block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-pdf:hover {
+    background-color: #0056b3;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr; /* Una sola columna en pantallas pequeñas */
+    }
+}
+/*para TEXTO */
+
+.description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 10px;
+    text-align: justify;
+    line-height: 1.6;
+}
+
+.txtreport {
+    grid-column: span 2; /* Ocupar dos columnas completas en pantallas grandes */
+    background: #f3f3f3;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+.txtreport h2 {
+    margin-bottom: 10px;
+    color: #333;
+    text-align: center;
+}
+
+.txtreport p {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.6;
+    text-align: justify;
+}
+
+@media (max-width: 768px) {
+    .txtreport {
+        grid-column: 1; /* Ocupar solo una columna en pantallas pequeñas */
+    }
+}
+
+.btn-pdf {
+    display: flex;
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-pdf:hover {
+    background-color: #0056b3;
+}
+

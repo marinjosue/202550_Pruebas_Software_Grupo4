@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Agregar un curso</title>
+</head>
+<body>
+    <div id="header"></div>
+    <script src="../js/dinav.js"></script>
+    <div class="container mt-5">
+        <h1 class="text-center">Agregar Curso</h1>
+        <form id="courseForm">
+            <div class="mb-3">
+                <label for="courseName" class="form-label">Nombre del Curso</label>
+                <input type="text" class="form-control" id="courseName" name="courseName" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseDescription" class="form-label">Descripción</label>
+                <textarea class="form-control" id="courseDescription" name="courseDescription" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="courseStart" class="form-label">Fecha de Inicio</label>
+                <input type="date" class="form-control" id="courseStart" name="start_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseEnd" class="form-label">Fecha de Fin</label>
+                <input type="date" class="form-control" id="courseEnd" name="end_date" required>
+            </div>
+            <div class="mb-3">
+                <label for="coursePrice" class="form-label">Precio</label>
+                <input type="number" class="form-control" id="coursePrice" name="price" required>
+            </div>
+            <div class="mb-3">
+                <label for="cedula" class="form-label">Cédula del Profesor</label>
+                <input type="text" class="form-control" id="cedula" name="cedula" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseCategory" class="form-label">Categoría</label>
+                <input type="number" class="form-control" id="courseCategory" name="id_category" required>
+            </div>
+            <div class="mb-3">
+                <label for="courseStatus" class="form-label">Estado</label>
+                <select class="form-control" id="courseStatus" name="status">
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="courseYoutube" class="form-label">Enlace de Video de YouTube</label>
+                <input type="url" class="form-control" id="courseYoutube" name="course_youtube" required>
+            </div>
+
+            <h3>Unidades</h3>
+            <div id="unitsContainer" class="mb-4">
+                <div class="unit">
+                    <label for="unitTitle1" class="form-label">Título de la Unidad</label>
+                    <input type="text" class="form-control" id="unitTitle1" name="unitTitles[]" required>
+                    <label for="unitContent1" class="form-label">Contenido de la Unidad</label>
+                    <textarea class="form-control" id="unitContent1" name="unitContents[]" rows="3" required></textarea>
+                </div>
+            </div>
+            <button type="button" class="btn btn-secondary mb-3" onclick="addUnit()">Agregar Unidad</button>
+            <button type="submit" class="btn btn-success">Guardar Curso</button>
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='course.html'">Atrás</button>
+
+        </form>
+    </div>
+    <div id="footer"></div>
+    <script>
+        const API_URL = 'http://ec2-3-15-222-198.us-east-2.compute.amazonaws.com:3000/api/courses';
+        let unitCount = 1;
+
+        function addUnit() {
+            unitCount++;
+            const container = document.getElementById('unitsContainer');
+            container.insertAdjacentHTML('beforeend', `
+                <div class="unit">
+                    <label for="unitTitle${unitCount}" class="form-label">Título de la Unidad</label>
+                    <input type="text" class="form-control" id="unitTitle${unitCount}" name="unitTitles[]" required>
+                    <label for="unitContent${unitCount}" class="form-label">Contenido de la Unidad</label>
+                    <textarea class="form-control" id="unitContent${unitCount}" name="unitContents[]" rows="3" required></textarea>
+                </div>
+            `);
+        }
+
+        document.getElementById('courseForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const courseData = {
+                courseName: formData.get('courseName'),
+                courseDescription: formData.get('courseDescription'),
+                start_date: formData.get('start_date'),
+                end_date: formData.get('end_date'),
+                price: formData.get('price'),
+                cedula: formData.get('cedula'),
+                id_category: formData.get('id_category'),
+                status: formData.get('status'),
+                course_youtube: formData.get('course_youtube'),
+                unitTitles: formData.getAll('unitTitles[]'),
+                unitContents: formData.getAll('unitContents[]')
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/save`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(courseData)
+                });
+
+                const result = await response.json();
+
+                if (result.message) {
+                    alert(result.message);
+                    window.location.href = 'course.html';
+                } else {
+                    alert('Error al guardar el curso');
+                }
+            } catch (error) {
+                console.error('Error al guardar el curso:', error);
+                alert('Hubo un error al guardar el curso.');
+            }
+        });
+    </script>
+</body>
+</html>

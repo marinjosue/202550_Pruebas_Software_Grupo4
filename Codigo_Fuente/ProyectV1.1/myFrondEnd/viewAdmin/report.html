@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes de Cursos</title>
+    <link rel="stylesheet" href="../css/report.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+    <div id="header"></div>
+    <script src="../js/dinav.js"></script>
+    <main>
+        <h1>Reportes de Cursos</h1>    
+    
+        <div class="container">
+            <section class="report">
+                <h2>Cursos Más Vendidos</h2>
+                <canvas id="mostSoldChart"></canvas>
+                <p class="description">
+                    Este gráfico muestra los cursos más populares entre nuestros estudiantes. Analiza cuáles son los cursos con mayor número de ventas para identificar tendencias de interés.
+                </p>
+            </section>
+    
+            <section class="report">
+                <h2>Cursos Menos Vendidos</h2>
+                <canvas id="leastSoldChart"></canvas>
+                <p class="description">
+                    Aquí se destacan los cursos con menor número de ventas. Esta información puede ser útil para identificar áreas de mejora o la necesidad de ajustes en la oferta.
+                </p>
+            </section>
+    
+            <section class="report">
+                <h2>Cursos Abandonados</h2>
+                <canvas id="abandonedCoursesChart"></canvas>
+                <p class="description">
+                    Este gráfico detalla los cursos que fueron iniciados pero no completados. Nos ayuda a entender dónde se encuentran los principales puntos de abandono.
+                </p>
+            </section>
+    
+            <section class="report">
+                <h2>Cursos Completados</h2>
+                <canvas id="completedCoursesChart"></canvas>
+                <p class="description">
+                    Los datos presentados aquí reflejan los cursos que han sido completados exitosamente. Representan los logros de los estudiantes y el impacto de nuestras ofertas.
+                </p>
+            </section>
+    
+            <section class="txtreport">
+                <h2>Reporte General</h2>
+                <p>
+                    Este reporte brinda una visión detallada del desempeño de nuestros cursos. Los gráficos interactivos te permiten identificar patrones en las ventas, el abandono y la finalización de los cursos. Usa esta información para tomar decisiones estratégicas que mejoren la experiencia educativa de los usuarios.
+                </p>
+                <h2>Ganancias Simuladas</h2>
+                <p>
+                    Basado en el número de cursos vendidos:
+                </p>
+                <ul>
+                    <li>Ganancia total: $12,750</li>
+                    <li>Ganancia promedio por curso: $2,550</li>
+                    <li>Cursos con más ganancia: Meditación ($4,500)</li>
+                </ul>
+                <p class="description">
+                    Estas cifras son simuladas para dar una idea del rendimiento financiero general.
+                </p>
+                <h2>Cursos Destacados</h2>
+                <ol>
+                    <li>Curso de Desarrollo Web Avanzado</li>
+                    <li>Curso de Inteligencia Artificial</li>
+                    <li>Curso de Ciberseguridad</li>
+                    <li>Curso de Ciencia de Datos</li>
+                    <li>Curso de Marketing Digital</li>
+                </ol>
+                <p class="description">
+                    Esta lista muestra algunos de los cursos más destacados y recomendados por nuestros expertos. Estos cursos han recibido excelentes valoraciones y han demostrado ser altamente efectivos.
+                </p>
+            </section>
+        </div>
+    </main>
+        
+    <button id="downloadPdf" class="btn-pdf">Generar PDF</button>
+    <div id="footer"></div>
+    
+    <script src="../js/reportCharts.js"></script>
+
+</body>
+</html>

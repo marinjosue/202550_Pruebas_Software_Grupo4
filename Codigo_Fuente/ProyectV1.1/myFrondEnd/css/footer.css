@@ -1,0 +1,91 @@
+/* ESTILO PARA PIE DE PAGINA */
+footer {
+    background-color: #8bcece;
+    color: white;
+    padding: 20px 0;
+    width: 100%;
+    position: absolute;
+    left: 0;
+}
+.footer-credits {
+    text-align: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+.footer-credits p {
+    margin: 5px 0;
+}
+
+.footer-credits a {
+    color: #00bcd4;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-credits a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap; /* Permitir que las secciones se envuelvan en pantallas pequeñas */
+    text-align: center; /* Centrar contenido en dispositivos pequeños */
+}
+
+.footer-section h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.footer-section p {
+    margin: 5px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.footer-section p:hover {
+    color: #a8c6df;
+}
+
+.social-icons i {
+    font-size: 18px;
+    margin-right: 10px;
+    transition: color 0.3s ease;
+}
+
+.social-icons i:hover {
+    color: #a8c6df;
+}
+
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Los bloques se apilan verticalmente */
+        align-items: center;
+    }
+    .footer-section h4 {
+        font-size: 14px; /* Reducir el tamaño del título en pantallas pequeñas */
+    }
+
+    .footer-section p {
+        font-size: 12px; /* Reducir el tamaño del texto */
+    }
+
+
+}
+
+@media (max-width: 480px) {
+    footer {
+        padding: 15px 10px; /* Reducir los espacios en pantallas muy pequeñas */
+    }
+
+    .footer-container {
+        text-align: center; /* Forzar alineación centrada */
+    }
+}

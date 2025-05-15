@@ -1,0 +1,381 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    padding-top: 55px;
+}
+
+/* Estilo general para la sección banner */
+.banner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(to bottom right, #8bcece, #fff);
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+/* Título principal del banner */
+.title-banner {
+    font-size: 2.5rem;
+    color: #3b0e0e;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+/* Texto secundario del banner */
+.title-text {
+    font-size: 1.2rem;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
+    margin-bottom: 30px;
+    font-family: 'Georgia', serif;
+}
+
+/* Botón de contacto */
+.btm-banner {
+    display: inline-block;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+    background: #007BFF;
+    border-radius: 25px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.btm-banner:hover {
+    background: #0056b3;
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .title-banner {
+        font-size: 2rem;
+    }
+
+    .title-text {
+        font-size: 1rem;
+    }
+
+    .btm-banner {
+        padding: 10px 25px;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .title-banner {
+        font-size: 1.8rem;
+    }
+
+    .title-text {
+        font-size: 0.9rem;
+    }
+
+    .btm-banner {
+        padding: 8px 20px;
+        font-size: 0.8rem;
+    }
+}
+/* ESTILO PARA CARRUSEL (sin modificaciones) */
+/* Estilos para el carrusel */
+.imagenes {
+    display: flex;
+    width: 100%;
+    height: 90%;
+    padding: 29px;
+}
+
+.imagenes img {
+    width: 100px;
+    height: 400px;
+    flex-grow: 1;
+    object-fit: cover;
+    opacity: .8;
+    transition: .5s ease;
+    max-width: 100%;
+    /* la imagen nunca va a ser mas grande que el contenedor */
+    display: block;
+    /* asegura que la imagen no tenga un margen extra */
+}
+
+.imagenes img:hover {
+    cursor: default;
+    width: 300px;
+    opacity: 2;
+    filter: contrast(120%);
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .imagenes {
+        gap: 10px; /* Reducir espacio entre imágenes */
+        padding: 15px; /* Ajustar padding en pantallas medianas */
+    }
+
+    .imagenes img {
+        width: 80px; /* Reducir tamaño de las imágenes */
+        height: auto; /* Mantener proporción en pantallas más pequeñas */
+        transition: 0.3s ease; /* Animaciones más rápidas */
+    }
+
+    .imagenes img:hover {
+        width: 150px; /* Hover más sutil en pantallas medianas */
+        transform: scale(1.1); /* Ligero zoom */
+    }
+}
+}
+
+@media (max-width: 480px) {
+    .imagenes {
+        padding: 10px; /* Reducir padding en pantallas muy pequeñas */
+        gap: 5px; /* Menor espacio entre imágenes */
+    }
+
+    .imagenes img {
+        width: 60px; /* Tamaño más reducido para móviles */
+        height: auto;
+    }
+
+    .imagenes img:hover {
+        width: 120px; /* Hover menos llamativo */
+        transform: scale(1.05); /* Suave aumento en móviles */
+    }
+}
+
+
+/* ESTILO PARA INFORMACION DE CURSOS (sin modificaciones) */
+
+main {
+    padding: 2rem;
+}
+
+section {
+    margin-bottom: 2rem;
+}
+
+.course {
+    border: 1px solid #ccc;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* ESTILO Para Imformacion de tipo de cursos*/
+/* General styling */
+.layout-container {
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+    /* Columnas: izquierda más pequeña que derecha */
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Left Section (Imagen y Botones) */
+.left-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.course-image {
+    width: 100%;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.options .option {
+    margin-bottom: 10px;
+}
+
+.dropdown-btn {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    color: #fff;
+    background-color: #ced6ce;
+    transition: 0.3s;
+}
+
+.dropdown-btn:hover {
+    background-color: #ced6ce;
+}
+
+/* Right Section (Texto y Contenido) */
+.right-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.right-section h2 {
+    color: #558b2f;
+    /* Color verde */
+    border-bottom: 2px solid #558b2f;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.right-section p,
+.right-section ul {
+    color: #333;
+    line-height: 1.6;
+    margin: 0 0 15px 0;
+}
+
+.right-section ul {
+    padding-left: 20px;
+}
+
+.right-section li {
+    margin-bottom: 10px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+    .layout-container {
+        grid-template-columns: 1fr;
+        /* Una sola columna en pantallas pequeñas */
+    }
+
+    .left-section {
+        margin-bottom: 20px;
+    }
+}
+
+
+/* Estilos para Informacion de Cursos */
+.course-details {
+    display: flex;
+    justify-content: space-around;
+    padding: 15px;
+    background-color: #fafafa;
+    border-bottom: 1px solid #ddd;
+    flex-wrap: wrap; /* Asegura que los elementos se envuelvan en pantallas pequeñas */
+}
+
+.course-details div {
+    text-align: center;
+    flex: 1 1 45%; /* Toma el 45% del ancho, permite ajuste automático */
+    margin: 10px 0; /* Espaciado entre bloques en pantallas pequeñas */
+}
+
+.course-details p:first-child {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 0;
+    color: #f06a6a;
+}
+
+.course-details p:last-child {
+    font-size: 0.9rem;
+    margin: 0;
+    color: #666;
+}
+
+.course-includes {
+    padding: 15px;
+    background-color: #fff;
+    border-radius: 0 0 5px 5px;
+    text-align: left;
+}
+
+.course-includes h4 {
+    color: #4caf50;
+    font-size: 1.2rem;
+    text-align: center;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.course-includes ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.course-includes li {
+    font-size: 0.95rem;
+    color: #333;
+    margin: 5px 0;
+    padding-left: 20px;
+    position: relative;
+}
+
+.course-includes li::before {
+    content: '•';
+    color: #f06a6a;
+    position: absolute;
+    left: 0;
+    font-size: 1.2rem;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Los bloques se apilan verticalmente */
+        align-items: center;
+    }
+
+    .course-details {
+        flex-direction: column; /* Alinear bloques de cursos en columna */
+        text-align: center;
+    }
+
+    .course-details div {
+        flex: 1 1 100%; /* Cada bloque ocupa el ancho completo */
+    }
+
+    .footer-section h4 {
+        font-size: 14px; /* Reducir el tamaño del título en pantallas pequeñas */
+    }
+
+    .footer-section p {
+        font-size: 12px; /* Reducir el tamaño del texto */
+    }
+
+    .social-icons i {
+        font-size: 16px; /* Iconos más pequeños en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    footer {
+        padding: 15px 10px; /* Reducir los espacios en pantallas muy pequeñas */
+    }
+
+    .footer-container {
+        text-align: center; /* Forzar alineación centrada */
+    }
+
+    .course-details p:first-child {
+        font-size: 1.5rem; /* Reducir el tamaño de los números */
+    }
+
+    .course-includes h4 {
+        font-size: 1rem; /* Título más pequeño */
+    }
+
+    .course-includes li {
+        font-size: 0.85rem; /* Texto más compacto */
+    }
+}
