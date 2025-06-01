@@ -1,0 +1,456 @@
+// Variables globales
+:root {
+  --primary-color: #3B82F6;
+  --secondary-color: #64748B;
+  --success-color: #10B981;
+  --warning-color: #F59E0B;
+  --danger-color: #EF4444;
+  --info-color: #06B6D4;
+}
+
+// Reset básico
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  line-height: 1.6;
+  color: #374151;
+  background-color: #f9fafb;
+}
+
+// Utilidades
+.text-center {
+  text-align: center;
+}
+
+.mb-2 {
+  margin-bottom: 1rem;
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem;
+}
+
+.mt-2 {
+  margin-top: 1rem;
+}
+
+.p-2 {
+  padding: 1rem;
+}
+
+// Sobrescribir algunos estilos de PrimeReact
+.p-card {
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.p-button {
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+
+.p-inputtext {
+  border-radius: 0.375rem;
+  border: 1px solid #d1d5db;
+  
+  &:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 1px var(--primary-color);
+  }
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.home-page {
+  .custom-carousel {
+    .p-carousel-content {
+      border-radius: 12px;
+      overflow: hidden;
+      
+      .p-carousel-item {
+        .carousel-item {
+          position: relative;
+          
+          img {
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+          }
+          
+          &:hover img {
+            transform: scale(1.02);
+          }
+        }
+      }
+    }
+  }
+}
+
+.course-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    border-color: var(--primary-color-text);
+  }
+  
+  &.selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3) !important;
+    transform: translateY(-2px);
+  }
+}
+
+.course-stat {
+  h4 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+  }
+  
+  p {
+    color: var(--text-color-secondary);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+}
+
+.course-includes {
+  ul li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--surface-border);
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+}
+
+.course-image-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  
+  img {
+    transition: transform 0.3s ease;
+  }
+  
+  &:hover img {
+    transform: scale(1.05);
+  }
+}
+
+// PrimeReact customizations
+.p-panel .p-panel-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-text));
+  color: white;
+  border-radius: 8px 8px 0 0;
+  
+  .p-panel-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+}
+
+.p-panel .p-panel-content {
+  border-radius: 0 0 8px 8px;
+}
+
+.p-button.p-button-success {
+  background: linear-gradient(135deg, var(--success-color), #059669);
+  border: none;
+  
+  &:hover {
+    background: linear-gradient(135deg, #059669, var(--success-color));
+    transform: translateY(-1px);
+  }
+}
+
+.p-carousel .p-carousel-indicators {
+  padding: 1rem 0;
+  
+  .p-carousel-indicator {
+    margin: 0 0.25rem;
+    
+    button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      border: 2px solid white;
+      transition: all 0.3s ease;
+      
+      &:hover {
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
+    
+    &.p-highlight button {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+    }
+  }
+}
+
+// Modern Home Page Styles
+.home-page-modern {
+  .hero-carousel {
+    .p-carousel-content {
+      border-radius: 16px;
+      overflow: hidden;
+      
+      .carousel-item-wrapper {
+        .relative {
+          .carousel-overlay {
+            background: linear-gradient(transparent, rgba(0,0,0,0.7));
+            border-radius: 0 0 16px 16px;
+          }
+        }
+      }
+    }
+    
+    .p-carousel-indicators {
+      .p-carousel-indicator button {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.6);
+        border: 2px solid white;
+        transition: all 0.3s ease;
+        
+        &:hover {
+          background: rgba(255, 255, 255, 0.9);
+          transform: scale(1.2);
+        }
+      }
+      
+      .p-highlight button {
+        background: var(--primary-color);
+        border-color: var(--primary-color);
+      }
+    }
+  }
+  
+  .hero-banner {
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+    border: 1px solid rgba(59, 130, 246, 0.1);
+  }
+}
+
+// Course Cards Modern
+.course-card-modern {
+  border: 2px solid transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.3);
+  }
+  
+  &.selected {
+    border-color: var(--primary-color);
+    transform: translateY(-4px);
+    
+    .p-card-header {
+      background: linear-gradient(135deg, var(--primary-color), #1e40af) !important;
+    }
+  }
+  
+  .stat-item {
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+// Panel Modern
+.panel-modern {
+  .p-panel-header {
+    background: linear-gradient(135deg, var(--primary-color), #1e40af);
+    color: white;
+    border-radius: 12px 12px 0 0;
+    padding: 1rem 1.5rem;
+    
+    .p-panel-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    
+    .p-panel-header-icon {
+      color: white;
+    }
+  }
+  
+  .p-panel-content {
+    border-radius: 0 0 12px 12px;
+    padding: 1.5rem;
+  }
+}
+
+// Certification Badge
+.certification-badge {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+  border: 2px solid rgba(59, 130, 246, 0.2);
+}
+
+// Footer Modern
+.footer-modern {
+  .footer-content {
+    background: linear-gradient(135deg, var(--surface-100), var(--surface-200));
+  }
+  
+  .footer-section {
+    h4 {
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .footer-link {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    
+    &:hover {
+      color: var(--primary-color);
+      background: rgba(59, 130, 246, 0.1);
+      padding-left: 0.5rem;
+      transform: translateX(4px);
+    }
+  }
+  
+  .social-btn {
+    transition: all 0.3s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+    
+    &.facebook-btn:hover {
+      background: #1877f2;
+      border-color: #1877f2;
+      color: white;
+    }
+    
+    &.instagram-btn:hover {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+      border-color: #bc1888;
+      color: white;
+    }
+    
+    &.youtube-btn:hover {
+      background: #ff0000;
+      border-color: #ff0000;
+      color: white;
+    }
+  }
+  
+  .newsletter-section {
+    .p-card {
+      border: 2px solid var(--primary-color);
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(16, 185, 129, 0.05));
+    }
+  }
+  
+  .copyright-section {
+    .border-top-1 {
+      border-top: 1px solid var(--surface-border) !important;
+    }
+  }
+}
+
+// Responsive Design Improvements
+@media (max-width: 768px) {
+  .home-page-modern {
+    .hero-carousel .carousel-item-wrapper .relative .carousel-overlay {
+      h3 {
+        font-size: 1.5rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+    
+    .hero-banner {
+      h1 {
+        font-size: 2.5rem !important;
+        
+        div {
+          font-size: 1.5rem !important;
+        }
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+    }
+  }
+  
+  .course-card-modern {
+    .stat-item {
+      padding: 0.75rem !important;
+      
+      h4 {
+        font-size: 1.5rem !important;
+      }
+    }
+  }
+  
+  .footer-modern {
+    .footer-section {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    
+    .social-btn {
+      width: 100%;
+    }
+  }
+}
+
+// Animation Classes
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slide-up {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
