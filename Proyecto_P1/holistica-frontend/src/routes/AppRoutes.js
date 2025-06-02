@@ -16,6 +16,7 @@ import CourseEdit from '../pages/courses/CourseEdit';
 import ProtectedRoute from '../components/ProtectedRoute';
 import MyEnrollments from '../pages/user/MyEnrollments';
 import PaymentHistory from '../pages/user/PaymentHistory';
+import AboutUs from '../pages/aboutUs/AboutUs'; // Importa la página de "Sobre Nosotros"
 
 export default function AppRoutes() {
   return (
@@ -32,6 +33,7 @@ export default function AppRoutes() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path='/about' element={<AboutUs/>} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/courses" element={<CourseList />} />
           <Route path="/courses/:id" element={<CourseDetails />} />
