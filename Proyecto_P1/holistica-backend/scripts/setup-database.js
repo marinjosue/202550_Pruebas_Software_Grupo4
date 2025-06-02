@@ -4,7 +4,7 @@ const dbManager = require('../config/db');
 async function setupDatabase() {
   try {
     console.log('🚀 Setting up database...');
-    console.log('📊 Database type:', dbManager.getDbType());
+    //console.log('📊 Database type:', dbManager.getDbType());
     
     // Wait for database initialization
     await new Promise(resolve => setTimeout(resolve, 1000));
