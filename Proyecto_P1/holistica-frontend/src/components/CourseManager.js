@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import courseService from '../services/courseService';
+import CourseCard from './CourseCard';
 
 const CourseManager = () => {
     const [courses, setCourses] = useState([]);
@@ -72,60 +73,38 @@ const CourseManager = () => {
         <div style={{ padding: '20px' }}>
             <h1>Gestión de Cursos</h1>
             {error && <p style={{ color: 'red' }}>{error}</p>}
-
-            {/* Formulario para crear/editar cursos */}
             <form onSubmit={handleSubmit} style={{ marginBottom: '20px' }}>
-                <div>
-                    <label>Nombre: </label>
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleInputChange}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Descripción: </label>
-                    <input
-                        type="text"
-                        name="description"
-                        value={formData.description}
-                        onChange={handleInputChange}
-                    />
-                </div>
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Nombre del curso"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                />
+                <textarea
+                    name="description"
+                    placeholder="Descripción del curso"
+                    value={formData.description}
+                    onChange={handleInputChange}
+                    required
+                />
                 <button type="submit">{editingCourse ? 'Actualizar Curso' : 'Crear Curso'}</button>
                 {editingCourse && (
-                    <button type="button" onClick={() => setEditingCourse(null)}>
-                        Cancelar
-                    </button>
+                    <button type="button" onClick={() => setEditingCourse(null)}>Cancelar</button>
                 )}
             </form>
-
-            {/* Lista de cursos */}
-            <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                <thead>
-                    <tr>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Nombre</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Descripción</th>
-                        <th style={{ border: '1px solid #ddd', padding: '8px' }}>Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {courses.map((course) => (
-                        <tr key={course.id}>
-                            <td style={{ border: '1px solid #ddd', padding: '8px' }}>{course.name}</td>
-                            <td style={{ border: '1px solid #ddd', padding: '8px' }}>{course.description}</td>
-                            <td style={{ border: '1px solid #ddd', padding: '8px' }}>
-                                <button onClick={() => handleEdit(course)}>Editar</button>
-                                <button onClick={() => handleDelete(course.id)} style={{ marginLeft: '10px' }}>
-                                    Eliminar
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+            <div className="course-list">
+                {courses.map((course) => (
+                    <CourseCard
+                        key={course.id}
+                        course={course}
+                        onEnroll={() => alert(`Inscripción en curso ${course.name}`)}
+                        onInfo={() => handleEdit(course)}
+                        onDelete={() => handleDelete(course.id)}
+                    />
+                ))}
+            </div>
         </div>
     );
 };
