@@ -20,6 +20,7 @@ const adminRoutes = require('./routes/admin.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
 
 const app = express();
+app.disable('x-powered-by');
 
 // CORS configuration
 const corsOptions = {

@@ -12,7 +12,11 @@ const validateRegistration = (req, res, next) => {
     errors.push('El apellido debe tener al menos 2 caracteres');
   }
 
-  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+
+  if (
+    !email ||
+    !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)
+  ) {
     errors.push('Email inválido');
   }
 
