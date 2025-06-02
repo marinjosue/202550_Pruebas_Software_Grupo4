@@ -4,7 +4,7 @@ const dbManager = require('../config/db');
 async function setupDatabase() {
   try {
     console.log('🚀 Setting up database...');
-    //console.log('📊 Database type:', dbManager.getDbType());
+    console.log('🌐 Backend should be running on http://localhost:3000');
     
     // Wait for database initialization
     await new Promise(resolve => setTimeout(resolve, 1000));
@@ -28,9 +28,17 @@ async function setupDatabase() {
       console.log('✅ Admin user created');
       console.log('📧 Email: admin@holistica.com');
       console.log('🔑 Password: admin123');
+    } else {
+      console.log('ℹ️ Admin user already exists');
     }
     
     console.log('🎉 Database setup completed successfully!');
+    console.log('');
+    console.log('🔗 Test URLs:');
+    console.log('   Frontend: http://localhost:3001');
+    console.log('   Backend API: http://localhost:3000/api');
+    console.log('   Login endpoint: http://localhost:3000/api/auth/login');
+    console.log('   Profile endpoint: http://localhost:3000/api/users/me');
     
   } catch (error) {
     console.error('❌ Database setup failed:', error.message);

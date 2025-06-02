@@ -104,15 +104,21 @@ export async function resetPasswordRequest(email) {
   }
 }
 
+// Función simplificada para verificar token usando el endpoint de perfil
 export async function verifyTokenRequest() {
   try {
-    const res = await fetch(`${API_URL}/auth/verify`, {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      return null;
+    }
+
+    const res = await fetch(`${API_URL}/users/me`, {
       method: 'GET',
       headers: { 
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include'
+        'Accept': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
     });
 
     if (!res.ok) {

@@ -4,7 +4,6 @@ import { Button } from 'primereact/button';
 import { Panel } from 'primereact/panel';
 import { Carousel } from 'primereact/carousel';
 import { Divider } from 'primereact/divider';
-import { Tag } from 'primereact/tag';
 import { Toast } from 'primereact/toast';
 import { Badge } from 'primereact/badge';
 import { Chip } from 'primereact/chip';
@@ -15,13 +14,10 @@ import { Dialog } from 'primereact/dialog';
 import { TabView, TabPanel } from 'primereact/tabview';
 import { Rating } from 'primereact/rating';
 import { Avatar } from 'primereact/avatar';
-import { AvatarGroup } from 'primereact/avatargroup';
-import { useNavigate } from 'react-router-dom';
 import '../styles/Home.css';
 
 export default function Home() {
   const toast = useRef(null);
-  const navigate = useNavigate();
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [imagesLoaded, setImagesLoaded] = useState(false);
   const [showEnrollDialog, setShowEnrollDialog] = useState(false);
@@ -345,7 +341,6 @@ export default function Home() {
       <div className="welcome-banner">
         <div className="welcome-content">
           <h1 className="welcome-title">
-            Holistic Center
             <span className="welcome-subtitle">Cursos de Cosmetología</span>
           </h1>
           <p className="welcome-description">

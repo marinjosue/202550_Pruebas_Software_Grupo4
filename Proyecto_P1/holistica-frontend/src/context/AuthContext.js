@@ -37,9 +37,41 @@ export const AuthProvider = ({ children }) => {
   const checkAuth = async () => {
     try {
       dispatch({ type: 'SET_LOADING', payload: true });
+      
+      // Verificar si hay token en localStorage
+      const token = localStorage.getItem('token');
+      if (!token) {
+        dispatch({ type: 'SET_USER', payload: null });
+        return;
+      }
+
+      // Verificar si hay usuario guardado en localStorage
+      const savedUser = localStorage.getItem('user');
+      if (savedUser) {
+        try {
+          const userData = JSON.parse(savedUser);
+          dispatch({ type: 'SET_USER', payload: userData });
+          return;
+        } catch (error) {
+          console.error('Error parsing saved user data:', error);
+        }
+      }
+      
+      // Si no hay usuario guardado, intentar obtenerlo del servidor
       const userData = await verifyTokenRequest();
-      dispatch({ type: 'SET_USER', payload: userData });
+      if (userData) {
+        localStorage.setItem('user', JSON.stringify(userData));
+        dispatch({ type: 'SET_USER', payload: userData });
+      } else {
+        // Token inválido, limpiar localStorage
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        dispatch({ type: 'SET_USER', payload: null });
+      }
     } catch (error) {
+      // Si el token es inválido, limpiarlo
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
       dispatch({ type: 'SET_USER', payload: null });
     }
   };
@@ -51,7 +83,10 @@ export const AuthProvider = ({ children }) => {
       
       const response = await loginRequest(credentials);
       
-      if (response.user) {
+      if (response.token && response.user) {
+        // Guardar token en localStorage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         dispatch({ type: 'SET_USER', payload: response.user });
         return response;
       }
@@ -70,7 +105,10 @@ export const AuthProvider = ({ children }) => {
       
       const response = await registerRequest(userData);
       
-      if (response.user) {
+      if (response.token && response.user) {
+        // Guardar token en localStorage
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
         dispatch({ type: 'SET_USER', payload: response.user });
         return response;
       }
@@ -90,6 +128,7 @@ export const AuthProvider = ({ children }) => {
     } finally {
       dispatch({ type: 'LOGOUT' });
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
       sessionStorage.clear();
     }
   };

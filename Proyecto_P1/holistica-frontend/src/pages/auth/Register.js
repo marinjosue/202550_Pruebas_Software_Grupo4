@@ -5,9 +5,9 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Card } from 'primereact/card';
-import { Divider } from 'primereact/divider';
 import { Checkbox } from 'primereact/checkbox';
 import { useAuth } from '../../hooks/useAuth';
+import '../../styles/Register.css';
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -119,184 +119,149 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex align-items-center justify-content-center p-3" 
-         style={{ 
-           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-           fontFamily: 'Inter, sans-serif'
-         }}>
+    <div className={`register-container ${loading ? 'register-loading' : ''}`}>
       <Toast ref={toast} />
       
-      <Card className="w-full max-w-4xl shadow-8 border-round-2xl overflow-hidden">
-        <div className="text-center p-4" 
-             style={{ 
-               background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-               color: 'white' 
-             }}>
-          <div className="flex justify-content-center mb-3">
-            <div className="border-circle p-3 bg-white-alpha-20">
+      <Card className="register-card">
+        <div className="register-header">
+          <div className="register-icon-container">
+            <div className="register-icon">
               <i className="pi pi-user-plus text-4xl"></i>
             </div>
           </div>
-          <h2 className="text-3xl font-bold m-0 mb-2">Crear Cuenta</h2>
-          <p className="text-green-100 m-0">Únete a nuestra comunidad de aprendizaje</p>
+          <h2 className="register-title">Crear Cuenta</h2>
+          <p className="register-subtitle">Únete a nuestra comunidad de aprendizaje</p>
         </div>
 
-        <form onSubmit={handleRegister} className="p-4">
-          <div className="grid">
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="name" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-user mr-2 text-primary"></i>
-                  Nombre *
-                </label>
-                <InputText 
-                  id="name" 
-                  value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="Tu nombre"
-                  required
-                />
-              </div>
+        <form onSubmit={handleRegister} className="register-form">
+          <div className="register-grid">
+            <div className="register-field">
+              <label htmlFor="name">
+                <i className="pi pi-user mr-2 text-primary"></i>
+                Nombre <span className="required">*</span>
+              </label>
+              <InputText 
+                id="name" 
+                value={formData.name}
+                onChange={(e) => handleInputChange('name', e.target.value)}
+                placeholder="Tu nombre"
+                required
+              />
             </div>
 
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="lastname" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-user mr-2 text-primary"></i>
-                  Apellido *
-                </label>
-                <InputText 
-                  id="lastname" 
-                  value={formData.lastname}
-                  onChange={(e) => handleInputChange('lastname', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="Tu apellido"
-                  required
-                />
-              </div>
+            <div className="register-field">
+              <label htmlFor="lastname">
+                <i className="pi pi-user mr-2 text-primary"></i>
+                Apellido <span className="required">*</span>
+              </label>
+              <InputText 
+                id="lastname" 
+                value={formData.lastname}
+                onChange={(e) => handleInputChange('lastname', e.target.value)}
+                placeholder="Tu apellido"
+                required
+              />
             </div>
 
-            <div className="col-12">
-              <div className="field mb-3">
-                <label htmlFor="email" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-envelope mr-2 text-primary"></i>
-                  Correo Electrónico *
-                </label>
-                <InputText 
-                  id="email" 
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="tu@email.com"
-                  required
-                />
-              </div>
+            <div className="register-field full-width">
+              <label htmlFor="email">
+                <i className="pi pi-envelope mr-2 text-primary"></i>
+                Correo Electrónico <span className="required">*</span>
+              </label>
+              <InputText 
+                id="email" 
+                type="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                placeholder="tu@email.com"
+                required
+              />
             </div>
 
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="phone" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-phone mr-2 text-primary"></i>
-                  Teléfono
-                </label>
-                <InputText 
-                  id="phone" 
-                  value={formData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="0987654321"
-                />
-              </div>
+            <div className="register-field">
+              <label htmlFor="phone">
+                <i className="pi pi-phone mr-2 text-primary"></i>
+                Teléfono
+              </label>
+              <InputText 
+                id="phone" 
+                value={formData.phone}
+                onChange={(e) => handleInputChange('phone', e.target.value)}
+                placeholder="0987654321"
+              />
             </div>
 
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="dni" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-id-card mr-2 text-primary"></i>
-                  Cédula/DNI
-                </label>
-                <InputText 
-                  id="dni" 
-                  value={formData.dni}
-                  onChange={(e) => handleInputChange('dni', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="1234567890"
-                />
-              </div>
+            <div className="register-field">
+              <label htmlFor="dni">
+                <i className="pi pi-id-card mr-2 text-primary"></i>
+                Cédula/DNI
+              </label>
+              <InputText 
+                id="dni" 
+                value={formData.dni}
+                onChange={(e) => handleInputChange('dni', e.target.value)}
+                placeholder="1234567890"
+              />
             </div>
 
-            <div className="col-12">
-              <div className="field mb-3">
-                <label htmlFor="address" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-map-marker mr-2 text-primary"></i>
-                  Dirección
-                </label>
-                <InputText 
-                  id="address" 
-                  value={formData.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
-                  className="w-full p-3 border-round-lg"
-                  placeholder="Tu dirección"
-                />
-              </div>
+            <div className="register-field full-width">
+              <label htmlFor="address">
+                <i className="pi pi-map-marker mr-2 text-primary"></i>
+                Dirección
+              </label>
+              <InputText 
+                id="address" 
+                value={formData.address}
+                onChange={(e) => handleInputChange('address', e.target.value)}
+                placeholder="Tu dirección"
+              />
             </div>
 
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="password" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-lock mr-2 text-primary"></i>
-                  Contraseña *
-                </label>
-                <Password 
-                  id="password" 
-                  value={formData.password}
-                  onChange={(e) => handleInputChange('password', e.target.value)}
-                  className="w-full"
-                  inputClassName="w-full p-3 border-round-lg"
-                  placeholder="Mínimo 6 caracteres"
-                  toggleMask
-                  required
-                />
-              </div>
+            <div className="register-field">
+              <label htmlFor="password">
+                <i className="pi pi-lock mr-2 text-primary"></i>
+                Contraseña <span className="required">*</span>
+              </label>
+              <Password 
+                id="password" 
+                value={formData.password}
+                onChange={(e) => handleInputChange('password', e.target.value)}
+                placeholder="Mínimo 6 caracteres"
+                toggleMask
+                required
+              />
             </div>
 
-            <div className="col-12 md:col-6">
-              <div className="field mb-3">
-                <label htmlFor="confirmPassword" className="block text-sm font-semibold text-700 mb-2">
-                  <i className="pi pi-lock mr-2 text-primary"></i>
-                  Confirmar Contraseña *
-                </label>
-                <Password 
-                  id="confirmPassword" 
-                  value={formData.confirmPassword}
-                  onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
-                  className="w-full"
-                  inputClassName="w-full p-3 border-round-lg"
-                  placeholder="Repite la contraseña"
-                  toggleMask
-                  feedback={false}
-                  required
-                />
-              </div>
+            <div className="register-field">
+              <label htmlFor="confirmPassword">
+                <i className="pi pi-lock mr-2 text-primary"></i>
+                Confirmar Contraseña <span className="required">*</span>
+              </label>
+              <Password 
+                id="confirmPassword" 
+                value={formData.confirmPassword}
+                onChange={(e) => handleInputChange('confirmPassword', e.target.value)}
+                placeholder="Repite la contraseña"
+                toggleMask
+                feedback={false}
+                required
+              />
             </div>
           </div>
 
-          <div className="flex align-items-center mb-4">
+          <div className="register-terms">
             <Checkbox 
               id="terms" 
               checked={acceptTerms} 
               onChange={(e) => setAcceptTerms(e.checked)} 
-              className="mr-2"
             />
-            <label htmlFor="terms" className="text-sm text-600">
+            <label htmlFor="terms">
               Acepto los{' '}
-              <Link to="/terms" className="text-primary no-underline hover:underline">
+              <Link to="/terms">
                 términos y condiciones
               </Link>
               {' '}y{' '}
-              <Link to="/privacy" className="text-primary no-underline hover:underline">
+              <Link to="/privacy">
                 política de privacidad
               </Link>
             </label>
@@ -306,33 +271,27 @@ export default function Register() {
             type="submit"
             label="Crear Cuenta" 
             icon="pi pi-user-plus" 
-            className="w-full p-3 text-lg font-bold border-round-lg mb-3"
-            style={{ 
-              background: 'linear-gradient(135deg, #10B981 0%, #059669 100%)',
-              border: 'none'
-            }}
+            className="register-button"
             loading={loading}
             disabled={loading}
           />
         </form>
 
-        <Divider className="mx-4" />
+        <hr className="register-divider" />
 
-        <div className="p-4 text-center">
+        <div className="register-footer">
           <span className="text-600">¿Ya tienes cuenta? </span>
           <Link 
-            to="/auth/login" 
-            className="text-primary font-semibold no-underline hover:underline"
+            to="/login" 
+            className="register-login-link"
           >
             Iniciar Sesión
           </Link>
-        </div>
-
-        <div className="p-4 pt-0">
+          
           <Button 
             label="Volver al Inicio" 
             icon="pi pi-home" 
-            className="w-full p-2 border-round-lg"
+            className="register-back-button"
             outlined
             onClick={() => navigate('/')}
           />

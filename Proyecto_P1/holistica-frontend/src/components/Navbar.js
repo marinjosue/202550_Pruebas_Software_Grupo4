@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
@@ -7,13 +7,13 @@ import { Menu } from 'primereact/menu';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { useCart } from '../context/CartContext';
+import logo from '../assets/logo.png';
 import '../styles/Navbar.css';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
-  const [userMenuVisible, setUserMenuVisible] = useState(false);
   const userMenuRef = useRef(null);
 
   const handleLogout = () => {
@@ -101,28 +101,11 @@ export default function Navbar() {
   const start = (
     <div className="navbar-brand" onClick={() => navigate('/')}>
       <img 
-        src="/assets/logo.png" 
+        src={logo} 
         alt="Holística Center" 
         className="brand-logo"
-        onError={(e) => {
-          // Fallback if logo doesn't exist
-          e.target.style.display = 'none';
-          e.target.nextSibling.style.display = 'flex';
-        }}
+        style={{ width: '40px', height: '40px' }}
       />
-      <div className="brand-fallback" style={{ display: 'none' }}>
-        <div className="brand-icon">
-          <i className="pi pi-heart-fill"></i>
-        </div>
-        <div className="brand-text">
-          <span className="brand-name">Holística</span>
-          <span className="brand-subtitle">Center</span>
-        </div>
-      </div>
-      <div className="brand-text-main">
-        <span className="brand-name">Holística</span>
-        <span className="brand-subtitle">Center</span>
-      </div>
     </div>
   );
 
@@ -162,7 +145,6 @@ export default function Navbar() {
           <Button
             className="user-menu-button p-button-rounded"
             onClick={(e) => {
-              setUserMenuVisible(true);
               userMenuRef.current.toggle(e);
             }}
           >
@@ -184,7 +166,7 @@ export default function Navbar() {
       ) : (
         <div className="auth-buttons">
           <Button
-            label="Iniciar Sesión"
+            label="Login"
             icon="pi pi-sign-in"
             className="login-button p-button-outlined"
             onClick={() => navigate('/login')}

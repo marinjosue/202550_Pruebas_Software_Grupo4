@@ -1,0 +1,139 @@
+/* Variables CSS para mantener consistencia */
+:root {
+  --primary-color: #6366f1;
+  --primary-hover: #4f46e5;
+  --secondary-color: #ec4899;
+  --success-color: #10b981;
+  --warning-color: #f59e0b;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --text-light: #ffffff;
+  --background-white: #ffffff;
+  --background-light: #f9fafb;
+  --border-color: #e5e7eb;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --border-radius: 0.5rem;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-modern {
+  background-color: var(--background-light);
+  color: var(--text-primary);
+  width: 100%;
+  margin-top: 2rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.footer-content {
+  background-color: var(--background-light) !important;
+}
+
+.footer-section h4 {
+  color: var(--primary-color) !important;
+  font-size: 1.1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.footer-section h4:after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 40px;
+  height: 2px;
+  background-color: var(--primary-color);
+}
+
+.footer-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+  padding: 0.3rem 0;
+}
+
+.footer-link:hover {
+  color: var(--primary-color);
+  transform: translateX(3px);
+}
+
+.footer-link i {
+  transition: var(--transition);
+}
+
+.footer-link:hover i {
+  color: var(--primary-hover) !important;
+}
+
+.social-btn {
+  transition: var(--transition);
+}
+
+.facebook-btn.p-button-outlined {
+  color: #1877f2;
+  border-color: #1877f2;
+}
+
+.facebook-btn.p-button-outlined:hover {
+  background-color: #1877f2;
+  color: white;
+}
+
+.instagram-btn.p-button-outlined {
+  color: #e1306c;
+  border-color: #e1306c;
+}
+
+.instagram-btn.p-button-outlined:hover {
+  background-color: #e1306c;
+  color: white;
+}
+
+.youtube-btn.p-button-outlined {
+  color: #ff0000;
+  border-color: #ff0000;
+}
+
+.youtube-btn.p-button-outlined:hover {
+  background-color: #ff0000;
+  color: white;
+}
+
+.newsletter-section .p-card {
+  background-color: var(--background-white);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.copyright-section {
+  padding-top: 1rem;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+  .grid > div {
+    margin-bottom: 1.5rem;
+  }
+  
+  .copyright-section div[class*="col-"] {
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Mejora para la versión horizontal en pantallas grandes */
+@media (min-width: 992px) {
+  .footer-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  
+  .footer-section {
+    flex: 1;
+    padding: 0 1rem;
+  }
+}

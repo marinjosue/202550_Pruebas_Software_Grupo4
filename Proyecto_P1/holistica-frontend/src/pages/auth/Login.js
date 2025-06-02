@@ -5,10 +5,9 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { Card } from 'primereact/card';
-import { Divider } from 'primereact/divider';
 import { Checkbox } from 'primereact/checkbox';
 import { useAuth } from '../../hooks/useAuth';
-
+import '../../styles/Login.css';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -41,7 +40,7 @@ export default function Login() {
         detail: 'Sesión iniciada correctamente', 
         life: 2000 
       });
-      setTimeout(() => navigate('/'), 2000);
+      setTimeout(() => navigate('/profile'), 2000);
     } catch (error) {
       console.error('Login error:', error);
       let errorMessage = 'Error al iniciar sesión';
@@ -66,31 +65,23 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex align-items-center justify-content-center p-4" 
-         style={{ 
-           background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-           fontFamily: 'Inter, sans-serif'
-         }}>
+    <div className={`login-container ${loading ? 'login-loading' : ''}`}>
       <Toast ref={toast} />
       
-      <Card className="w-full max-w-md shadow-8 border-round-2xl overflow-hidden">
-        <div className="text-center p-4" 
-             style={{ 
-               background: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
-               color: 'white' 
-             }}>
-          <div className="flex justify-content-center mb-3">
-            <div className="border-circle p-3 bg-white-alpha-20">
+      <Card className="login-card">
+        <div className="login-header">
+          <div className="login-icon-container">
+            <div className="login-icon">
               <i className="pi pi-user text-4xl"></i>
             </div>
           </div>
-          <h2 className="text-3xl font-bold m-0 mb-2">Iniciar Sesión</h2>
-          <p className="text-blue-100 m-0">Bienvenido a Holística Center</p>
+          <h2 className="login-title">Iniciar Sesión</h2>
+          <p className="login-subtitle">Bienvenido a Holística Center</p>
         </div>
 
-        <form onSubmit={handleLogin} className="p-4">
-          <div className="field mb-4">
-            <label htmlFor="email" className="block text-sm font-semibold text-700 mb-2">
+        <form onSubmit={handleLogin} className="login-form">
+          <div className="login-field">
+            <label htmlFor="email">
               <i className="pi pi-envelope mr-2 text-primary"></i>
               Correo Electrónico
             </label>
@@ -99,15 +90,13 @@ export default function Login() {
               type="email"
               value={email} 
               onChange={(e) => setEmail(e.target.value)} 
-              className="w-full p-3 border-round-lg"
               placeholder="tu@email.com"
               autoFocus 
-              style={{ fontSize: '1rem' }}
             />
           </div>
 
-          <div className="field mb-4">
-            <label htmlFor="password" className="block text-sm font-semibold text-700 mb-2">
+          <div className="login-field">
+            <label htmlFor="password">
               <i className="pi pi-lock mr-2 text-primary"></i>
               Contraseña
             </label>
@@ -115,30 +104,26 @@ export default function Login() {
               id="password" 
               value={password} 
               onChange={(e) => setPassword(e.target.value)} 
-              className="w-full"
-              inputClassName="w-full p-3 border-round-lg"
               placeholder="********"
               toggleMask 
               feedback={false}
-              style={{ fontSize: '1rem' }}
             />
           </div>
 
-          <div className="flex align-items-center justify-content-between mb-4">
-            <div className="flex align-items-center">
+          <div className="login-options">
+            <div className="login-remember">
               <Checkbox 
                 id="remember" 
                 checked={rememberMe} 
                 onChange={(e) => setRememberMe(e.checked)} 
-                className="mr-2"
               />
-              <label htmlFor="remember" className="text-sm text-600">
+              <label htmlFor="remember">
                 Recordarme
               </label>
             </div>
             <Link 
-              to="/auth/reset-password" 
-              className="text-sm text-primary no-underline hover:underline"
+              to="/reset-password" 
+              className="login-forgot"
             >
               ¿Olvidaste tu contraseña?
             </Link>
@@ -148,33 +133,27 @@ export default function Login() {
             type="submit"
             label="Iniciar Sesión" 
             icon="pi pi-sign-in" 
-            className="w-full p-3 text-lg font-bold border-round-lg"
-            style={{ 
-              background: 'linear-gradient(135deg, #3B82F6 0%, #1E40AF 100%)',
-              border: 'none'
-            }}
+            className="login-button"
             loading={loading}
             disabled={loading}
           />
         </form>
 
-        <Divider className="mx-4" />
+        <hr className="login-divider" />
 
-        <div className="p-4 text-center">
+        <div className="login-footer">
           <span className="text-600">¿No tienes cuenta? </span>
           <Link 
-            to="/auth/register" 
-            className="text-primary font-semibold no-underline hover:underline"
+            to="/register" 
+            className="login-register-link"
           >
             Regístrate aquí
           </Link>
-        </div>
-
-        <div className="p-4 pt-0">
+          
           <Button 
             label="Volver al Inicio" 
             icon="pi pi-home" 
-            className="w-full p-2 border-round-lg"
+            className="login-back-button"
             outlined
             onClick={() => navigate('/')}
           />
