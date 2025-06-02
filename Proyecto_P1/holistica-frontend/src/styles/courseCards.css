@@ -1,0 +1,120 @@
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    padding-top: 80px;
+}
+/* Estilo para menus */
+/* Estilo general para la sección */
+.courses-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 60px;
+    background-color: #f9f9f9;
+}
+
+/* Estilo para cada tarjeta */
+.course-card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 300px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Títulos de los cursos */
+.course-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Texto de los cursos */
+.course-card p {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 5px 0;
+}
+
+/* Botones */
+.course-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.course-card button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    margin: 5px 0;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;
+    align-self: center;
+}
+
+.course-card button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para las imágenes */
+.course-card img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    object-fit: cover;
+    max-height: 200px; /* Límite de altura para evitar que las imágenes sean demasiado grandes */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+/* Responsivo */
+@media (max-width: 768px) {
+    .courses-section {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .course-card {
+        width: 90%;
+    }
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 768px) {
+    .course-details {
+        flex-direction: column; /* Alinear bloques de cursos en columna */
+        text-align: center;
+    }
+
+    .course-details div {
+        flex: 1 1 100%; /* Cada bloque ocupa el ancho completo */
+    }
+
+    .footer-section h4 {
+        font-size: 14px; /* Reducir el tamaño del título en pantallas pequeñas */
+    }
+
+    .footer-section p {
+        font-size: 12px; /* Reducir el tamaño del texto */
+    }
+
+    .social-icons i {
+        font-size: 16px; /* Iconos más pequeños en pantallas pequeñas */
+    }
+}
