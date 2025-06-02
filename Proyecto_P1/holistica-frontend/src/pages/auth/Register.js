@@ -7,9 +7,11 @@ import { Toast } from 'primereact/toast';
 import { Card } from 'primereact/card';
 import { Checkbox } from 'primereact/checkbox';
 import { useAuth } from '../../hooks/useAuth';
+
 import '../../styles/Register.css';
 
 export default function Register() {
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
     lastname: '',
@@ -24,7 +26,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
   const navigate = useNavigate();
-  const { register } = useAuth();
+
 
   const handleInputChange = (field, value) => {
     setFormData(prev => ({

@@ -1,5 +1,6 @@
 .reports-container {
   padding: 2rem;
+  min-height: 100vh;
 }
 
 .reports-loading {
@@ -35,6 +36,13 @@
   margin-bottom: 2rem;
 }
 
+@media (max-width: 768px) {
+  .reports-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}
+
 .stats-card {
   border-radius: 1rem !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
@@ -65,6 +73,7 @@
   justify-content: center;
   border-radius: 50%;
   color: white;
+  flex-shrink: 0;
 }
 
 .stat-icon.sold {
@@ -76,13 +85,13 @@
 }
 
 .stat-icon.courses {
-  background: linear-gradient(135deg, var(--primary-color), #1e40af);
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
 }
 
 .stat-info h3 {
-  margin: 0;
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: bold;
+  margin: 0 0 0.25rem 0;
   color: var(--text-color);
 }
 
@@ -90,12 +99,28 @@
   margin: 0;
   color: var(--text-color-secondary);
   font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.875rem;
 }
 
 .chart-card {
   border-radius: 1rem !important;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1) !important;
   border: none !important;
+}
+
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  overflow: hidden;
+}
+
+.chart-container canvas {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  width: auto !important;
+  height: auto !important;
 }
 
 .table-card {
@@ -105,7 +130,20 @@
 }
 
 .reports-table {
-  border-radius: 1rem !important;
+  border-radius: 0.75rem;
+}
+
+.reports-table .p-datatable-header {
+  background: var(--surface-ground);
+  border-radius: 0.75rem 0.75rem 0 0;
+}
+
+.reports-table .p-datatable-tbody > tr {
+  transition: all 0.2s ease;
+}
+
+.reports-table .p-datatable-tbody > tr:hover {
+  background: var(--highlight-bg);
 }
 
 .status-indicator {
@@ -113,52 +151,65 @@
 }
 
 .success-rate {
-  background: linear-gradient(135deg, #10b981, #059669);
-  color: white;
   padding: 0.25rem 0.75rem;
-  border-radius: 50px;
+  border-radius: 1rem;
+  background: var(--green-100);
+  color: var(--green-800);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
 }
 
 .sales-count {
-  color: #10b981;
-  font-weight: 700;
-  font-size: 1.1rem;
+  color: var(--green-600);
+  font-weight: 600;
 }
 
 .abandoned-count {
-  color: #ef4444;
-  font-weight: 700;
-  font-size: 1.1rem;
+  color: var(--red-600);
+  font-weight: 600;
 }
 
-@media (max-width: 1024px) {
-  .reports-grid {
-    grid-template-columns: 1fr;
-  }
+.revenue-amount {
+  color: var(--blue-600);
+  font-weight: 600;
 }
 
-@media (max-width: 768px) {
-  .reports-container {
-    padding: 1rem;
-  }
-  
-  .reports-header h1 {
-    font-size: 2rem;
-  }
-  
-  .stat-item {
-    padding: 0.75rem;
-  }
-  
-  .stat-icon {
-    font-size: 1.5rem;
-    width: 50px;
-    height: 50px;
-  }
-  
-  .stat-info h3 {
-    font-size: 1.5rem;
-  }
+/* Not Found Styles */
+.not-found-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 500px;
+}
+
+.not-found-content h2 {
+  color: var(--text-color);
+  margin: 1rem 0;
+}
+
+.not-found-content p {
+  color: var(--text-color-secondary);
+  margin-bottom: 2rem;
+}
+
+.not-found-content .p-button {
+  background: var(--primary-color);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.not-found-content .p-button:hover {
+  background: var(--primary-color-text);
+  transform: translateY(-1px);
 }

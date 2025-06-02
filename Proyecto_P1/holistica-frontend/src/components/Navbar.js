@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
@@ -6,6 +6,7 @@ import { Avatar } from 'primereact/avatar';
 import { Menu } from 'primereact/menu';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
+
 import { useCart } from '../context/CartContext';
 import logo from '../assets/logo.png';
 import '../styles/Navbar.css';
@@ -15,6 +16,7 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
   const userMenuRef = useRef(null);
+  const [userMenuVisible, setUserMenuVisible] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -28,9 +30,9 @@ export default function Navbar() {
       command: () => navigate('/profile')
     },
     {
-      label: 'Mis Cursos',
-      icon: 'pi pi-book',
-      command: () => navigate('/my-courses')
+      label: 'Mis Inscripciones',
+      icon: 'pi pi-graduation-cap',
+      command: () => navigate('/my-enrollments')
     },
     {
       label: 'Configuración',
@@ -47,11 +49,7 @@ export default function Navbar() {
   ];
 
   const adminMenuItems = [
-    {
-      label: 'Dashboard',
-      icon: 'pi pi-chart-line',
-      command: () => navigate('/admin/dashboard')
-    },
+ 
     {
       label: 'Gestionar Cursos',
       icon: 'pi pi-book',
@@ -171,12 +169,7 @@ export default function Navbar() {
             className="login-button p-button-outlined"
             onClick={() => navigate('/login')}
           />
-          <Button
-            label="Registrarse"
-            icon="pi pi-user-plus"
-            className="register-button"
-            onClick={() => navigate('/register')}
-          />
+         
         </div>
       )}
     </div>

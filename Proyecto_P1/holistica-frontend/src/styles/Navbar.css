@@ -314,21 +314,7 @@
   box-shadow: var(--shadow-md) !important;
 }
 
-.register-button {
-  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
-  color: var(--text-light) !important;
-  border: none !important;
-  padding: 0.5rem 1rem !important;
-  border-radius: var(--border-radius) !important;
-  font-weight: 500 !important;
-  transition: var(--transition) !important;
-}
 
-.register-button:hover {
-  background: linear-gradient(135deg, var(--primary-hover), #db2777) !important;
-  transform: translateY(-2px) !important;
-  box-shadow: var(--shadow-md) !important;
-}
 
 /* Responsive Design */
 @media (max-width: 1024px) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card } from 'primereact/card';
 import { Chart } from 'primereact/chart';
 import { DataTable } from 'primereact/datatable';
@@ -13,19 +13,23 @@ const CourseReports = () => {
   const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState({});
   const [chartOptions, setChartOptions] = useState({});
-  const toast = React.useRef(null);
+  const toast = useRef(null);
 
-  const loadReports = React.useCallback(async () => {
+  useEffect(() => {
+    loadReports();
+    initChart();
+  }, []);
+
+  const loadReports = async () => {
     try {
       setLoading(true);
       const data = await getCourseReports();
-      // Asegurar que data sea un array
       const reportsArray = Array.isArray(data) ? data : [];
       setReports(reportsArray);
       updateChartData(reportsArray);
     } catch (error) {
       console.error('Error loading reports:', error);
-      setReports([]); // Establecer array vacío en caso de error
+      setReports([]);
       toast.current?.show({
         severity: 'error',
         summary: 'Error',
@@ -35,12 +39,7 @@ const CourseReports = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    loadReports();
-    initChart();
-  }, [loadReports]);
+  };
 
   const updateChartData = (data) => {
     if (!Array.isArray(data) || data.length === 0) {
@@ -94,6 +93,8 @@ const CourseReports = () => {
   const initChart = () => {
     setChartOptions({
       responsive: true,
+      maintainAspectRatio: true,
+      aspectRatio: 2,
       plugins: {
         legend: {
           position: 'top',
@@ -105,8 +106,14 @@ const CourseReports = () => {
       },
       scales: {
         y: {
-          beginAtZero: true
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
         }
+      },
+      animation: {
+        duration: 1000
       }
     });
   };
@@ -182,7 +189,14 @@ const CourseReports = () => {
         </Card>
 
         <Card className="chart-card">
-          <Chart type="bar" data={chartData} options={chartOptions} />
+          <div className="chart-container">
+            <Chart 
+              type="bar" 
+              data={chartData} 
+              options={chartOptions}
+              style={{ position: 'relative', height: '400px' }}
+            />
+          </div>
         </Card>
       </div>
 
@@ -193,6 +207,7 @@ const CourseReports = () => {
           emptyMessage="No hay datos de reportes disponibles"
           paginator
           rows={10}
+          responsiveLayout="scroll"
         >
           <Column 
             field="courseName" 
