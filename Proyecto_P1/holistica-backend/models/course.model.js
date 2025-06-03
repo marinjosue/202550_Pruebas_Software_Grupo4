@@ -4,13 +4,14 @@ const CourseModel = {
   async create(course) {
     const {
       title, description, price, duration,
-      category, type, start_date, end_date, created_by
+      category, type, startDate, endDate, createdBy
     } = course;
 
+    // Las claves en el objeto JS son camelCase, pero en la consulta SQL se mantienen igual
     const [result] = await pool.query(`
       INSERT INTO courses (title, description, price, duration, category, type, start_date, end_date, created_by)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [title, description, price, duration, category, type, start_date, end_date, created_by]
+      [title, description, price, duration, category, type, startDate, endDate, createdBy]
     );
 
     return result.insertId;
@@ -29,13 +30,13 @@ const CourseModel = {
   async update(id, data) {
     const {
       title, description, price, duration,
-      category, type, start_date, end_date
+      category, type, startDate, endDate
     } = data;
 
     await pool.query(`
       UPDATE courses SET title = ?, description = ?, price = ?, duration = ?, category = ?, type = ?, start_date = ?, end_date = ?
       WHERE id = ?`,
-      [title, description, price, duration, category, type, start_date, end_date, id]
+      [title, description, price, duration, category, type, startDate, endDate, id]
     );
   },
 

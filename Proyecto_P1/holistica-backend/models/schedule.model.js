@@ -2,12 +2,12 @@ const pool = require('../config/db');
 
 const ScheduleModel = {
     async create(schedule) {
-        const { course_id, day_of_week, start_time, end_time, instructor_id } = schedule;
+        const { courseId, dayOfWeek, startTime, endTime, instructorId } = schedule;
         try {
             const [result] = await pool.query(`
                 INSERT INTO schedules (course_id, day_of_week, start_time, end_time, instructor_id)
                 VALUES (?, ?, ?, ?, ?)`,
-                [course_id, day_of_week, start_time, end_time, instructor_id]
+                [courseId, dayOfWeek, startTime, endTime, instructorId]
             );
             return result.insertId;
         } catch (error) {
@@ -30,26 +30,26 @@ const ScheduleModel = {
         return rows;
     },
 
-    async findByCourse(course_id) {
+    async findByCourse(courseId) {
         const [rows] = await pool.query(`
       SELECT s.*, u.name as instructor_name
       FROM schedules s
       LEFT JOIN users u ON s.instructor_id = u.id
       WHERE s.course_id = ?
       ORDER BY s.day_of_week, s.start_time`,
-            [course_id]
+            [courseId]
         );
         return rows;
     },
 
     async update(id, data) {
-        const { day_of_week, start_time, end_time, instructor_id } = data;
+        const { dayOfWeek, startTime, endTime, instructorId } = data;
 
         await pool.query(`
       UPDATE schedules 
       SET day_of_week = ?, start_time = ?, end_time = ?, instructor_id = ?
       WHERE id = ?`,
-            [day_of_week, start_time, end_time, instructor_id, id]
+            [dayOfWeek, startTime, endTime, instructorId, id]
         );
     },
 
