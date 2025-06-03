@@ -1,0 +1,35 @@
+.course-form-container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.form-header {
+  margin-bottom: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 2rem;
+}
+
+.form-card {
+  margin-bottom: 1rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  margin-bottom: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2rem;
+}

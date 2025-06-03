@@ -6,10 +6,10 @@ import { Tag } from 'primereact/tag';
 import { Button } from 'primereact/button';
 import { Toast } from 'primereact/toast';
 import { ProgressSpinner } from 'primereact/progressspinner';
-import { Chip } from 'primereact/chip';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import paymentService from '../../services/paymentService';
+import { formatDateTime, getStatusSeverity, getMethodIcon, ensureArray, showError } from '../../utils/commonHelpers';
 import '../../styles/PaymentHistory.css';
 
 export default function PaymentHistory() {
@@ -31,71 +31,18 @@ export default function PaymentHistory() {
     try {
       setLoading(true);
       const data = await paymentService.getPaymentHistory();
-      setPayments(Array.isArray(data) ? data : []);
+      setPayments(ensureArray(data));
     } catch (error) {
       console.error('Error loading payment history:', error);
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error.message,
-        life: 3000
-      });
+      showError(toast, error.message);
       setPayments([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return 'No especificada';
-    try {
-      return new Date(dateString).toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-      });
-    } catch (error) {
-      return 'Fecha inválida';
-    }
-  };
-
-  const getStatusSeverity = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'completed':
-      case 'completado':
-        return 'success';
-      case 'pending':
-      case 'pendiente':
-        return 'warning';
-      case 'failed':
-      case 'fallido':
-        return 'danger';
-      default:
-        return 'info';
-    }
-  };
-
-  const getMethodIcon = (method) => {
-    switch (method?.toLowerCase()) {
-      case 'transferencia':
-        return 'pi pi-credit-card';
-      case 'stripe':
-        return 'pi pi-money-bill';
-      case 'paypal':
-        return 'pi pi-paypal';
-      case 'efectivo':
-        return 'pi pi-dollar';
-      case 'tarjeta':
-        return 'pi pi-credit-card';
-      default:
-        return 'pi pi-shopping-cart';
-    }
-  };
-
   const dateBodyTemplate = (rowData) => {
-    return <span>{formatDate(rowData.created_at)}</span>;
+    return <span>{formatDateTime(rowData.created_at)}</span>;
   };
 
   const amountBodyTemplate = (rowData) => {
@@ -189,7 +136,7 @@ export default function PaymentHistory() {
             header={header()}
             paginator
             rows={10}
-            responsiveLayout="scroll"
+            responsive
             emptyMessage="No tienes pagos registrados"
             className="payment-history-table"
           >
@@ -228,12 +175,13 @@ export default function PaymentHistory() {
           <div className="no-payments-content">
             <i className="pi pi-credit-card no-payments-icon"></i>
             <h2>No tienes pagos registrados</h2>
-            <p>¡Explora nuestros cursos y realiza tu primera compra!</p>
+            <p>&iexcl;Explora nuestros cursos y realiza tu primera compra!</p>
             <Button
               label="Explorar Cursos"
               icon="pi pi-search"
               onClick={() => navigate('/courses')}
               className="explore-button"
+              aria-label="Explorar Cursos"
             />
           </div>
         </div>

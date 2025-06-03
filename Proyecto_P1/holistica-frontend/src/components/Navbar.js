@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Menubar } from 'primereact/menubar';
 import { Button } from 'primereact/button';
 import { Badge } from 'primereact/badge';
@@ -16,7 +16,6 @@ export default function Navbar() {
   const { user, logout } = useAuth();
   const { cartItems } = useCart();
   const userMenuRef = useRef(null);
-  const [userMenuVisible, setUserMenuVisible] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -97,14 +96,19 @@ export default function Navbar() {
   ];
 
   const start = (
-    <div className="navbar-brand" onClick={() => navigate('/')}>
+    <button 
+      className="navbar-brand" 
+      onClick={() => navigate('/')}
+      type="button"
+      aria-label="Ir al inicio"
+    >
       <img 
         src={logo} 
         alt="Holística Center" 
         className="brand-logo"
         style={{ width: '40px', height: '40px' }}
       />
-    </div>
+    </button>
   );
 
   const end = (

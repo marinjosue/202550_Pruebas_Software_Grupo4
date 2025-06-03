@@ -47,12 +47,8 @@ export default function ContentViewer() {
         setLoading(false);
       }, 1000);
     } catch (error) {
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'No se pudo cargar el contenido',
-        life: 3000
-      });
+      console.error(`Exception while loading content: ${error.message}`);
+      toast.current.show({ severity: 'error', summary: 'Error', detail: 'No se pudo cargar el contenido' });
       setLoading(false);
     }
   };

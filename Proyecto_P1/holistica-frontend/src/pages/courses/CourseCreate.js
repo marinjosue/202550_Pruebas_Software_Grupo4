@@ -401,8 +401,9 @@ export default function CourseCreate() {
             </div>
 
             <div className="form-field">
-              <label>Subir Imagen</label>
+              <label htmlFor="course-image-upload">Subir Imagen</label>
               <FileUpload
+                id="course-image-upload"
                 mode="basic"
                 name="courseImage"
                 accept="image/*"

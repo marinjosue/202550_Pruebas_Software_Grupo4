@@ -8,8 +8,7 @@ const AboutUs = () => {
       <section className="aboutus-hero">
         <div className="aboutus-hero-content">
           <h1 className="aboutus-title">
-            <span role="img" aria-label="Lotus">🌸</span>
-            Sobre Nosotros
+            🌸 Sobre Nosotros
           </h1>
           <p className="aboutus-subtitle">
             Transformando vidas a través del arte del masaje y el bienestar integral.

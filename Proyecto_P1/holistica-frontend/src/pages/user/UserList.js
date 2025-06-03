@@ -159,56 +159,62 @@ const UserList = () => {
       >
         <div className="create-user-form">
           <div className="form-field">
-            <label>Nombre</label>
+            <label htmlFor="user-name">Nombre</label>
             <InputText
+              id="user-name"
               value={newUser.name}
               onChange={(e) => setNewUser({...newUser, name: e.target.value})}
-              placeholder="Ingrese el nombre"
+              placeholder="Nombre del usuario"
             />
           </div>
           
           <div className="form-field">
-            <label>Apellido</label>
+            <label htmlFor="user-lastname">Apellido</label>
             <InputText
+              id="user-lastname"
               value={newUser.lastname}
               onChange={(e) => setNewUser({...newUser, lastname: e.target.value})}
-              placeholder="Ingrese el apellido"
+              placeholder="Apellido del usuario"
             />
           </div>
           
           <div className="form-field">
-            <label>Email</label>
+            <label htmlFor="user-email">Email</label>
             <InputText
+              id="user-email"
               value={newUser.email}
               onChange={(e) => setNewUser({...newUser, email: e.target.value})}
-              placeholder="Ingrese el email"
+              placeholder="email@ejemplo.com"
             />
           </div>
           
           <div className="form-field">
-            <label>Teléfono</label>
+            <label htmlFor="user-phone">Teléfono</label>
             <InputText
+              id="user-phone"
               value={newUser.phone}
               onChange={(e) => setNewUser({...newUser, phone: e.target.value})}
-              placeholder="Ingrese el teléfono"
+              placeholder="Número de teléfono"
             />
           </div>
           
           <div className="form-field">
-            <label>DNI</label>
+            <label htmlFor="user-dni">DNI</label>
             <InputText
+              id="user-dni"
               value={newUser.dni}
               onChange={(e) => setNewUser({...newUser, dni: e.target.value})}
-              placeholder="Ingrese el DNI"
+              placeholder="Documento de identidad"
             />
           </div>
           
           <div className="form-field">
-            <label>Dirección</label>
+            <label htmlFor="user-address">Dirección</label>
             <InputText
+              id="user-address"
               value={newUser.address}
               onChange={(e) => setNewUser({...newUser, address: e.target.value})}
-              placeholder="Ingrese la dirección"
+              placeholder="Dirección del usuario"
             />
           </div>
           

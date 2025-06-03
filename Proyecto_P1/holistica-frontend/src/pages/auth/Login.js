@@ -45,7 +45,7 @@ export default function Login() {
       setTimeout(() => navigate('/profile'), 2000);
     } catch (error) {
       console.error('Login error:', error);
-      let errorMessage = 'Error al iniciar sesión';
+      let errorMessage;
       
       if (error.message.includes('servidor')) {
         errorMessage = 'No se puede conectar al servidor. Verifica tu conexión.';
@@ -77,7 +77,10 @@ export default function Login() {
               <i className="pi pi-user text-4xl"></i>
             </div>
           </div>
-          <h2 className="login-title">Iniciar Sesión</h2>
+          <h2 className="auth-title">
+            <i className="pi pi-sign-in"></i>
+            {' '}Iniciar Sesión
+          </h2>
           <p className="login-subtitle">Bienvenido a Holística Center</p>
         </div>
 
@@ -85,7 +88,7 @@ export default function Login() {
           <div className="login-field">
             <label htmlFor="email">
               <i className="pi pi-envelope mr-2 text-primary"></i>
-              Correo Electrónico
+              {' '}Correo Electrónico
             </label>
             <InputText 
               id="email" 
@@ -100,7 +103,7 @@ export default function Login() {
           <div className="login-field">
             <label htmlFor="password">
               <i className="pi pi-lock mr-2 text-primary"></i>
-              Contraseña
+            {' '} Contraseña
             </label>
             <Password 
               id="password" 
@@ -123,19 +126,21 @@ export default function Login() {
                 Recordarme
               </label>
             </div>
-            <Link 
-              to="/reset-password" 
-              className="login-forgot"
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
+            <div className="forgot-password">
+              <Button 
+                label="¿Olvidaste tu contraseña?"
+                icon="pi pi-question-circle"
+                className="p-button-link"
+                onClick={() => navigate('/forgot-password')}
+              />
+            </div>
           </div>
 
           <Button 
-            type="submit"
-            label="Iniciar Sesión" 
+            label="Ingresar" 
             icon="pi pi-sign-in" 
-            className="login-button"
+            className="auth-button"
+            type="submit"
             loading={loading}
             disabled={loading}
           />

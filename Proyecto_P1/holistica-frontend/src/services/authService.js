@@ -1,133 +1,53 @@
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3000/api';
+import ApiClient from '../utils/apiClient';
 
-export async function loginRequest(credentials) {
-  try {
-    const res = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(credentials)
-    });
+class AuthService extends ApiClient {
+  constructor() {
+    super('auth');
+  }
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: 'Error de conexión' }));
-      throw new Error(errorData.message || 'Login fallido');
-    }
+  async loginRequest(credentials) {
+    return this.post('/login', credentials);
+  }
 
-    return await res.json();
-  } catch (error) {
-    console.error('Error en loginRequest:', error);
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('No se puede conectar al servidor. Verifica que el backend esté ejecutándose.');
-    }
-    throw error;
+  async registerRequest(userData) {
+    return this.post('/register', userData);
+  }
+
+  async logoutRequest() {
+    return this.post('/logout');
+  }
+
+  async verifyTokenRequest() {
+    return this.get('/verify');
+  }
+
+  async forgotPasswordRequest(email) {
+    return this.post('/forgot-password', { email });
+  }
+
+  async resetPasswordRequest(token, newPassword) {
+    return this.post('/reset-password', { token, newPassword });
+  }
+
+  async updateProfileRequest(profileData) {
+    return this.put('/profile', profileData);
+  }
+
+  async changePasswordRequest(passwordData) {
+    return this.put('/change-password', passwordData);
   }
 }
 
-export async function registerRequest(userData) {
-  try {
-    const res = await fetch(`${API_URL}/auth/register`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify(userData)
-    });
+const authService = new AuthService();
 
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: 'Error de conexión' }));
-      throw new Error(errorData.message || 'Registro fallido');
-    }
+// Export individual functions for compatibility
+export const loginRequest = (credentials) => authService.loginRequest(credentials);
+export const registerRequest = (userData) => authService.registerRequest(userData);
+export const logoutRequest = () => authService.logoutRequest();
+export const verifyTokenRequest = () => authService.verifyTokenRequest();
+export const forgotPasswordRequest = (email) => authService.forgotPasswordRequest(email);
+export const resetPasswordRequest = (token, newPassword) => authService.resetPasswordRequest(token, newPassword);
+export const updateProfileRequest = (profileData) => authService.updateProfileRequest(profileData);
+export const changePasswordRequest = (passwordData) => authService.changePasswordRequest(passwordData);
 
-    return await res.json();
-  } catch (error) {
-    console.error('Error en registerRequest:', error);
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('No se puede conectar al servidor. Verifica que el backend esté ejecutándose.');
-    }
-    throw error;
-  }
-}
-
-export async function logoutRequest() {
-  try {
-    const res = await fetch(`${API_URL}/auth/logout`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include'
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: 'Error de conexión' }));
-      throw new Error(errorData.message || 'Logout fallido');
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error('Error en logoutRequest:', error);
-    throw error;
-  }
-}
-
-export async function resetPasswordRequest(email) {
-  try {
-    const res = await fetch(`${API_URL}/auth/reset-password`, {
-      method: 'POST',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      credentials: 'include',
-      body: JSON.stringify({ email })
-    });
-
-    if (!res.ok) {
-      const errorData = await res.json().catch(() => ({ message: 'Error de conexión' }));
-      throw new Error(errorData.message || 'Solicitud de reseteo fallida');
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error('Error en resetPasswordRequest:', error);
-    if (error.name === 'TypeError' && error.message.includes('fetch')) {
-      throw new Error('No se puede conectar al servidor. Verifica que el backend esté ejecutándose.');
-    }
-    throw error;
-  }
-}
-
-// Función simplificada para verificar token usando el endpoint de perfil
-export async function verifyTokenRequest() {
-  try {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      return null;
-    }
-
-    const res = await fetch(`${API_URL}/users/me`, {
-      method: 'GET',
-      headers: { 
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }
-    });
-
-    if (!res.ok) {
-      return null;
-    }
-
-    return await res.json();
-  } catch (error) {
-    console.error('Error en verifyTokenRequest:', error);
-    return null;
-  }
-}
+export default authService;

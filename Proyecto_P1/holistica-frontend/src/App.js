@@ -1,6 +1,6 @@
 import React from 'react';
-import { PrimeReactProvider } from 'primereact/api';
-import { addLocale, locale } from 'primereact/api';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { PrimeReactProvider, addLocale, locale } from 'primereact/api';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
 import AppRoutes from './routes/AppRoutes';
@@ -9,8 +9,6 @@ import ConnectionStatus from './components/ConnectionStatus';
 import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
-
-
 
 // Configurar localización en español
 addLocale('es', {
@@ -58,14 +56,21 @@ const primeReactConfig = {
 function App() {
   return (
     <PrimeReactProvider value={primeReactConfig}>
-      <AuthProvider>
-        <CartProvider>
-          <div className="App">
-            <ConnectionStatus />
-            <AppRoutes />
-          </div>
-        </CartProvider>
-      </AuthProvider>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true
+        }}
+      >
+        <AuthProvider>
+          <CartProvider>
+            <div className="App">
+              <ConnectionStatus />
+              <AppRoutes />
+            </div>
+          </CartProvider>
+        </AuthProvider>
+      </Router>
     </PrimeReactProvider>
   );
 }

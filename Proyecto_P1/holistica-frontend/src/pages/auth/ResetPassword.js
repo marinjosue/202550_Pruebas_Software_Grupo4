@@ -18,6 +18,7 @@ function ResetPassword() {
       await resetPasswordRequest(email);
       setSubmitted(true);
     } catch (err) {
+      console.error('Error al resetear la contraseña:', err);
       setError('Hubo un problema al enviar el correo. Verifica tu email.');
     }
   };

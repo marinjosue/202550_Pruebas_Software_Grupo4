@@ -204,8 +204,100 @@ export default function CourseList() {
     }
   };
 
+  const renderPriceDisplay = (course) => {
+    if (course.original_price && course.original_price > course.price) {
+      return (
+        <>
+          <span className="original-price">${course.original_price}</span>
+          <span className="current-price">${course.price}</span>
+        </>
+      );
+    }
+    return (
+      <span className="current-price">
+        {course.price > 0 ? `$${course.price}` : 'Gratis'}
+      </span>
+    );
+  };
+
+  const renderCourseMeta = (course) => (
+    <div className="course-meta">
+      <div className="meta-item">
+        <i className="pi pi-clock"></i>
+        <span>{course.duration || 0} horas</span>
+      </div>
+      <div className="meta-item">
+        <i className="pi pi-users"></i>
+        <span>{course.max_students || '∞'} estudiantes</span>
+      </div>
+      <div className="meta-item">
+        <i className="pi pi-calendar"></i>
+        <span>{course.start_date ? new Date(course.start_date).toLocaleDateString() : 'Por definir'}</span>
+      </div>
+    </div>
+  );
+
+  const renderAdminActions = (course) => (
+    <div className="admin-course-actions">
+      <Button
+        label="Editar"
+        icon="pi pi-pencil"
+        onClick={() => navigate(`/courses/${course.id}/edit`)}
+        className="p-button-warning p-button-sm"
+      />
+      <Button
+        label="Eliminar"
+        icon="pi pi-trash"
+        onClick={() => {
+          confirmDialog({
+            message: `¿Estás seguro de que deseas eliminar el curso "${course.name}"?`,
+            header: 'Confirmar Eliminación',
+            icon: 'pi pi-exclamation-triangle',
+            acceptClassName: 'p-button-danger',
+            acceptLabel: 'Sí, eliminar',
+            rejectLabel: 'Cancelar',
+            accept: () => { handleDeleteCourse(course.id); }
+          });
+        }}
+        className="p-button-danger p-button-sm"
+      />
+    </div>
+  );
+
+  const renderStudentActions = (course, isEnrolled) => {
+    if (isEnrolled) {
+      return (
+        <div className="enrolled-status">
+          <Button
+            label="Inscrito ✓"
+            icon="pi pi-check"
+            className="p-button-success p-button-sm"
+            disabled
+          />
+        </div>
+      );
+    }
+    
+    const enrollLabel = course.price && course.price > 0 ? 
+                       `Inscribirse $${course.price}` : 
+                       'Inscribirse Gratis';
+    const enrollIcon = course.price && course.price > 0 ? 
+                      'pi pi-credit-card' : 
+                      'pi pi-user-plus';
+    
+    return (
+      <Button
+        label={enrollLabel}
+        icon={enrollIcon}
+        onClick={() => handleEnroll(course)}
+        className="enroll-button"
+      />
+    );
+  };
+
   const courseTemplate = (course) => {
     const isEnrolled = enrolledCourses.has(course.id);
+    const isAdmin = user && user.role === 1;
 
     return (
       <Card className="course-card" key={course.id}>
@@ -226,35 +318,13 @@ export default function CourseList() {
           <div className="course-header">
             <h3 className="course-title">{course.name}</h3>
             <div className="course-price">
-              {course.original_price && course.original_price > course.price ? (
-                <>
-                  <span className="original-price">${course.original_price}</span>
-                  <span className="current-price">${course.price}</span>
-                </>
-              ) : (
-                <span className="current-price">
-                  {course.price > 0 ? `$${course.price}` : 'Gratis'}
-                </span>
-              )}
+              {renderPriceDisplay(course)}
             </div>
           </div>
 
           <p className="course-description">{course.description}</p>
 
-          <div className="course-meta">
-            <div className="meta-item">
-              <i className="pi pi-clock"></i>
-              <span>{course.duration || 0} horas</span>
-            </div>
-            <div className="meta-item">
-              <i className="pi pi-users"></i>
-              <span>{course.max_students || '∞'} estudiantes</span>
-            </div>
-            <div className="meta-item">
-              <i className="pi pi-calendar"></i>
-              <span>{course.start_date ? new Date(course.start_date).toLocaleDateString() : 'Por definir'}</span>
-            </div>
-          </div>
+          {renderCourseMeta(course)}
 
           <div className="course-tags">
             <Chip label={course.level || 'Todos los niveles'} className="level-chip" />
@@ -269,54 +339,7 @@ export default function CourseList() {
             onClick={() => navigate(`/courses/${course.id}`)}
             className="p-button-outlined detail-button"
           />
-          {user && user.role === 1 ? (
-            <div className="admin-course-actions">
-              <Button
-                label="Editar"
-                icon="pi pi-pencil"
-                onClick={() => navigate(`/courses/${course.id}/edit`)}
-                className="p-button-warning p-button-sm"
-              />
-              <Button
-                label="Eliminar"
-                icon="pi pi-trash"
-                onClick={() => {
-                  confirmDialog({
-                    message: `¿Estás seguro de que deseas eliminar el curso "${course.name}"?`,
-                    header: 'Confirmar Eliminación',
-                    icon: 'pi pi-exclamation-triangle',
-                    acceptClassName: 'p-button-danger',
-                    acceptLabel: 'Sí, eliminar',
-                    rejectLabel: 'Cancelar',
-                    accept: () => handleDeleteCourse(course.id)
-                  });
-                }}
-                className="p-button-danger p-button-sm"
-              />
-            </div>
-          ) : (
-            isEnrolled ? (
-              <div className="enrolled-status">
-                <Button
-                  label="Inscrito ✓"
-                  icon="pi pi-check"
-                  className="p-button-success p-button-sm"
-                  disabled
-                />
-              </div>
-            ) : (
-              <Button
-                label={course.price && course.price > 0 ? 
-                       `Inscribirse $${course.price}` : 
-                       'Inscribirse Gratis'}
-                icon={course.price && course.price > 0 ? 
-                      'pi pi-credit-card' : 
-                      'pi pi-user-plus'}
-                onClick={() => handleEnroll(course)}
-                className="enroll-button"
-              />
-            )
-          )}
+          {isAdmin ? renderAdminActions(course) : renderStudentActions(course, isEnrolled)}
         </div>
       </Card>
     );
@@ -380,34 +403,32 @@ export default function CourseList() {
   }
 
   return (
-    <>
-      <div className="course-list-container">
-        <Toast ref={toast} />
-        <ConfirmDialog />
-        
-        <DataView
-          value={filteredCourses}
-          itemTemplate={courseTemplate}
-          header={header()}
-          paginator
-          rows={9}
-          layout="grid"
-          emptyMessage="No se encontraron cursos"
-          className="course-dataview"
-        />
+    <div className="course-list-container">
+      <Toast ref={toast} />
+      <ConfirmDialog />
+      
+      <DataView
+        value={filteredCourses}
+        itemTemplate={courseTemplate}
+        header={header()}
+        paginator
+        rows={9}
+        layout="grid"
+        emptyMessage="No se encontraron cursos"
+        className="course-dataview"
+      />
 
-        {/* Payment Dialog */}
-        <PaymentDialog
-          visible={showPaymentDialog}
-          onHide={() => {
-            setShowPaymentDialog(false);
-            setSelectedCourse(null);
-          }}
-          course={selectedCourse}
-          onPaymentSuccess={handlePaymentSuccess}
-          onEnrollmentSuccess={handlePaymentSuccess}
-        />
-      </div>
-    </>
+      {/* Payment Dialog */}
+      <PaymentDialog
+        visible={showPaymentDialog}
+        onHide={() => {
+          setShowPaymentDialog(false);
+          setSelectedCourse(null);
+        }}
+        course={selectedCourse}
+        onPaymentSuccess={handlePaymentSuccess}
+        onEnrollmentSuccess={handlePaymentSuccess}
+      />
+    </div>
   );
 }

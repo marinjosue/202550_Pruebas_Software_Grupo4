@@ -33,13 +33,12 @@ export const getMyProfile = async () => {
   try {
     const token = localStorage.getItem('token');
     if (!token) {
-      throw new Error('No hay token de autenticación. Por favor, inicia sesión.');
+      throw new Error('No hay token de autenticación');
     }
-    
-    const response = await api.get('/users/me');
+    const response = await api.get('/me');
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.message || 'Error al obtener el perfil');
+    throw new Error(error.response?.data?.error || 'Error al obtener el perfil');
   }
 };
 
