@@ -13,7 +13,7 @@ export const STATUS_OPTIONS = [
 ];
 
 export const INITIAL_FORM_DATA = {
-  name: '',
+  title: '',
   description: '',
   detailed_description: '',
   price: 0,

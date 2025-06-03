@@ -22,7 +22,7 @@ export default function CourseCreate() {
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    title: '',
     description: '',
     detailed_description: '',
     price: 0,
@@ -76,7 +76,7 @@ export default function CourseCreate() {
   };
 
   const validateForm = () => {
-    if (!formData.name.trim()) {
+    if (!formData.title.trim()) {
       toast.current?.show({
         severity: 'error',
         summary: 'Error de validación',

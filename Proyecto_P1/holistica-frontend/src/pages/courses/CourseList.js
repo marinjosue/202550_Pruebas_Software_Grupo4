@@ -87,7 +87,7 @@ export default function CourseList() {
     // Filtrar por término de búsqueda
     if (searchTerm) {
       filtered = filtered.filter(course =>
-        course.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         course.level?.toLowerCase().includes(searchTerm.toLowerCase())
       );
@@ -106,9 +106,9 @@ export default function CourseList() {
           case 'duration_desc':
             return (b.duration || 0) - (a.duration || 0);
           case 'name_asc':
-            return (a.name || '').localeCompare(b.name || '');
+            return (a.title || '').localeCompare(b.title || '');
           case 'name_desc':
-            return (b.name || '').localeCompare(a.name || '');
+            return (b.title || '').localeCompare(a.title || '');
           case 'recent':
           default:
             return new Date(b.created_at || 0) - new Date(a.created_at || 0);
@@ -143,7 +143,7 @@ export default function CourseList() {
 
     // Mostrar confirmación antes de proceder
     confirmDialog({
-      message: `¿Estás seguro de que deseas inscribirte en "${course.name}"?`,
+      message: `¿Estás seguro de que deseas inscribirte en "${course.title}"?`,
       header: 'Confirmar Inscripción',
       icon: 'pi pi-graduation-cap',
       acceptLabel: 'Sí, inscribirme',
@@ -250,7 +250,7 @@ export default function CourseList() {
         icon="pi pi-trash"
         onClick={() => {
           confirmDialog({
-            message: `¿Estás seguro de que deseas eliminar el curso "${course.name}"?`,
+            message: `¿Estás seguro de que deseas eliminar el curso "${course.title}"?`,
             header: 'Confirmar Eliminación',
             icon: 'pi pi-exclamation-triangle',
             acceptClassName: 'p-button-danger',
@@ -304,7 +304,7 @@ export default function CourseList() {
         <div className="course-image-container">
           <img 
             src={course.image_url || 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=250&fit=crop'}
-            alt={course.name}
+            alt={course.title}
             className="course-image"
             onError={(e) => {
               e.target.src = 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=250&fit=crop';
@@ -316,7 +316,7 @@ export default function CourseList() {
         
         <div className="course-content">
           <div className="course-header">
-            <h3 className="course-title">{course.name}</h3>
+            <h3 className="course-title">{course.title}</h3>
             <div className="course-price">
               {renderPriceDisplay(course)}
             </div>

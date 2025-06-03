@@ -24,7 +24,7 @@ export const courseValidationSchema = {
 export const validateCourseForm = (formData, toast) => {
   const validations = [
     {
-      condition: !formData.name?.trim(),
+      condition: !formData.title?.trim(),
       message: 'El nombre del curso es obligatorio'
     },
     {

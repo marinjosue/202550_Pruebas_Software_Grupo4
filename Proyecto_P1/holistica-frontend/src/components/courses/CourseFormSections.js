@@ -11,7 +11,7 @@ import { LEVEL_OPTIONS, STATUS_OPTIONS } from '../../constants/courseConstants';
 
 // Shared PropTypes definition
 const formDataPropType = PropTypes.shape({
-  name: PropTypes.string,
+  title: PropTypes.string,
   level: PropTypes.string,
   description: PropTypes.string,
   detailed_description: PropTypes.string,
@@ -49,9 +49,9 @@ const BasicInfoSection = ({ formData, handleInputChange }) => (
     <div className="form-grid">
       <FormField label="Nombre del Curso">
         <InputText
-          id="name"
-          value={formData.name}
-          onChange={(e) => handleInputChange('name', e.target.value)}
+          id="title"
+          value={formData.title}
+          onChange={(e) => handleInputChange('title', e.target.value)}
           placeholder="Ej: Masaje Terapéutico Avanzado"
         />
       </FormField>

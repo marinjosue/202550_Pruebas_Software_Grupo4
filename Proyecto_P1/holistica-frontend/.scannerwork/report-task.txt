@@ -2,5 +2,5 @@ projectKey=front_proyectoU1
 serverUrl=http://localhost:9000
 serverVersion=25.5.0.107428
 dashboardUrl=http://localhost:9000/dashboard?id=front_proyectoU1
-ceTaskId=21fc7da2-552d-4d14-afbe-9994609587ce
-ceTaskUrl=http://localhost:9000/api/ce/task?id=21fc7da2-552d-4d14-afbe-9994609587ce
+ceTaskId=46e32a25-0c9d-491c-b83c-9c5128a4372d
+ceTaskUrl=http://localhost:9000/api/ce/task?id=46e32a25-0c9d-491c-b83c-9c5128a4372d
