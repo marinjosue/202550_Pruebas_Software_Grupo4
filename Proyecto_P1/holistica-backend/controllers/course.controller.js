@@ -31,6 +31,17 @@ const createCourse = async (req, res) => {
             created_by: req.user.id
         };
 
+        // Validar que los campos requeridos estén presentes
+        const missingFields = [];
+        if (!courseData.title) missingFields.push('title');
+        if (!courseData.description) missingFields.push('description');
+        if (missingFields.length > 0) {
+            return res.status(400).json({
+                error: 'Faltan campos requeridos',
+                fields: missingFields
+            });
+        }
+
         const courseId = await CourseModel.create(courseData);
         res.status(201).json({
             message: 'Curso creado exitosamente',
