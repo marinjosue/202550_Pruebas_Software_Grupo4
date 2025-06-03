@@ -4,7 +4,7 @@ const UserModel = require('../models/user.model');
 
 const register = async (req, res) => {
     try {
-        const { name, lastname, email, phone, dni, address, password, role_id = 2 } = req.body;
+        const { name, lastname, email, phone, dni, address, password, roleId = 2 } = req.body;
 
         // Check if user already exists
         const existingUser = await UserModel.findByEmail(email);
@@ -13,11 +13,11 @@ const register = async (req, res) => {
         }
 
         // Hash password
-        const password_hash = await bcrypt.hash(password, 10);
+        const passwordHash = await bcrypt.hash(password, 10);
 
         // Create user
         const userId = await UserModel.create({
-            name, lastname, email, phone, dni, address, password_hash, role_id
+            name, lastname, email, phone, dni, address, passwordHash, roleId
         });
 
         res.status(201).json({

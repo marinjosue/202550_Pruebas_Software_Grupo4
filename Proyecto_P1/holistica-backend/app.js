@@ -54,7 +54,7 @@ app.get('/health/db', async (req, res) => {
       status: 'OK',
       database: 'connected',
       timestamp: new Date().toISOString(),
-      test_query: rows[0]
+      testQuery: rows[0]
     });
   } catch (error) {
     logger.error('Database health check failed', { error: error.message });

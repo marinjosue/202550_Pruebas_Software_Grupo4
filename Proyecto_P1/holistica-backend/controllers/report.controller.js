@@ -1,4 +1,3 @@
-const ReportModel = require('../models/report.model');
 const pool = require('../config/db');
 
 const generateCourseReports = async (req, res) => {

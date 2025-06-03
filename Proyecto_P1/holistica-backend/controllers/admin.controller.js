@@ -3,16 +3,16 @@ const CourseModel = require('../models/course.model');
 
 const uploadContent = async (req, res) => {
     try {
-        const { course_id, title, type, url } = req.body;
+        const { courseId, title, type, url } = req.body;
 
         // Verify course exists
-        const course = await CourseModel.findById(course_id);
+        const course = await CourseModel.findById(courseId);
         if (!course) {
             return res.status(404).json({ error: 'Curso no encontrado' });
         }
 
         const contentId = await MultimediaModel.upload({
-            course_id,
+            courseId,
             title,
             type,
             url

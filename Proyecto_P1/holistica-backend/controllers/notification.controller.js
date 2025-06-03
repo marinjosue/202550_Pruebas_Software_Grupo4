@@ -2,9 +2,9 @@ const NotificationModel = require('../models/notification.model');
 
 const sendNotification = async (req, res) => {
     try {
-        const { user_id, message } = req.body;
+        const { userId, message } = req.body;
 
-        const notificationId = await NotificationModel.send(user_id, message);
+        const notificationId = await NotificationModel.send(userId, message);
         res.status(201).json({
             message: 'Notificación enviada',
             notificationId
@@ -16,8 +16,8 @@ const sendNotification = async (req, res) => {
 
 const getUnreadNotifications = async (req, res) => {
     try {
-        const user_id = req.user.id;
-        const notifications = await NotificationModel.findUnread(user_id);
+        const userId = req.user.id;
+        const notifications = await NotificationModel.findUnread(userId);
         res.json(notifications);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener notificaciones', details: error.message });

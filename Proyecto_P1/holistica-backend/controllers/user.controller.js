@@ -11,7 +11,7 @@ const getProfile = async (req, res) => {
     }
     
     // Remove password from response
-    const { password_hash, ...userProfile } = user;
+    const { passwordHash, ...userProfile } = user;
     res.json(userProfile);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener perfil', details: error.message });
@@ -29,7 +29,7 @@ const updateProfile = async (req, res) => {
     }
     
     // Remove sensitive fields that shouldn't be updated via this endpoint
-    const { password, password_hash, role_id, id, created_at, ...allowedUpdates } = updateData;
+    const { password, passwordHash, role_id, id, created_at, ...allowedUpdates } = updateData;
     
     if (Object.keys(allowedUpdates).length === 0) {
       return res.status(400).json({ error: 'No se proporcionaron campos válidos para actualizar' });
@@ -47,7 +47,7 @@ const getAllUsers = async (req, res) => {
     const users = await UserModel.findAll();
     // Remove passwords from response
     const safeUsers = users.map(user => {
-      const { password_hash, ...safeUser } = user;
+      const { passwordHash, ...safeUser } = user;
       return safeUser;
     });
     res.json(safeUsers);
@@ -72,11 +72,11 @@ const createUser = async (req, res) => {
     }
     
     // Hash password
-    const password_hash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password, 10);
     
     // Create user
     const userId = await UserModel.create({
-      name, lastname, email, phone, dni, address, password_hash, role_id
+      name, lastname, email, phone, dni, address, passwordHash, role_id
     });
     
     res.status(201).json({ 
