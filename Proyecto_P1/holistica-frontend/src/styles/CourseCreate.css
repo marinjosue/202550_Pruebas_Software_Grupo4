@@ -1,35 +1,270 @@
+/* === VARIABLES CSS === */
+:root {
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --border-radius: 8px;
+  --transition: all 0.3s ease;
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --color-primary: #007ad9;
+  --color-secondary: #6c757d;
+  --color-background: #f8f9fa;
+  --color-border: #dee2e6;
+}
+
+/* === LAYOUT PRINCIPAL === */
 .course-form-container {
-  padding: 2rem;
+  padding: var(--spacing-lg);
   max-width: 1200px;
   margin: 0 auto;
+  background-color: var(--color-background);
+  min-height: 100vh;
 }
 
+/* === HEADER === */
 .form-header {
-  margin-bottom: 2rem;
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: var(--spacing-md);
 }
 
+.form-header h1 {
+  color: var(--color-primary);
+  font-size: 2rem;
+  font-weight: 600;
+  margin: var(--spacing-sm) 0 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.form-header .p-button-text {
+  color: var(--color-secondary);
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.form-header .p-button-text:hover {
+  color: var(--color-primary);
+  transform: translateX(-4px);
+}
+
+/* === GRID Y CARDS === */
 .form-grid {
   display: grid;
-  gap: 2rem;
+  gap: var(--spacing-lg);
 }
 
 .form-card {
-  margin-bottom: 1rem;
+  margin-bottom: 0;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-light);
+  transition: var(--transition);
 }
 
+.form-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.form-card .p-card-title {
+  color: var(--color-primary);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+/* === FILAS Y CAMPOS === */
 .form-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
 }
 
 .form-field {
-  margin-bottom: 1rem;
+  margin-bottom: var(--spacing-md);
 }
 
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--color-secondary);
+  font-size: 0.9rem;
+}
+
+.form-field label::after {
+  content: " *";
+  color: #e74c3c;
+  display: none;
+}
+
+.form-field:has(input[required]) label::after,
+.form-field:has(textarea[required]) label::after {
+  display: inline;
+}
+
+/* === CAMPOS ESPECIALES === */
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.checkbox-field label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.course-image-upload {
+  width: 100%;
+}
+
+.course-image-upload .p-fileupload-choose {
+  width: 100%;
+  justify-content: center;
+}
+
+/* === COMPONENTES PRIMEREACT === */
+.p-inputtext,
+.p-inputtextarea,
+.p-inputnumber-input,
+.p-calendar input,
+.p-dropdown {
+  width: 100%;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--color-border);
+  transition: var(--transition);
+}
+
+.p-inputtext:focus,
+.p-inputtextarea:focus,
+.p-inputnumber-input:focus,
+.p-calendar input:focus,
+.p-dropdown:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(0, 122, 217, 0.1);
+}
+
+.p-inputtextarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* === ACCIONES === */
 .form-actions {
   display: flex;
   justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 2rem;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+}
+
+.form-actions .p-button {
+  min-width: 120px;
+  border-radius: var(--border-radius);
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.form-actions .p-button:not(.p-button-outlined) {
+  background: linear-gradient(135deg, var(--color-primary), #0056b3);
+}
+
+.form-actions .p-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .course-form-container {
+    padding: var(--spacing-sm);
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-sm);
+  }
+  
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+  
+  .form-actions .p-button {
+    width: 100%;
+  }
+  
+  .form-header h1 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --spacing-sm: 0.75rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+  }
+  
+  .checkbox-field {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
+
+/* === ANIMACIONES === */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-card:nth-child(n) {
+  animation-delay: calc(0.1s * var(--index, 0));
+}
+
+/* === ESTADOS DE LOADING === */
+.p-button.p-button-loading .p-button-icon {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* === MEJORAS DE ACCESIBILIDAD === */
+.form-field:focus-within label {
+  color: var(--color-primary);
+}
+
+.p-button:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* === UTILIDADES === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

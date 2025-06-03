@@ -88,9 +88,44 @@ const createUser = async (req, res) => {
   }
 };
 
+
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    // Validate user ID
+    if (!id || isNaN(id)) {
+      return res.status(400).json({ error: 'ID de usuario inválido' });
+    }
+    
+    // Check if user exists
+    const existingUser = await UserModel.findById(id);
+    if (!existingUser) {
+      return res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+    
+    // Prevent deletion of current user (optional security check)
+    if (req.user && req.user.id == id) {
+      return res.status(403).json({ error: 'No puedes eliminar tu propia cuenta' });
+    }
+    
+    // Delete user
+    await UserModel.delete(id);
+    
+    res.json({ 
+      message: 'Usuario eliminado exitosamente',
+      deletedUserId: id 
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar usuario', details: error.message });
+  }
+};
+
 module.exports = {
   getProfile,
   updateProfile,
   getAllUsers,
-  createUser
+  createUser,
+  deleteUser
 };

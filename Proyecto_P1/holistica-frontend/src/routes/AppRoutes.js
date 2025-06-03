@@ -106,7 +106,14 @@ export default function AppRoutes() {
           </PublicLayout>
         } 
       />
-      
+      <Route Add commentMore actions
+            path="/admin/courses" 
+            element={
+              <ProtectedRoute requireAdmin>
+                <CourseCreate />
+              </ProtectedRoute>
+            } 
+          />
       {/* Ruta 404 */}
       <Route path="*" element={
         <PublicLayout>

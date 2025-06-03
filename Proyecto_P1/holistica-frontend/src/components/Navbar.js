@@ -33,11 +33,6 @@ export default function Navbar() {
       icon: 'pi pi-graduation-cap',
       command: () => navigate('/my-enrollments')
     },
-    {
-      label: 'Configuración',
-      icon: 'pi pi-cog',
-      command: () => navigate('/settings')
-    },
     { separator: true },
     {
       label: 'Cerrar Sesión',
@@ -49,11 +44,6 @@ export default function Navbar() {
 
   const adminMenuItems = [
  
-    {
-      label: 'Gestionar Cursos',
-      icon: 'pi pi-book',
-      command: () => navigate('/admin/courses')
-    },
     {
       label: 'Usuarios',
       icon: 'pi pi-users',

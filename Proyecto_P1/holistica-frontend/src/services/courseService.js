@@ -6,16 +6,12 @@ class CourseService extends ApiClient {
   }
 
   async getAllCourses(params = {}) {
-    console.log('Fetching all courses...');
     const data = await this.getAll(params);
-    console.log('Courses fetched successfully:', data);
     return data;
   }
 
   async getCourseById(id) {
-    console.log('Fetching course by ID:', id);
     const data = await this.getById(id);
-    console.log('Course fetched successfully:', data);
     return data;
   }
 

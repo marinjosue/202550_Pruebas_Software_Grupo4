@@ -21,50 +21,66 @@ export default function Login() {
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    
-    if (!email || !password) {
+  e.preventDefault();
+  
+  if (!email || !password) {
+    if (toast.current) {
       toast.current.show({ 
         severity: 'error', 
         summary: 'Error', 
         detail: 'Por favor completa todos los campos', 
         life: 3000 
       });
-      return;
     }
+    return;
+  }
 
-    setLoading(true);
-    try {
-      await login({ email, password });
+  setLoading(true);
+  try {
+    await login({ email, password });
+    if (toast.current) {
       toast.current.show({ 
         severity: 'success', 
         summary: 'Bienvenido', 
         detail: 'Sesión iniciada correctamente', 
         life: 2000 
       });
-      setTimeout(() => navigate('/profile'), 2000);
-    } catch (error) {
-      console.error('Login error:', error);
-      let errorMessage;
-      
-      if (error.message.includes('servidor')) {
-        errorMessage = 'No se puede conectar al servidor. Verifica tu conexión.';
-      } else if (error.message.includes('Credenciales')) {
-        errorMessage = 'Email o contraseña incorrectos';
-      } else {
-        errorMessage = error.message || 'Error desconocido';
-      }
-      
+    }
+    // Simular validación de datos (2-3 segundos)
+    await new Promise(resolve => setTimeout(resolve, 2500));
+     // Mostrar mensaje de validación completa
+    if (toast.current) {
+      toast.current.show({ 
+        severity: 'success', 
+        summary: 'Bienvenido', 
+        detail: 'Datos validados correctamente. Redirigiendo...', 
+        life: 1500 
+      });
+    }
+    setTimeout(() => navigate('/profile'), 2000);
+  } catch (error) {
+    let errorMessage;
+    
+    if (error.message.includes('servidor')) {
+      errorMessage = 'No se puede conectar al servidor. Verifica tu conexión.';
+    } else if (error.message.includes('Credenciales')) {
+      errorMessage = 'Email o contraseña incorrectos';
+    } else {
+      errorMessage = error.message || 'Error desconocido';
+    }
+    
+    if (toast.current) {
       toast.current.show({ 
         severity: 'error', 
         summary: 'Error de Autenticación', 
         detail: errorMessage, 
         life: 4000 
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={`login-container ${loading ? 'login-loading' : ''}`}>

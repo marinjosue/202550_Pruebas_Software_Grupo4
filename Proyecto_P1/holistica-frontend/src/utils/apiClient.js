@@ -21,19 +21,16 @@ class ApiClient {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-      console.log(`${this.constructor.name} API Request:`, config.method?.toUpperCase(), config.url, config.data);
       return config;
     });
 
     // Response interceptor
     this.api.interceptors.response.use(
       (response) => {
-        console.log(`${this.constructor.name} API Response:`, response.status, response.config.url, response.data);
         return response;
       },
       (error) => {
-        console.error(`${this.constructor.name} API Error:`, error.response?.status, error.response?.config?.url, error.response?.data);
-        this.handleAuthError(error);
+         this.handleAuthError(error);
         return Promise.reject(error);
       }
     );

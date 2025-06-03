@@ -35,7 +35,7 @@ export const getMyProfile = async () => {
     if (!token) {
       throw new Error('No hay token de autenticación');
     }
-    const response = await api.get('/me');
+    const response = await api.get('/users/me');
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.error || 'Error al obtener el perfil');
