@@ -139,8 +139,8 @@ export default function Register() {
           <div className="register-grid">
             <div className="register-field">
               <label htmlFor="name">
-                <i className="pi pi-user mr-2 text-primary"></i>
-                Nombre <span className="required">*</span>
+                <i className="pi pi-user"></i>
+                {' '}Nombre <span className="required">*</span>
               </label>
               <InputText 
                 id="name" 
@@ -153,8 +153,8 @@ export default function Register() {
 
             <div className="register-field">
               <label htmlFor="lastname">
-                <i className="pi pi-user mr-2 text-primary"></i>
-                Apellido <span className="required">*</span>
+                <i className="pi pi-user"></i>
+                {' '}Apellido <span className="required">*</span>
               </label>
               <InputText 
                 id="lastname" 
@@ -167,8 +167,8 @@ export default function Register() {
 
             <div className="register-field full-width">
               <label htmlFor="email">
-                <i className="pi pi-envelope mr-2 text-primary"></i>
-                Correo Electrónico <span className="required">*</span>
+                <i className="pi pi-envelope"></i>
+                {' '}Correo Electrónico <span className="required">*</span>
               </label>
               <InputText 
                 id="email" 
@@ -182,8 +182,8 @@ export default function Register() {
 
             <div className="register-field">
               <label htmlFor="phone">
-                <i className="pi pi-phone mr-2 text-primary"></i>
-                Teléfono
+                <i className="pi pi-phone"></i>
+                {' '}Teléfono
               </label>
               <InputText 
                 id="phone" 
@@ -195,8 +195,8 @@ export default function Register() {
 
             <div className="register-field">
               <label htmlFor="dni">
-                <i className="pi pi-id-card mr-2 text-primary"></i>
-                Cédula/DNI
+                <i className="pi pi-id-card"></i>
+                {' '}Cédula/DNI
               </label>
               <InputText 
                 id="dni" 
@@ -208,8 +208,8 @@ export default function Register() {
 
             <div className="register-field full-width">
               <label htmlFor="address">
-                <i className="pi pi-map-marker mr-2 text-primary"></i>
-                Dirección
+                <i className="pi pi-map-marker"></i>
+                {' '}Dirección
               </label>
               <InputText 
                 id="address" 
@@ -221,8 +221,8 @@ export default function Register() {
 
             <div className="register-field">
               <label htmlFor="password">
-                <i className="pi pi-lock mr-2 text-primary"></i>
-                Contraseña <span className="required">*</span>
+                <i className="pi pi-lock"></i>
+                {' '}Contraseña <span className="required">*</span>
               </label>
               <Password 
                 id="password" 
@@ -236,8 +236,8 @@ export default function Register() {
 
             <div className="register-field">
               <label htmlFor="confirmPassword">
-                <i className="pi pi-lock mr-2 text-primary"></i>
-                Confirmar Contraseña <span className="required">*</span>
+                <i className="pi pi-lock"></i>
+                {' '}Confirmar Contraseña <span className="required">*</span>
               </label>
               <Password 
                 id="confirmPassword" 

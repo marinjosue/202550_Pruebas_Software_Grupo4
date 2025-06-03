@@ -1,5 +1,6 @@
 import React from 'react';
-import '../styles/courseCards.css'; // Opcional, para estilos
+import PropTypes from 'prop-types';
+import '../styles/courseCards.css'; 
 
 const CourseCard = ({ course, onEnroll, onInfo }) => {
     return (
@@ -14,6 +15,20 @@ const CourseCard = ({ course, onEnroll, onInfo }) => {
             <button onClick={() => onInfo(course.id)}>Información</button>
         </div>
     );
+};
+
+CourseCard.propTypes = {
+    course: PropTypes.shape({
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+        name: PropTypes.string.isRequired,
+        start_date: PropTypes.string,
+        end_date: PropTypes.string,
+        duration: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+        description: PropTypes.string,
+        price: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+    }).isRequired,
+    onEnroll: PropTypes.func.isRequired,
+    onInfo: PropTypes.func.isRequired
 };
 
 export default CourseCard;

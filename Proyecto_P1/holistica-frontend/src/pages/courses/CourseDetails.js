@@ -14,8 +14,6 @@ import { useAuth } from '../../hooks/useAuth';
 import courseService from '../../services/courseService';
 import contentService from '../../services/contentService';
 import enrollmentService from '../../services/enrollmentService';
-import PaymentDialog from '../../components/PaymentDialog';
-import { ConfirmDialog, confirmDialog } from 'primereact/confirmdialog';
 import '../../styles/CourseDetails.css';
 
 export default function CourseDetails() {
@@ -42,30 +40,26 @@ export default function CourseDetails() {
         console.log('Loading course details for ID:', id);
         setLoading(true);
         
-        // Cargar curso principal
         const courseData = await courseService.getCourseById(id);
         console.log('Course data loaded:', courseData);
         setCourse(courseData);
         
-        // Cargar contenido (opcional, no bloquea si falla)
         try {
           const contentData = await contentService.getContentByCourse(id);
           setContent(Array.isArray(contentData) ? contentData : []);
         } catch (contentError) {
-          console.warn('Content loading failed, continuing without content:', contentError);
+          console.warn('Content loading failed:', contentError.message);
           setContent([]);
         }
         
       } catch (error) {
-        console.error('Error loading course:', error);
+        console.error('Error loading course:', error.message);
         toast.current?.show({
           severity: 'error',
           summary: 'Error',
           detail: error.message || 'Error al cargar el curso',
           life: 5000
         });
-        
-        // Dar tiempo para mostrar el error antes de redirigir
         setTimeout(() => navigate('/courses'), 3000);
       } finally {
         setLoading(false);
@@ -141,6 +135,7 @@ export default function CourseDetails() {
         day: 'numeric'
       });
     } catch (error) {
+      console.error('Error formatting date:', error);
       return 'Fecha inválida';
     }
   };
@@ -296,7 +291,7 @@ export default function CourseDetails() {
                   <h4>Objetivos del curso</h4>
                   <ul>
                     {course.objectives.split('\n').map((objective, index) => (
-                      <li key={index}>{objective}</li>
+                      <li key={`objective-${index}-${objective.substring(0, 10)}`}>{objective}</li>
                     ))}
                   </ul>
                 </div>
@@ -307,7 +302,7 @@ export default function CourseDetails() {
                   <h4>Requisitos</h4>
                   <ul>
                     {course.requirements.split('\n').map((requirement, index) => (
-                      <li key={index}>{requirement}</li>
+                      <li key={`requirement-${index}-${requirement.substring(0, 10)}`}>{requirement}</li>
                     ))}
                   </ul>
                 </div>
@@ -378,7 +373,7 @@ export default function CourseDetails() {
                   <span className="rating-number">4.8</span>
                   <div className="rating-stars">
                     {[1, 2, 3, 4, 5].map((star) => (
-                      <i key={star} className="pi pi-star-fill"></i>
+                      <i key={`rating-star-${star}`} className="pi pi-star-fill"></i>
                     ))}
                   </div>
                   <span className="rating-count">(24 reseñas)</span>

@@ -203,11 +203,11 @@ const CourseReports = () => {
       <Card className="table-card">
         <DataTable
           value={reports}
-          className="reports-table"
-          emptyMessage="No hay datos de reportes disponibles"
           paginator
           rows={10}
-          responsiveLayout="scroll"
+          responsive
+          className="course-reports-table"
+          emptyMessage="No hay datos disponibles"
         >
           <Column 
             field="courseName" 

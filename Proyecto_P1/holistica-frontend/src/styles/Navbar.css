@@ -27,6 +27,7 @@
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
+  animation: fadeIn 0.5s ease-out;
 }
 
 /* Estilos del menubar personalizado */
@@ -450,10 +451,6 @@
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.navbar-container {
-  animation: fadeIn 0.5s ease-out;
 }
 
 /* Efectos de hover adicionales */

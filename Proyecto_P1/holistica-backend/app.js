@@ -14,7 +14,6 @@ const userRoutes = require('./routes/user.routes');
 const courseRoutes = require('./routes/course.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const enrollmentRoutes = require('./routes/enrollment.routes');
-const notificationRoutes = require('./routes/notification.routes');
 const reportRoutes = require('./routes/report.routes');
 const adminRoutes = require('./routes/admin.routes');
 const scheduleRoutes = require('./routes/schedule.routes');
@@ -74,7 +73,6 @@ app.use('/api/users', userRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/enrollments', enrollmentRoutes);
-app.use('/api/notifications', notificationRoutes);
 app.use('/api/reports', reportRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/schedules', scheduleRoutes);
@@ -92,7 +90,6 @@ app.get('/', (req, res) => {
       courses: '/api/courses',
       payments: '/api/payments',
       enrollments: '/api/enrollments',
-      notifications: '/api/notifications',
       reports: '/api/reports',
       admin: '/api/admin',
       schedules: '/api/schedules'

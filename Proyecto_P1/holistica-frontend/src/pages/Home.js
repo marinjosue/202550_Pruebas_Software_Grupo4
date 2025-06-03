@@ -278,7 +278,7 @@ export default function Home() {
               <TabPanel header="Incluye" leftIcon="pi pi-check-circle">
                 <div className="includes-grid">
                   {includes.map((item, index) => (
-                    <div key={index} className={`include-item ${item.highlight ? 'highlight' : ''}`}>
+                    <div key={`include-${index}-${item.text.substring(0, 10).replace(/\s+/g, '')}`} className={`include-item ${item.highlight ? 'highlight' : ''}`}>
                       <i className={`${item.icon} include-icon`}></i>
                       <span>{item.text}</span>
                     </div>
@@ -289,7 +289,7 @@ export default function Home() {
               <TabPanel header="Características" leftIcon="pi pi-star">
                 <div className="features-container">
                   {course.features.map((feature, index) => (
-                    <Chip key={index} label={feature} className="feature-chip" />
+                    <Chip key={`feature-${course.id}-${index}-${feature.substring(0, 5).replace(/\s+/g, '')}`} label={feature} className="feature-chip" />
                   ))}
                 </div>
               </TabPanel>
@@ -354,7 +354,7 @@ export default function Home() {
               label="CONTACTO VÍA WHATSAPP" 
               icon="pi pi-whatsapp" 
               className="whatsapp-button"
-              onClick={() => window.open('https://chat.whatsapp.com/DKUeRaOpLTeEWAmE8gpvhI', '_blank')}
+              onClick={() => window.open('https://chat.whatsapp.com/DKUeRaOpLTeEWAmE8gpvhI', '_blank', 'noopener')}
             />
             <Button 
               label="VER PROGRAMAS" 
@@ -381,7 +381,7 @@ export default function Home() {
                 />
                 <h2 className="section-title">
                   <i className="pi pi-graduation-cap"></i>
-                  Modalidades de Estudio
+                  {' '}Modalidades de Estudio
                 </h2>
               </div>
               
@@ -398,7 +398,7 @@ export default function Home() {
               header={
                 <div className="panel-header">
                   <i className="pi pi-target"></i>
-                  OBJETIVO DEL CURSO
+                  {' '}OBJETIVO DEL CURSO
                 </div>
               } 
               className="info-panel"
@@ -417,7 +417,7 @@ export default function Home() {
               header={
                 <div className="panel-header">
                   <i className="pi pi-book"></i>
-                  PROGRAMA ACADÉMICO
+                  {' '}PROGRAMA ACADÉMICO
                 </div>
               } 
               className="info-panel"
@@ -430,7 +430,7 @@ export default function Home() {
                   header={
                     <div className="accordion-header">
                       <i className="pi pi-bookmark"></i>
-                      <span>Programa Completo</span>
+                      {' '}<span>Programa Completo</span>
                     </div>
                   }
                 >
@@ -478,7 +478,7 @@ export default function Home() {
               header={
                 <div className="panel-header">
                   <i className="pi pi-verified"></i>
-                  CERTIFICACIÓN
+                  {' '}CERTIFICACIÓN
                 </div>
               } 
               className="info-panel"
@@ -506,7 +506,7 @@ export default function Home() {
               header={
                 <div className="panel-header">
                   <i className="pi pi-comments"></i>
-                  TESTIMONIOS
+                      {' '}TESTIMONIOS
                 </div>
               } 
               className="info-panel"
@@ -514,7 +514,7 @@ export default function Home() {
             >
               <div className="testimonials-container">
                 {testimonials.map((testimonial, index) => (
-                  <div key={index} className="testimonial-card">
+                  <div key={`testimonial-${testimonial.name.replace(/\s+/g, '')}-${index}`} className="testimonial-card">
                     <div className="testimonial-header">
                       <Avatar image={testimonial.avatar} size="large" />
                       <div className="testimonial-info">

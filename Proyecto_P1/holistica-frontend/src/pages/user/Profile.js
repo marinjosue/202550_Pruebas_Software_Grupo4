@@ -61,8 +61,7 @@ const Profile = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -144,68 +143,62 @@ const Profile = () => {
           <div className="profile-form">
             <div className="form-grid">
               <div className="form-field">
-                <label>Nombre</label>
+                <label htmlFor="profile-name">Nombre</label>
                 <InputText
-                  name="name"
+                  id="profile-name"
                   value={formData.name || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('name', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
-
+              
               <div className="form-field">
-                <label>Apellido</label>
+                <label htmlFor="profile-lastname">Apellido</label>
                 <InputText
-                  name="lastname"
+                  id="profile-lastname"
                   value={formData.lastname || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('lastname', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
-
+              
               <div className="form-field">
-                <label>Email</label>
+                <label htmlFor="profile-email">Email</label>
                 <InputText
-                  name="email"
+                  id="profile-email"
                   value={formData.email || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('email', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
-
+              
               <div className="form-field">
-                <label>Teléfono</label>
+                <label htmlFor="profile-phone">Teléfono</label>
                 <InputText
-                  name="phone"
+                  id="profile-phone"
                   value={formData.phone || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('phone', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
-
+              
               <div className="form-field">
-                <label>DNI</label>
+                <label htmlFor="profile-dni">DNI</label>
                 <InputText
-                  name="dni"
+                  id="profile-dni"
                   value={formData.dni || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('dni', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
-
-              <div className="form-field full-width">
-                <label>Dirección</label>
+              
+              <div className="form-field">
+                <label htmlFor="profile-address">Dirección</label>
                 <InputText
-                  name="address"
+                  id="profile-address"
                   value={formData.address || ''}
-                  onChange={handleInputChange}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
                   disabled={!editMode}
-                  className={!editMode ? 'readonly' : ''}
                 />
               </div>
             </div>

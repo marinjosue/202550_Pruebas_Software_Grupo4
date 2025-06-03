@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { loginRequest, registerRequest, logoutRequest, verifyTokenRequest } from '../services/authService';
 
 const AuthContext = createContext();
@@ -69,9 +70,7 @@ export const AuthProvider = ({ children }) => {
         dispatch({ type: 'SET_USER', payload: null });
       }
     } catch (error) {
-      // Si el token es inválido, limpiarlo
-      localStorage.removeItem('token');
-      localStorage.removeItem('user');
+      console.log(`Exception while doing something: ${error}`);
       dispatch({ type: 'SET_USER', payload: null });
     }
   };
@@ -83,15 +82,25 @@ export const AuthProvider = ({ children }) => {
       
       const response = await loginRequest(credentials);
       
-      if (response.token && response.user) {
+      if (!response) {
+        throw new Error('No se recibió respuesta del servidor');
+      }
+      
+      if (response?.token && response?.user) {
         // Guardar token en localStorage
         localStorage.setItem('token', response.token);
         localStorage.setItem('user', JSON.stringify(response.user));
         dispatch({ type: 'SET_USER', payload: response.user });
         return response;
-      }
+      } 
       
-      throw new Error('Credenciales inválidas');
+      let errorMsg = 'Credenciales inválidas';
+      if (!response.token) {
+        errorMsg = 'Token no recibido';
+      } else if (!response.user) {
+        errorMsg = 'Información de usuario no recibida';
+      }
+      throw new Error(errorMsg);
     } catch (error) {
       dispatch({ type: 'SET_ERROR', payload: error.message });
       throw error;
@@ -123,9 +132,13 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       await logoutRequest();
+      dispatch({ type: 'LOGOUT' });
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      sessionStorage.clear();
     } catch (error) {
-      console.error('Error durante logout:', error);
-    } finally {
+      console.error('Logout error:', error.message);
+      // Still clear local state even if server logout fails
       dispatch({ type: 'LOGOUT' });
       localStorage.removeItem('token');
       localStorage.removeItem('user');
@@ -137,20 +150,24 @@ export const AuthProvider = ({ children }) => {
     dispatch({ type: 'CLEAR_ERROR' });
   };
 
-  const value = {
+  const value = useMemo(() => ({
     ...state,
     login,
     register,
     logout,
     clearError,
     checkAuth
-  };
+  }), [state]);
 
   return (
     <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired
 };
 
 export const useAuthContext = () => {

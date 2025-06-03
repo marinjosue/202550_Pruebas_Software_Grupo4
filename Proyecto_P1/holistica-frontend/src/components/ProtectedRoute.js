@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { ProgressSpinner } from 'primereact/progressspinner';
@@ -50,6 +51,15 @@ const ProtectedRoute = ({ children, requireAdmin = false }) => {
   }
 
   return children;
+};
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.node.isRequired,
+  requireAdmin: PropTypes.bool
+};
+
+ProtectedRoute.defaultProps = {
+  requireAdmin: false
 };
 
 export default ProtectedRoute;

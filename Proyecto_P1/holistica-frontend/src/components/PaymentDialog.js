@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
 import { Dialog } from 'primereact/dialog';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
@@ -168,8 +169,9 @@ const PaymentDialog = ({
           <h4>Detalles del Pago</h4>
           
           <div className="form-field">
-            <label>Método de Pago</label>
+            <label htmlFor="payment-method">Método de Pago</label>
             <Dropdown
+              id="payment-method"
               value={selectedMethod}
               options={paymentMethods}
               onChange={(e) => setSelectedMethod(e.value)}
@@ -179,8 +181,9 @@ const PaymentDialog = ({
           </div>
 
           <div className="form-field">
-            <label>Monto</label>
+            <label htmlFor="payment-amount">Monto</label>
             <InputNumber
+              id="payment-amount"
               value={amount}
               onValueChange={(e) => setAmount(e.value)}
               mode="currency"
@@ -337,6 +340,29 @@ const PaymentDialog = ({
       </Dialog>
     </>
   );
+};
+
+PaymentDialog.propTypes = {
+  visible: PropTypes.bool.isRequired,
+  onHide: PropTypes.func.isRequired,
+  course: PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    name: PropTypes.string,
+    description: PropTypes.string,
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    original_price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    duration: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    level: PropTypes.string,
+    image_url: PropTypes.string
+  }),
+  onPaymentSuccess: PropTypes.func,
+  onEnrollmentSuccess: PropTypes.func
+};
+
+PaymentDialog.defaultProps = {
+  course: null,
+  onPaymentSuccess: () => {},
+  onEnrollmentSuccess: () => {}
 };
 
 export default PaymentDialog;

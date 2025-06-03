@@ -1,70 +1,187 @@
-# Getting Started with Create React App
+# Holística Center - Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Una plataforma web moderna para cursos de cosmetología y medicina alternativa, especializada en masajes terapéuticos y bienestar integral.
 
-## Available Scripts
+## 🌟 Características
 
-In the project directory, you can run:
+- **Gestión de Cursos**: Explorar, inscribirse y gestionar cursos especializados
+- **Modalidades de Estudio**: Presencial, semipresencial y online
+- **Autenticación Segura**: Sistema de login/registro con roles de usuario
+- **Panel de Administración**: Gestión completa de cursos y usuarios
+- **Pagos Integrados**: Sistema de pagos para inscripciones
+- **Interfaz Moderna**: Diseño responsive con PrimeReact
+
+## 🚀 Tecnologías Utilizadas
+
+- **React 18** - Framework principal
+- **React Router v6** - Navegación y enrutamiento
+- **PrimeReact** - Componentes UI y tema
+- **PrimeIcons** - Iconografía
+- **Context API** - Gestión de estado global
+- **Axios** - Cliente HTTP para API calls
+
+## 📋 Prerequisitos
+
+- Node.js (versión 16 o superior)
+- npm o yarn
+- Backend API ejecutándose en puerto 3000
+
+## 🔧 Instalación
+
+1. **Clonar el repositorio**
+   ```bash
+   git clone [URL_DEL_REPOSITORIO]
+   cd holistica-frontend
+   ```
+
+2. **Instalar dependencias**
+   ```bash
+   npm install
+   ```
+
+3. **Configurar variables de entorno**
+   ```bash
+   # Crear archivo .env en la raíz del proyecto
+   REACT_APP_API_URL=http://localhost:3000/api
+   REACT_APP_ENVIRONMENT=development
+   ```
+
+4. **Iniciar la aplicación**
+   ```bash
+   npm start
+   ```
+
+La aplicación estará disponible en [http://localhost:3001](http://localhost:3001)
+
+## 📁 Estructura del Proyecto
+
+```
+src/
+├── components/          # Componentes reutilizables
+│   ├── common/         # Componentes comunes
+│   ├── courses/        # Componentes específicos de cursos
+│   └── layout/         # Componentes de layout
+├── context/            # Context providers (Auth, Cart)
+├── hooks/              # Custom hooks
+├── layouts/            # Layouts principales
+├── pages/              # Páginas de la aplicación
+│   ├── auth/          # Páginas de autenticación
+│   ├── courses/       # Páginas de cursos
+│   ├── user/          # Páginas de usuario
+│   └── admin/         # Páginas de administración
+├── services/           # Servicios API
+├── styles/            # Archivos CSS
+├── utils/             # Utilidades y helpers
+└── routes/            # Configuración de rutas
+```
+
+## 🎯 Funcionalidades Principales
+
+### Para Estudiantes
+- ✅ Explorar catálogo de cursos
+- ✅ Ver detalles completos de cada curso
+- ✅ Sistema de inscripciones con pagos
+- ✅ Seguimiento de progreso académico
+- ✅ Gestión de perfil personal
+
+### Para Administradores
+- ✅ Crear y editar cursos
+- ✅ Gestionar usuarios y roles
+- ✅ Ver reportes y estadísticas
+- ✅ Moderar contenido
+
+### Modalidades de Cursos
+- 🏢 **Presencial**: 7 meses, 28 clases, interacción directa
+- 🏢💻 **Semipresencial**: 5 meses, 20 clases, modalidad híbrida
+- 💻 **Online**: 3 meses, 12 clases, totalmente virtual
+
+## 🔐 Autenticación y Roles
+
+- **Estudiante**: Acceso a cursos y perfil personal
+- **Administrador**: Acceso completo al sistema
+
+## 📱 Responsive Design
+
+La aplicación está optimizada para:
+- 📱 Dispositivos móviles (320px+)
+- 📱 Tablets (768px+)
+- 💻 Desktop (1024px+)
+
+## 🎨 Temas y Estilos
+
+- Tema principal: Lara Light Cyan (PrimeReact)
+- Paleta de colores enfocada en bienestar y salud
+- Componentes customizados para la marca
+
+## 🔗 Scripts Disponibles
 
 ### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Ejecuta la aplicación en modo desarrollo.\
+Abre [http://localhost:3001](http://localhost:3001) en tu navegador.
 
 ### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Ejecuta los tests en modo interactivo.
 
 ### `npm run build`
+Construye la aplicación para producción en la carpeta `build`.\
+Optimiza el build para el mejor rendimiento.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### `npm run lint`
+Ejecuta ESLint para revisar el código.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### `npm run lint:fix`
+Corrige automáticamente los errores de ESLint.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🌐 Variables de Entorno
 
-### `npm run eject`
+```env
+REACT_APP_API_URL=http://localhost:3000/api
+REACT_APP_ENVIRONMENT=development
+REACT_APP_VERSION=1.0.0
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## 🤝 Contribución
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 📞 Contacto y Soporte
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+- **Email**: contacto@holisticacenter.com
+- **WhatsApp**: [Grupo de Soporte](https://chat.whatsapp.com/DKUeRaOpLTeEWAmE8gpvhI)
+- **Teléfono**: +593 99 123 4567
 
-## Learn More
+## 📜 Licencia
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Este proyecto es privado y pertenece a Holística Center.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 🔄 Actualizaciones Recientes
 
-### Code Splitting
+- ✅ Implementación de sistema de autenticación
+- ✅ Integración con backend API
+- ✅ Sistema de pagos funcional
+- ✅ Panel de administración completo
+- ✅ Responsive design optimizado
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 🚨 Problemas Conocidos
 
-### Analyzing the Bundle Size
+- Verificar que el backend esté ejecutándose en puerto 3000
+- Algunas funcionalidades requieren conexión a internet
+- El sistema de pagos está en modo de prueba
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📈 Roadmap
 
-### Making a Progressive Web App
+- [ ] Implementar notificaciones push
+- [ ] Añadir sistema de chat en vivo
+- [ ] Integrar videoconferencias
+- [ ] App móvil nativa
+- [ ] Sistema de calificaciones y reseñas
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Desarrollado por**: Grupo 4 - ESPE Universidad de las Fuerzas Armadas\
+**Curso**: Pruebas de Software\
+**Versión**: 1.0.0

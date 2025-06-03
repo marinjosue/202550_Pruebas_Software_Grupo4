@@ -21,50 +21,66 @@ export default function Login() {
 
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    
-    if (!email || !password) {
+  e.preventDefault();
+  
+  if (!email || !password) {
+    if (toast.current) {
       toast.current.show({ 
         severity: 'error', 
         summary: 'Error', 
         detail: 'Por favor completa todos los campos', 
         life: 3000 
       });
-      return;
     }
+    return;
+  }
 
-    setLoading(true);
-    try {
-      await login({ email, password });
+  setLoading(true);
+  try {
+    await login({ email, password });
+    if (toast.current) {
       toast.current.show({ 
         severity: 'success', 
         summary: 'Bienvenido', 
         detail: 'Sesión iniciada correctamente', 
         life: 2000 
       });
-      setTimeout(() => navigate('/profile'), 2000);
-    } catch (error) {
-      console.error('Login error:', error);
-      let errorMessage = 'Error al iniciar sesión';
-      
-      if (error.message.includes('servidor')) {
-        errorMessage = 'No se puede conectar al servidor. Verifica tu conexión.';
-      } else if (error.message.includes('Credenciales')) {
-        errorMessage = 'Email o contraseña incorrectos';
-      } else {
-        errorMessage = error.message || 'Error desconocido';
-      }
-      
+    }
+    // Simular validación de datos (2-3 segundos)
+    await new Promise(resolve => setTimeout(resolve, 2500));
+     // Mostrar mensaje de validación completa
+    if (toast.current) {
+      toast.current.show({ 
+        severity: 'success', 
+        summary: 'Bienvenido', 
+        detail: 'Datos validados correctamente. Redirigiendo...', 
+        life: 1500 
+      });
+    }
+    setTimeout(() => navigate('/profile'), 2000);
+  } catch (error) {
+    let errorMessage;
+    
+    if (error.message.includes('servidor')) {
+      errorMessage = 'No se puede conectar al servidor. Verifica tu conexión.';
+    } else if (error.message.includes('Credenciales')) {
+      errorMessage = 'Email o contraseña incorrectos';
+    } else {
+      errorMessage = error.message || 'Error desconocido';
+    }
+    
+    if (toast.current) {
       toast.current.show({ 
         severity: 'error', 
         summary: 'Error de Autenticación', 
         detail: errorMessage, 
         life: 4000 
       });
-    } finally {
-      setLoading(false);
     }
-  };
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className={`login-container ${loading ? 'login-loading' : ''}`}>
@@ -77,7 +93,10 @@ export default function Login() {
               <i className="pi pi-user text-4xl"></i>
             </div>
           </div>
-          <h2 className="login-title">Iniciar Sesión</h2>
+          <h2 className="auth-title">
+            <i className="pi pi-sign-in"></i>
+            {' '}Iniciar Sesión
+          </h2>
           <p className="login-subtitle">Bienvenido a Holística Center</p>
         </div>
 
@@ -85,7 +104,7 @@ export default function Login() {
           <div className="login-field">
             <label htmlFor="email">
               <i className="pi pi-envelope mr-2 text-primary"></i>
-              Correo Electrónico
+              {' '}Correo Electrónico
             </label>
             <InputText 
               id="email" 
@@ -100,7 +119,7 @@ export default function Login() {
           <div className="login-field">
             <label htmlFor="password">
               <i className="pi pi-lock mr-2 text-primary"></i>
-              Contraseña
+            {' '} Contraseña
             </label>
             <Password 
               id="password" 
@@ -123,19 +142,21 @@ export default function Login() {
                 Recordarme
               </label>
             </div>
-            <Link 
-              to="/reset-password" 
-              className="login-forgot"
-            >
-              ¿Olvidaste tu contraseña?
-            </Link>
+            <div className="forgot-password">
+              <Button 
+                label="¿Olvidaste tu contraseña?"
+                icon="pi pi-question-circle"
+                className="p-button-link"
+                onClick={() => navigate('/forgot-password')}
+              />
+            </div>
           </div>
 
           <Button 
-            type="submit"
-            label="Iniciar Sesión" 
+            label="Ingresar" 
             icon="pi pi-sign-in" 
-            className="login-button"
+            className="auth-button"
+            type="submit"
             loading={loading}
             disabled={loading}
           />

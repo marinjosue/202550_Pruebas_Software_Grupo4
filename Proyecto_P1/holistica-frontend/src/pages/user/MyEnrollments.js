@@ -12,6 +12,7 @@ import { Badge } from 'primereact/badge';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import enrollmentService from '../../services/enrollmentService';
+import { formatFullDate, getStatusSeverity, getStatusLabel, ensureArray, showError, showSuccess } from '../../utils/commonHelpers';
 import '../../styles/MyEnrollments.css';
 
 export default function MyEnrollments() {
@@ -36,15 +37,10 @@ export default function MyEnrollments() {
     try {
       setLoading(true);
       const data = await enrollmentService.getMyEnrollments();
-      setEnrollments(Array.isArray(data) ? data : []);
+      setEnrollments(ensureArray(data));
     } catch (error) {
       console.error('Error loading enrollments:', error);
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error.message,
-        life: 3000
-      });
+      showError(toast, error.message);
       setEnrollments([]);
     } finally {
       setLoading(false);
@@ -58,72 +54,15 @@ export default function MyEnrollments() {
       setCancelling(true);
       await enrollmentService.cancelEnrollment(selectedEnrollment.id);
       
-      toast.current?.show({
-        severity: 'success',
-        summary: 'Inscripción cancelada',
-        detail: 'Tu inscripción ha sido cancelada exitosamente',
-        life: 3000
-      });
+      showSuccess(toast, 'Tu inscripción ha sido cancelada exitosamente', 'Inscripción cancelada');
       
       setShowCancelDialog(false);
       setSelectedEnrollment(null);
       loadEnrollments();
     } catch (error) {
-      toast.current?.show({
-        severity: 'error',
-        summary: 'Error',
-        detail: error.message,
-        life: 3000
-      });
+      showError(toast, error.message);
     } finally {
       setCancelling(false);
-    }
-  };
-
-  const getStatusSeverity = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'active':
-      case 'activo':
-        return 'success';
-      case 'completed':
-      case 'completado':
-        return 'info';
-      case 'cancelled':
-      case 'cancelado':
-        return 'danger';
-      case 'pending':
-      case 'pendiente':
-        return 'warning';
-      default:
-        return 'secondary';
-    }
-  };
-
-  const getStatusLabel = (status) => {
-    switch (status?.toLowerCase()) {
-      case 'active':
-        return 'Activo';
-      case 'completed':
-        return 'Completado';
-      case 'cancelled':
-        return 'Cancelado';
-      case 'pending':
-        return 'Pendiente';
-      default:
-        return status || 'Desconocido';
-    }
-  };
-
-  const formatDate = (dateString) => {
-    if (!dateString) return 'No especificada';
-    try {
-      return new Date(dateString).toLocaleDateString('es-ES', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
-      });
-    } catch (error) {
-      return 'Fecha inválida';
     }
   };
 
@@ -158,7 +97,7 @@ export default function MyEnrollments() {
             <div className="enrollment-details">
               <div className="detail-item">
                 <i className="pi pi-calendar"></i>
-                <span>Inscrito: {formatDate(enrollment.enrollment_date)}</span>
+                <span>Inscrito: {formatFullDate(enrollment.enrollment_date)}</span>
               </div>
               <div className="detail-item">
                 <i className="pi pi-clock"></i>
@@ -166,7 +105,7 @@ export default function MyEnrollments() {
               </div>
               <div className="detail-item">
                 <i className="pi pi-calendar-times"></i>
-                <span>Inicia: {formatDate(course.start_date)}</span>
+                <span>Inicia: {formatFullDate(course.start_date)}</span>
               </div>
             </div>
 
@@ -225,7 +164,10 @@ export default function MyEnrollments() {
     return (
       <div className="enrollments-header">
         <div className="enrollments-title">
-          <h1><i className="pi pi-graduation-cap"></i> Mis Inscripciones</h1>
+          <h1 className="page-title">
+            <i className="pi pi-graduation-cap"></i>
+            {' '}Mis Inscripciones
+          </h1>
           <p>Gestiona tus cursos inscritos y continúa tu aprendizaje</p>
         </div>
         
@@ -330,7 +272,7 @@ export default function MyEnrollments() {
             <h4>{selectedEnrollment.course?.name}</h4>
             <p className="cancel-warning">
               <i className="pi pi-exclamation-triangle"></i>
-              Esta acción no se puede deshacer y perderás el acceso al curso.
+              {' '}Esta acción no se puede deshacer y perderás el acceso al curso.
             </p>
           </div>
         )}
