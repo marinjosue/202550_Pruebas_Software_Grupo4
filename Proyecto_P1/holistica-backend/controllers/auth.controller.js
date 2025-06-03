@@ -4,7 +4,7 @@ const UserModel = require('../models/user.model');
 
 const register = async (req, res) => {
     try {
-        const { name, lastname, email, phone, dni, address, password, roleId = 2 } = req.body;
+        const { name, lastname, email, phone, dni, address, password, role_id = 2 } = req.body;
 
         // Check if user already exists
         const existingUser = await UserModel.findByEmail(email);
@@ -13,11 +13,11 @@ const register = async (req, res) => {
         }
 
         // Hash password
-        const passwordHash = await bcrypt.hash(password, 10);
+        const password_hash = await bcrypt.hash(password, 10);
 
         // Create user
         const userId = await UserModel.create({
-            name, lastname, email, phone, dni, address, passwordHash, roleId
+            name, lastname, email, phone, dni, address, password_hash, role_id
         });
 
         res.status(201).json({
@@ -40,14 +40,14 @@ const login = async (req, res) => {
         }
 
         // Verify password
-        const validPassword = await bcrypt.compare(password, user.passwordHash);
+        const validPassword = await bcrypt.compare(password, user.password_hash);
         if (!validPassword) {
             return res.status(401).json({ error: 'Credenciales inválidas' });
         }
 
         // Generate JWT token
         const token = jwt.sign(
-            { id: user.id, role: user.roleId },
+            { id: user.id, role: user.role_id },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -59,7 +59,7 @@ const login = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role: user.roleId
+                role: user.role_id
             }
         });
     } catch (error) {

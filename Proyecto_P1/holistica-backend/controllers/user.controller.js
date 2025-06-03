@@ -11,7 +11,7 @@ const getProfile = async (req, res) => {
     }
     
     // Remove password from response
-    const { passwordHash, ...userProfile } = user;
+    const { password_hash, ...userProfile } = user;
     res.json(userProfile);
   } catch (error) {
     res.status(500).json({ error: 'Error al obtener perfil', details: error.message });
@@ -29,7 +29,7 @@ const updateProfile = async (req, res) => {
     }
     
     // Remove sensitive fields that shouldn't be updated via this endpoint
-    const { password, passwordHash, roleId, id, createdAt, ...allowedUpdates } = updateData;
+    const { password, password_hash, role_id, id, created_at, ...allowedUpdates } = updateData;
     
     if (Object.keys(allowedUpdates).length === 0) {
       return res.status(400).json({ error: 'No se proporcionaron campos válidos para actualizar' });
@@ -47,7 +47,7 @@ const getAllUsers = async (req, res) => {
     const users = await UserModel.findAll();
     // Remove passwords from response
     const safeUsers = users.map(user => {
-      const { passwordHash, ...safeUser } = user;
+      const { password_hash, ...safeUser } = user;
       return safeUser;
     });
     res.json(safeUsers);
@@ -58,7 +58,7 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { name, lastname, email, phone, dni, address, password, roleId = 2 } = req.body;
+    const { name, lastname, email, phone, dni, address, password, role_id = 2 } = req.body;
     
     // Validate required fields
     if (!name || !lastname || !email || !password) {
@@ -72,11 +72,11 @@ const createUser = async (req, res) => {
     }
     
     // Hash password
-    const passwordHash = await bcrypt.hash(password, 10);
+    const password_hash = await bcrypt.hash(password, 10);
     
     // Create user
     const userId = await UserModel.create({
-      name, lastname, email, phone, dni, address, passwordHash, roleId
+      name, lastname, email, phone, dni, address, password_hash, role_id
     });
     
     res.status(201).json({ 
@@ -88,44 +88,9 @@ const createUser = async (req, res) => {
   }
 };
 
-
-
-const deleteUser = async (req, res) => {
-  try {
-    const { id } = req.params;
-    
-    // Validate user ID
-    if (!id || isNaN(id)) {
-      return res.status(400).json({ error: 'ID de usuario inválido' });
-    }
-    
-    // Check if user exists
-    const existingUser = await UserModel.findById(id);
-    if (!existingUser) {
-      return res.status(404).json({ error: 'Usuario no encontrado' });
-    }
-    
-    // Prevent deletion of current user (optional security check)
-    if (req.user && req.user.id == id) {
-      return res.status(403).json({ error: 'No puedes eliminar tu propia cuenta' });
-    }
-    
-    // Delete user
-    await UserModel.delete(id);
-    
-    res.json({ 
-      message: 'Usuario eliminado exitosamente',
-      deletedUserId: id 
-    });
-  } catch (error) {
-    res.status(500).json({ error: 'Error al eliminar usuario', details: error.message });
-  }
-};
-
 module.exports = {
   getProfile,
   updateProfile,
   getAllUsers,
-  createUser,
-  deleteUser
+  createUser
 };

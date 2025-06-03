@@ -26,26 +26,22 @@ class Logger {
 
   info(message, meta = {}) {
     const logMessage = this.formatMessage('info', message, meta);
-    console.log(logMessage.trim());
     this.writeToFile('app.log', logMessage);
   }
 
   error(message, meta = {}) {
     const logMessage = this.formatMessage('error', message, meta);
-    console.error(logMessage.trim());
     this.writeToFile('error.log', logMessage);
   }
 
   warn(message, meta = {}) {
     const logMessage = this.formatMessage('warn', message, meta);
-    console.warn(logMessage.trim());
     this.writeToFile('app.log', logMessage);
   }
 
   debug(message, meta = {}) {
     if (process.env.NODE_ENV === 'development') {
       const logMessage = this.formatMessage('debug', message, meta);
-      console.log(logMessage.trim());
       this.writeToFile('debug.log', logMessage);
     }
   }

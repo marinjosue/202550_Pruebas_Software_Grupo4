@@ -2,21 +2,21 @@ const pool = require('../config/db');
 
 const MultimediaModel = {
   async upload(content) {
-    const { courseId, title, type, url } = content;
+    const { course_id, title, type, url } = content;
 
     const [result] = await pool.query(`
       INSERT INTO contents (course_id, title, type, url)
       VALUES (?, ?, ?, ?)`,
-      [courseId, title, type, url]
+      [course_id, title, type, url]
     );
 
     return result.insertId;
   },
 
-  async findByCourse(courseId) {
+  async findByCourse(course_id) {
     const [rows] = await pool.query(`
       SELECT * FROM contents WHERE course_id = ?`,
-      [courseId]
+      [course_id]
     );
     return rows;
   },

@@ -3,6 +3,8 @@ const app = require('../app');
 const db = require('../config/db');
 
 describe('Schedule API', () => {
+    let authToken;
+
     beforeAll(async () => {
         const loginResponse = await req(app)
             .post('/api/auth/login') // Asumiendo una ruta de login

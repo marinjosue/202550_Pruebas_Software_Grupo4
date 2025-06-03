@@ -28,7 +28,7 @@ const createCourse = async (req, res) => {
     try {
         const courseData = {
             ...req.body,
-            createdBy: req.user.id
+            created_by: req.user.id
         };
 
         // Validar que los campos requeridos estén presentes

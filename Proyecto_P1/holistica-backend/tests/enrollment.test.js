@@ -4,6 +4,7 @@ const db = require('../config/db');
 
 
 describe('Enrollment API', () => {
+    let authToken;
 
     beforeAll(async () => {
         const loginResponse = await req(app)

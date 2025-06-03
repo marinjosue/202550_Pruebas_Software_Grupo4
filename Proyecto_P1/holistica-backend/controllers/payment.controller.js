@@ -4,8 +4,8 @@ const EnrollmentModel = require('../models/enrollment.model');
 
 const processPayment = async (req, res) => {
     try {
-        const { courseId, amount, method } = req.body;
-        const userId = req.user.id;
+        const { course_id, amount, method } = req.body;
+        const user_id = req.user.id;
         
         // Validate payment method (must match ENUM values)
         const validMethods = ['transferencia', 'online', 'stripe', 'efectivo', 'paypal', 'tarjeta'];
@@ -17,21 +17,21 @@ const processPayment = async (req, res) => {
         }
 
         // Verify course exists
-        const course = await CourseModel.findById(courseId);
+        const course = await CourseModel.findById(course_id);
         if (!course) {
             return res.status(404).json({ error: 'Curso no encontrado' });
         }
 
         // Process payment (simulation)
         const paymentId = await PaymentModel.create({
-            userId,
-            courseId,
+            user_id,
+            course_id,
             amount,
             method
         });
 
         // Auto-enroll user after successful payment
-        await EnrollmentModel.enroll(userId, courseId, 'inscrito');
+        await EnrollmentModel.enroll(user_id, course_id, 'inscrito');
 
         res.status(201).json({
             message: 'Pago procesado exitosamente',
@@ -45,8 +45,8 @@ const processPayment = async (req, res) => {
 
 const getPaymentHistory = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const payments = await PaymentModel.findByUser(userId);
+        const user_id = req.user.id;
+        const payments = await PaymentModel.findByUser(user_id);
         res.json(payments);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener historial de pagos', details: error.message });

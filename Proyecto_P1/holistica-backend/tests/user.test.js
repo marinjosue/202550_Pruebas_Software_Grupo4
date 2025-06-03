@@ -3,6 +3,7 @@ const app = require('../app');
 const db = require('../config/db');
 
 describe('User API', () => {
+    let authToken;
 
     beforeAll(async () => {
         const loginResponse = await req(app)
@@ -24,67 +25,56 @@ describe('User API', () => {
     });
 
     // Test para crear un nuevo usuario
-    test('POST /api/users - should create a new user and then return error for existing email', async () => {
-        // --- Parte 1: Crear un nuevo usuario exitosamente ---
-        // Generamos un email único para cada ejecución de test para evitar conflictos
-        const uniqueEmail = `testuser_${Date.now()}@example.com`;
+    test('POST /api/users - should create a new user', async () => {
         const newUser = {
-            name: 'AllanTest',
-            lastname: 'GonzTest',
-            email: uniqueEmail, // Usamos el email único aquí
-            phone: '0987654322',
-            dni: '1234567891',
-            address: 'Guayaquil, Ecuador',
-            password: '123456', // Asegúrate de que esta contraseña cumpla con tus validaciones
-            role_id: 2 // Asegúrate de que este role_id sea válido en tu DB
+            name: "Allan",
+            lastname: "Gonzá",
+            email: `allan${Date.now()}@example.com`, // Use unique email
+            phone: "0987654322",
+            dni: "1234567891",
+            address: "Guayaquil, Ecuador",
+            password: "123456",
+            role_id: 2
         };
-
-        console.log('Intentando crear usuario con email:', newUser.email);
-        const createResponse = await req(app)
+        const response = await req(app)
             .post('/api/users')
             .set('Authorization', `Bearer ${authToken}`)
             .send(newUser);
+        expect(response.statusCode).toBe(201);
+        expect(response.body).toHaveProperty('message', 'Usuario creado exitosamente');
+        expect(response.body).toHaveProperty('userId');
+    });
 
-        // Verificamos que la primera creación fue exitosa (status 201)
-        expect(createResponse.statusCode).toBe(201);
-        expect(createResponse.body).toHaveProperty('message', 'Usuario creado exitosamente');
-        expect(createResponse.body).toHaveProperty('userId');
-        console.log('Usuario creado exitosamente. userId:', createResponse.body.userId);
-
-        // --- Parte 2: Intentar crear otro usuario con el email que ya existe ---
-        const existingUserAttempt = {
-            name: 'ExistingUserAttempt',
-            lastname: 'Test',
-            email: uniqueEmail, // <-- ¡Usamos el mismo email que acabamos de crear!
-            phone: '0987654323',
-            dni: '1234567892',
-            address: 'Otra Dirección',
-            password: 'password123',
-            roleId: 2
+    //test que manda un usuario con email ya registrado
+    test('POST /api/users - should return error for existing email', async () => {
+        const existingUser = {
+            name: "Existing",
+            lastname: "User",
+            email: "allangonzalez@example.com",
+            phone: "0987654322",
+            dni: "1234567891",
+            address: "Guayaquil, Ecuador",
+            password: "123456",
+            role_id: 2
         };
-
-        console.log('Intentando crear usuario con email existente:', existingUserAttempt.email);
-        const errorResponse = await req(app)
+        const response = await req(app)
             .post('/api/users')
             .set('Authorization', `Bearer ${authToken}`)
-            .send(existingUserAttempt);
-
-        // Verificamos que la segunda creación falló con status 400 y el mensaje esperado
-        expect(errorResponse.statusCode).toBe(400);
-        expect(errorResponse.body).toHaveProperty('error', 'El email ya está registrado');
-        console.log('Error esperado para email existente recibido:', errorResponse.body.error);
+            .send(existingUser);
+        expect(response.statusCode).toBe(400);
+        expect(response.body).toHaveProperty('error', 'El email ya está registrado');
     });
 
     //test para crear un usuario sin campos requeridos
     test('POST /api/users - should return error for missing required fields', async () => {
         const incompleteUser = {
-            name: '',
-            lastname: 'User',
-            email: 'incomplete@example.com',
-            phone: '0987654322',
-            dni: '1234567891',
-            address: 'Guayaquil, Ecuador',
-            password: '123456',
+            name: "",
+            lastname: "User",
+            email: "incomplete@example.com",
+            phone: "0987654322",
+            dni: "1234567891",
+            address: "Guayaquil, Ecuador",
+            password: "123456",
             role_id: 2
         };
         const response = await req(app)
@@ -109,10 +99,10 @@ describe('User API', () => {
     //test para actualizar el perfil del usuario
     test('PUT /api/users/me - should update user profile', async () => {
         const updatedProfile = {
-            name: 'Updated Name',
-            lastname: 'Updated Lastname',
-            phone: '0987654321',
-            address: 'New Address'
+            name: "Updated Name",
+            lastname: "Updated Lastname",
+            phone: "0987654321",
+            address: "New Address"
         };
         const response = await req(app)
             .put('/api/users/me')

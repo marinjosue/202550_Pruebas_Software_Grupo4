@@ -90,10 +90,10 @@ const validateCourse = (req, res, next) => {
 };
 
 const validatePayment = (req, res, next) => {
-  const { courseId, amount, method } = req.body;
+  const { course_id, amount, method } = req.body;
   const errors = [];
 
-  if (!courseId) {
+  if (!course_id) {
     errors.push('ID del curso es requerido');
   }
 

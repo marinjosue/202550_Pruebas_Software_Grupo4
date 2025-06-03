@@ -4,26 +4,6 @@ const db = require('../config/db');
 
 describe('Auth API', () => {
 
-    //test para register
-    // test('POST /auth/register - should register a new user', async () => {
-        
-    //     const newUser = {
-    //         name: 'allan',
-    //         lastname: 'perez',
-    //         email: 'allan2@gmail.com',
-    //         phone: '0998383119',
-    //         dni: '12345678',
-    //         address: 'Calle Falsa 123',
-    //         password: 'Allan2002',
-    //         role_id: 2
-    //     }
-
-    //     const response = await req(app)
-    //         .post('/api/auth/register')
-    //         .send(newUser);
-    //     expect(response.statusCode).toBe(201);
-    //     expect(response.body.message).toBe('Usuario registrado exitosamente');
-    // });
 
     test('POST /auth/register - should register a error to create a user', async () => {
         

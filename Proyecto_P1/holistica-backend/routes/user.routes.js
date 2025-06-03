@@ -13,6 +13,5 @@ router.put('/me', authenticateToken, UserController.updateProfile);
 // Admin routes
 router.get('/', authenticateToken, allowRoles(1), UserController.getAllUsers);
 router.post('/', authenticateToken, allowRoles(1), UserController.createUser);
-router.delete('/:id', authenticateToken, allowRoles(1), UserController.deleteUser);
 
 module.exports = router;

@@ -1,17 +1,20 @@
 const req = require('supertest');
 const app = require('../app');
-const db = require('../config/db'); // Asegúrate de que tu módulo db exporta un pool de conexiones
+const db = require('../config/db');
 
 describe('User Course API', () => {
+    let authToken;
+
     beforeAll(async () => {
         const loginResponse = await req(app)
-            .post('/api/auth/login') // Asumiendo una ruta de login
+            .post('/api/auth/login')
             .send({
-                email: 'jimarin@gmail.com', // Credenciales de un usuario de prueba
+                email: 'jimarin@gmail.com',
                 password: 'Josue2002'
             });
-        authToken = loginResponse.body.token; // Asumiendo que el token está en response.body.token
+        authToken = loginResponse.body.token;
     });
+
     //Test para que apruebe el get
     test('GET /courses - should return all courses', async () => {
         const response = await req(app).get('/api/courses');
@@ -71,21 +74,6 @@ describe('User Course API', () => {
         expect(response.body.error).toBe('Faltan campos requeridos');
     });
 
-    // Test para que apruebe el put
-    // test('PUT /courses/:id - should update an existing course', async () => {
-    //     const courseId = 20; // Cambia esto al ID de un curso existente
-    //     const updatedCourse = {
-    //         title: 'Curso Actualizado',
-    //         description: 'Descripción actualizada del curso'
-    //     };
-    //     const response = await req(app)
-    //         .put(`/api/courses/${courseId}`)
-    //         .set('Authorization', `Bearer ${authToken}`) // Asegúrate de enviar el token de autenticación
-    //         .send(updatedCourse);
-    //     expect(response.statusCode).toBe(200);
-    //     expect(response.body.message).toBe('Curso actualizado exitosamente');
-    // });
-
     // Test que comprueba el error del put
     test('PUT /courses/:id - should return 404 for non-existent course', async () => {
         const courseId = 9999; // Cambia esto a un ID que no exista
@@ -101,16 +89,6 @@ describe('User Course API', () => {
         expect(response.body.error).toBe('Curso no encontrado');
     });
 
-    // Test para que apruebe el delete
-
-    // test('DELETE /courses/:id - should delete an existing course', async () => {
-    //     const courseId = 19; // Cambia esto al ID de un curso existente
-    //     const response = await req(app)
-    //         .delete(`/api/courses/${courseId}`)
-    //         .set('Authorization', `Bearer ${authToken}`); // Asegúrate de enviar el token de autenticación
-    //     expect(response.statusCode).toBe(200);
-    //     expect(response.body.message).toBe('Curso eliminado exitosamente');
-    // });
 
     // Test que comprueba el error del delete
     test('DELETE /courses/:id - should return 404 for non-existent course', async () => {

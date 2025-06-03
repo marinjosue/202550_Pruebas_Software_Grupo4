@@ -3,16 +3,16 @@ const CourseModel = require('../models/course.model');
 
 const enrollInCourse = async (req, res) => {
     try {
-        const { courseId } = req.body;
-        const userId = req.user.id;
+        const { course_id } = req.body;
+        const user_id = req.user.id;
 
         // Verify course exists
-        const course = await CourseModel.findById(courseId);
+        const course = await CourseModel.findById(course_id);
         if (!course) {
             return res.status(404).json({ error: 'Curso no encontrado' });
         }
 
-        const enrollmentId = await EnrollmentModel.enroll(userId, courseId);
+        const enrollmentId = await EnrollmentModel.enroll(user_id, course_id);
         res.status(201).json({
             message: 'Inscripción exitosa',
             enrollmentId,
@@ -25,8 +25,8 @@ const enrollInCourse = async (req, res) => {
 
 const getUserEnrollments = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const enrollments = await EnrollmentModel.findByUser(userId);
+        const user_id = req.user.id;
+        const enrollments = await EnrollmentModel.findByUser(user_id);
         res.json(enrollments);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener inscripciones', details: error.message });
