@@ -9,15 +9,15 @@ const UserModel = {
       phone,
       dni,
       address,
-      password_hash,
-      role_id
+      passwordHash,
+      roleId
     } = user;
 
     const [result] = await pool.query(`
       INSERT INTO users 
       (name, lastname, email, phone, dni, address, password_hash, role_id)
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-      [name, lastname, email, phone, dni, address, password_hash, role_id]
+      [name, lastname, email, phone, dni, address, passwordHash, roleId]
     );
 
     return result.insertId;

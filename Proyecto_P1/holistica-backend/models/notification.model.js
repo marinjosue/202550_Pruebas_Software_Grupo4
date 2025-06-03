@@ -1,19 +1,19 @@
 const pool = require('../config/db');
 
 const NotificationModel = {
-  async send(user_id, message) {
+  async send(userId, message) {
     const [result] = await pool.query(`
       INSERT INTO notifications (user_id, message)
       VALUES (?, ?)`,
-      [user_id, message]
+      [userId, message]
     );
     return result.insertId;
   },
 
-  async findUnread(user_id) {
+  async findUnread(userId) {
     const [rows] = await pool.query(`
       SELECT * FROM notifications WHERE user_id = ? AND read_status = FALSE`,
-      [user_id]
+      [userId]
     );
     return rows;
   },

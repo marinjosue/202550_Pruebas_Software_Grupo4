@@ -6,7 +6,7 @@ const processPayment = async (req, res) => {
     try {
         const { courseId, amount, method } = req.body;
         const userId = req.user.id;
-
+        
         // Validate payment method (must match ENUM values)
         const validMethods = ['transferencia', 'online', 'stripe', 'efectivo', 'paypal', 'tarjeta'];
         if (!validMethods.includes(method)) {

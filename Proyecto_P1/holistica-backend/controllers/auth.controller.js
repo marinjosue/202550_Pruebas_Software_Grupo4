@@ -40,14 +40,14 @@ const login = async (req, res) => {
         }
 
         // Verify password
-        const validPassword = await bcrypt.compare(password, user.password_hash);
+        const validPassword = await bcrypt.compare(password, user.passwordHash);
         if (!validPassword) {
             return res.status(401).json({ error: 'Credenciales inválidas' });
         }
 
         // Generate JWT token
         const token = jwt.sign(
-            { id: user.id, role: user.role_id },
+            { id: user.id, role: user.roleId },
             process.env.JWT_SECRET,
             { expiresIn: '24h' }
         );
@@ -59,7 +59,7 @@ const login = async (req, res) => {
                 id: user.id,
                 name: user.name,
                 email: user.email,
-                role: user.role_id
+                role: user.roleId
             }
         });
     } catch (error) {

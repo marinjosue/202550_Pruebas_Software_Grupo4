@@ -25,7 +25,7 @@ class AuthService {
             throw new Error('Usuario no encontrado');
         }
 
-        const isValidPassword = await this.comparePassword(password, user.password_hash);
+        const isValidPassword = await this.comparePassword(password, user.passwordHash);
         if (!isValidPassword) {
             throw new Error('Contraseña incorrecta');
         }
@@ -33,18 +33,18 @@ class AuthService {
         return {
             id: user.id,
             email: user.email,
-            role: user.role_id,
+            role: user.roleId,
             name: user.name
         };
     }
 
     static async createUser(userData) {
         const { password, ...userInfo } = userData;
-        const password_hash = await this.hashPassword(password);
+        const passwordHash = await this.hashPassword(password);
 
         return await UserModel.create({
             ...userInfo,
-            password_hash
+            passwordHash
         });
     }
 }

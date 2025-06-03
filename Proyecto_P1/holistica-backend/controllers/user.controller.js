@@ -29,7 +29,7 @@ const updateProfile = async (req, res) => {
     }
     
     // Remove sensitive fields that shouldn't be updated via this endpoint
-    const { password, passwordHash, role_id, id, created_at, ...allowedUpdates } = updateData;
+    const { password, passwordHash, roleId, id, createdAt, ...allowedUpdates } = updateData;
     
     if (Object.keys(allowedUpdates).length === 0) {
       return res.status(400).json({ error: 'No se proporcionaron campos válidos para actualizar' });
@@ -58,7 +58,7 @@ const getAllUsers = async (req, res) => {
 
 const createUser = async (req, res) => {
   try {
-    const { name, lastname, email, phone, dni, address, password, role_id = 2 } = req.body;
+    const { name, lastname, email, phone, dni, address, password, roleId = 2 } = req.body;
     
     // Validate required fields
     if (!name || !lastname || !email || !password) {
@@ -76,7 +76,7 @@ const createUser = async (req, res) => {
     
     // Create user
     const userId = await UserModel.create({
-      name, lastname, email, phone, dni, address, passwordHash, role_id
+      name, lastname, email, phone, dni, address, passwordHash, roleId
     });
     
     res.status(201).json({ 

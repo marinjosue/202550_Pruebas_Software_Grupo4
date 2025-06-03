@@ -1,11 +1,11 @@
 const pool = require('../config/db');
 
 const ReportModel = {
-  async generate(course_id, total_sales, total_enrollments, total_completions) {
+  async generate(courseId, totalSales, totalEnrollments, totalCompletions) {
     const [result] = await pool.query(`
       INSERT INTO reports (course_id, total_sales, total_enrollments, total_completions)
       VALUES (?, ?, ?, ?)`,
-      [course_id, total_sales, total_enrollments, total_completions]
+      [courseId, totalSales, totalEnrollments, totalCompletions]
     );
     return result.insertId;
   },
