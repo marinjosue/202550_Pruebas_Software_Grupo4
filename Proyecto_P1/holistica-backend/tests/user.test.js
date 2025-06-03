@@ -27,13 +27,13 @@ describe('User API', () => {
     // Test para crear un nuevo usuario
     test('POST /api/users - should create a new user', async () => {
         const newUser = {
-            name: "Allan",
-            lastname: "Gonzá",
+            name: 'Allan',
+            lastname: 'Gonzá',
             email: `allan${Date.now()}@example.com`, // Use unique email
-            phone: "0987654322",
-            dni: "1234567891",
-            address: "Guayaquil, Ecuador",
-            password: "123456",
+            phone: '0987654322',
+            dni: '1234567891',
+            address: 'Guayaquil, Ecuador',
+            password: '123456',
             role_id: 2
         };
         const response = await req(app)
@@ -48,13 +48,13 @@ describe('User API', () => {
     //test que manda un usuario con email ya registrado
     test('POST /api/users - should return error for existing email', async () => {
         const existingUser = {
-            name: "Existing",
-            lastname: "User",
-            email: "allangonzalez@example.com",
-            phone: "0987654322",
-            dni: "1234567891",
-            address: "Guayaquil, Ecuador",
-            password: "123456",
+            name: 'Existing',
+            lastname: 'User',
+            email: 'allangonzalez@example.com',
+            phone: '0987654322',
+            dni: '1234567891',
+            address: 'Guayaquil, Ecuador',
+            password: '123456',
             role_id: 2
         };
         const response = await req(app)
@@ -68,13 +68,13 @@ describe('User API', () => {
     //test para crear un usuario sin campos requeridos
     test('POST /api/users - should return error for missing required fields', async () => {
         const incompleteUser = {
-            name: "",
-            lastname: "User",
-            email: "incomplete@example.com",
-            phone: "0987654322",
-            dni: "1234567891",
-            address: "Guayaquil, Ecuador",
-            password: "123456",
+            name: '',
+            lastname: 'User',
+            email: 'incomplete@example.com',
+            phone: '0987654322',
+            dni: '1234567891',
+            address: 'Guayaquil, Ecuador',
+            password: '123456',
             role_id: 2
         };
         const response = await req(app)
@@ -99,10 +99,10 @@ describe('User API', () => {
     //test para actualizar el perfil del usuario
     test('PUT /api/users/me - should update user profile', async () => {
         const updatedProfile = {
-            name: "Updated Name",
-            lastname: "Updated Lastname",
-            phone: "0987654321",
-            address: "New Address"
+            name: 'Updated Name',
+            lastname: 'Updated Lastname',
+            phone: '0987654321',
+            address: 'New Address'
         };
         const response = await req(app)
             .put('/api/users/me')

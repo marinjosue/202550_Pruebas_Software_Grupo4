@@ -4,7 +4,6 @@ const CourseModel = require('../models/course.model');
 const uploadContent = async (req, res) => {
     try {
         const { course_id, title, type, url } = req.body;
-
         // Verify course exists
         const course = await CourseModel.findById(course_id);
         if (!course) {

@@ -29,7 +29,7 @@ describe('Payment API', () => {
         const response = await req(app)
             .post('/api/payments/')
             .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 57, amount: 100, method: "stripe"}); // Asegúrate de que el ID del curso y el monto sean válidos
+            .send({ course_id: 57, amount: 100, method: 'stripe'}); // Asegúrate de que el ID del curso y el monto sean válidos
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('message', 'Pago procesado exitosamente');
         expect(response.body).toHaveProperty('paymentId');
@@ -40,7 +40,7 @@ describe('Payment API', () => {
         const response = await req(app)
             .post('/api/payments/')
             .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 16, amount: 100, method: "invalid_method" }); // Método inválido
+            .send({ course_id: 16, amount: 100, method: 'invalid_method' }); // Método inválido
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', 'Método de pago inválido');
         expect(response.body).toHaveProperty('validMethods');

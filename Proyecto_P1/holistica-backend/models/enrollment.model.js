@@ -25,8 +25,6 @@ const EnrollmentModel = {
       // pool.query devuelve un array [results, fields] para consultas UPDATE/INSERT/DELETE
       const [result] = await pool.query('UPDATE enrollments SET status = ? WHERE id = ?', [status, id]);
 
-      // console.log('Resultado de la consulta SQL:', result); // Para depuración
-
       if (result.affectedRows === 0) {
         // Si affectedRows es 0, significa que no se encontró una fila con ese ID.
         // Puedes lanzar un error específico, para que el controlador pueda devolver un 404 por ejemplo.

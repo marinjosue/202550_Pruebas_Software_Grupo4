@@ -16,7 +16,7 @@ describe('Auth API', () => {
             address: 'Calle Falsa 123',
             password: 'Allan2002',
             role_id: 2
-        }
+        };
 
         const response = await req(app)
             .post('/api/auth/register')

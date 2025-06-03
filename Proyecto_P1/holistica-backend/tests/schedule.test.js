@@ -35,7 +35,7 @@ describe('Schedule API', () => {
         const response = await req(app)
             .post('/api/schedules')
             .set('Authorization', `Bearer ${authToken}`)
-            .send(newSchedule)
+            .send(newSchedule);
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('message', 'Horario creado exitosamente');
     });
