@@ -79,7 +79,7 @@ describe('Auth API', () => {
         const response = await req(app)
             .post('/api/auth/reset-password')
             .send({
-                email: 'allan2@gmail.com'
+                email: 'allan@gmail.com'
             });
         expect(response.body.message).toBe('Correo de recuperación enviado exitosamente');
     });

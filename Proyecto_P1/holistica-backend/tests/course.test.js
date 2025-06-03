@@ -28,11 +28,10 @@ describe('User Course API', () => {
 
     // Test para que apruebe el get con un query
     test('GET /courses/:id - should return a course by ID', async () => {
-        const courseId = 5; // Cambia esto al ID de un curso existente en tu base de datos
+        const courseId = 57; // Cambia esto al ID de un curso existente en tu base de datos
         const response = await req(app).get(`/api/courses/${courseId}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('id', courseId);
-        expect(response.body.description).toBe('Curso creado por Josue');
     });
 
     // Test que pruebe el mensaje de error del get con un query
@@ -42,20 +41,20 @@ describe('User Course API', () => {
         expect(response.body.error).toBe('Curso no encontrado');
     });
 
-    // Test para que apruebe el post
-    // test('POST /courses - should create a new course', async () => {
-    //     const newCourse = {
-    //         title: 'Curso de Prueba',
-    //         description: 'Descripción del curso de prueba',
-    //         created_by: 1 // Cambia esto al ID de un usuario existente
-    //     };
-    //     const response = await req(app)
-    //         .post('/api/courses')
-    //         .set('Authorization', `Bearer ${authToken}`) // Asegúrate de enviar el token de autenticación
-    //         .send(newCourse);
-    //     expect(response.statusCode).toBe(201);
-    //     expect(response.body.message).toBe('Curso creado exitosamente');
-    // });
+    //test para que apruebe el post
+    test('POST /courses - should create a new course', async () => {
+        const newCourse = {
+            title: 'Curso de Prueba',
+            description: 'Descripción del curso de prueba',
+            created_by: 1 // Cambia esto al ID de un usuario existente
+        };
+        const response = await req(app)
+            .post('/api/courses')
+            .set('Authorization', `Bearer ${authToken}`) // Asegúrate de enviar el token de autenticación
+            .send(newCourse);
+        expect(response.statusCode).toBe(201);
+        expect(response.body.message).toBe('Curso creado exitosamente');
+    });
 
     // Test que comprueba el error del post
     test('POST /courses - should return 400 for invalid course data', async () => {

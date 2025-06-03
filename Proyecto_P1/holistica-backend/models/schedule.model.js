@@ -3,14 +3,20 @@ const pool = require('../config/db');
 const ScheduleModel = {
     async create(schedule) {
         const { course_id, day_of_week, start_time, end_time, instructor_id } = schedule;
-
-        const [result] = await pool.query(`
-      INSERT INTO schedules (course_id, day_of_week, start_time, end_time, instructor_id)
-      VALUES (?, ?, ?, ?, ?)`,
-            [course_id, day_of_week, start_time, end_time, instructor_id]
-        );
-
-        return result.insertId;
+        try {
+            const [result] = await pool.query(`
+                INSERT INTO schedules (course_id, day_of_week, start_time, end_time, instructor_id)
+                VALUES (?, ?, ?, ?, ?)`,
+                [course_id, day_of_week, start_time, end_time, instructor_id]
+            );
+            return result.insertId;
+        } catch (error) {
+            // ¡Este console.error es VITAL! Te mostrará el error exacto de la DB.
+            console.error('❌ Error al crear horario en el modelo:', error.message);
+            console.error('Detalles del error completo:', error); // Para ver la pila de llamadas y más info
+            // Vuelve a lanzar el error para que el controlador lo capture y responda con 500
+            throw error;
+        }
     },
 
     async findAll() {
