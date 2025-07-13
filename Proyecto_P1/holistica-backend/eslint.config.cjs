@@ -1,6 +1,7 @@
 const js = require('@eslint/js');
 const globals = require('globals');
 const { defineConfig } = require('eslint/config');
+const { all } = require('./app');
 
 module.exports = defineConfig([
   {
@@ -12,7 +13,8 @@ module.exports = defineConfig([
     },
     rules: {
       semi: ['error', 'always'],
-      quotes: ['error', 'single']
+      quotes: ['error', 'single'],
+
     }
   },
   {

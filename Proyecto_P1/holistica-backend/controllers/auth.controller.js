@@ -76,25 +76,10 @@ const logout = async (req, res) => {
     }
 };
 
-const resetPassword = async (req, res) => {
-    try {
-        const { email } = req.body;
 
-        const user = await UserModel.findByEmail(email);
-        if (!user) {
-            return res.status(404).json({ error: 'Usuario no encontrado' });
-        }
-
-        // In a real implementation, you would send an email with a reset link
-        res.json({ message: 'Correo de recuperación enviado exitosamente' });
-    } catch (error) {
-        res.status(500).json({ error: 'Error al enviar correo de recuperación', details: error.message });
-    }
-};
 
 module.exports = {
     register,
     login,
-    logout,
-    resetPassword
+    logout
 };

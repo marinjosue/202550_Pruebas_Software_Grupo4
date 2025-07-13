@@ -6,6 +6,8 @@ const db = require('../config/db');
 describe('Enrollment API', () => {
     let authToken;
 
+
+
     beforeAll(async () => {
         const loginResponse = await req(app)
             .post('/api/auth/login') // Asumiendo una ruta de login
