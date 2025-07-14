@@ -33,20 +33,8 @@ const getUserEnrollments = async (req, res) => {
     }
 };
 
-const updateEnrollmentStatus = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { status } = req.body;
-
-        await EnrollmentModel.updateStatus(id, status);
-        res.json({ message: 'Estado de inscripción actualizado' });
-    } catch (error) {
-        res.status(500).json({ error: 'Error al actualizar estado', details: error.message });
-    }
-};
 
 module.exports = {
     enrollInCourse,
-    getUserEnrollments,
-    updateEnrollmentStatus
+    getUserEnrollments
 };

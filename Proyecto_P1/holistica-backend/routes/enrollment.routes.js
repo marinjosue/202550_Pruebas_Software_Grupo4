@@ -10,7 +10,5 @@ router.post('/', authenticateToken, EnrollmentController.enrollInCourse);
 // Get user enrollments (authenticated users)
 router.get('/my-enrollments', authenticateToken, EnrollmentController.getUserEnrollments);
 
-// Update enrollment status (admin only)
-router.put('/:id/status', authenticateToken, allowRoles(1), EnrollmentController.updateEnrollmentStatus);
 
 module.exports = router;
