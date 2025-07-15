@@ -1,4 +1,4 @@
-import ApiClient from '../utils/apiClient.js';
+import ApiClient from '../utils/apiClient';
 
 class ContentService extends ApiClient {
   constructor() {

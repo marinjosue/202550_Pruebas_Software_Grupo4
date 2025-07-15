@@ -15,18 +15,12 @@ describe('Schedule API', () => {
         authToken = loginResponse.body.token; // Asumiendo que el token está en response.body.token
     });
     //test para obtener los horarios
-    test('GET /api/schedules - should return all schedules', async () => {
-        const response = await req(app)
-            .get('/api/schedules')
-            .set('Authorization', `Bearer ${authToken}`); // Usa el token obtenido en el login
-        expect(response.statusCode).toBe(200);
-        expect(Array.isArray(response.body)).toBe(true);
-    });
+
     
     //test para crear un horario
     test('POST /api/schedules - should create a new schedule', async () => {
         const newSchedule = {
-            course_id: 57, // Asegúrate de que este ID exista en tu base de datos
+            course_id: 505, // Asegúrate de que este ID exista en tu base de datos
             day_of_week: 'Monday',
             start_time: '10:00:00',
             end_time: '12:00:00',

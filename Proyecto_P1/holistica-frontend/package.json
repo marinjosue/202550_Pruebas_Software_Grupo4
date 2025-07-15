@@ -1,7 +1,6 @@
 {
   "name": "holistica-frontend",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
@@ -25,10 +24,6 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test:jasmine": "jasmine",
-    "test:jasmine-browser": "jasmine-browser-runner runSpecs",
-    "test:jasmine-browser:serve": "jasmine-browser-runner serve",
-    "test:browser": "jasmine-browser-runner runSpecs",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,9 +43,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "jasmine": "^5.8.0",
-    "jasmine-browser-runner": "^3.0.0"
   }
 }

@@ -1,4 +1,4 @@
-const req = require('supertest');
+const request = require('supertest');
 const app = require('../app');
 const db = require('../config/db');
 
@@ -6,49 +6,61 @@ describe('Payment API', () => {
     let authToken;
 
     beforeAll(async () => {
-        const loginResponse = await req(app)
-            .post('/api/auth/login') // Asumiendo una ruta de login
+        const loginResponse = await request(app)
+            .post('/api/auth/login')
             .send({
-                email: 'jimarin@gmail.com', // Credenciales de un usuario de prueba
+                email: 'jimarin@gmail.com',
                 password: 'Josue2002'
             });
-        authToken = loginResponse.body.token; // Asumiendo que el token está en response.body.token
+        authToken = loginResponse.body.token;
     });
 
-    //test para get
     test('GET /api/payments/history - should return payment history', async () => {
-        const response = await req(app)
+        const response = await request(app)
             .get('/api/payments/history')
-            .set('Authorization', `Bearer ${authToken}`); // Asegúrate de tener un token válido para pruebas
+            .set('Authorization', `Bearer ${authToken}`);
         expect(response.statusCode).toBe(200);
         expect(Array.isArray(response.body)).toBe(true);
     });
 
-    //test por procesar un pago
     test('POST /api/payments - should process a payment', async () => {
-        const response = await req(app)
-            .post('/api/payments/')
+        // Primero crear un curso para asegurar que existe
+        const courseResponse = await request(app)
+            .post('/api/courses')
             .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 57, amount: 100, method: 'stripe'}); // Asegúrate de que el ID del curso y el monto sean válidos
+            .send({
+                title: 'Curso para Pago',
+                description: 'Curso para probar pagos',
+                price: 100.00,
+                duration: 20,
+                category: 'Testing',
+                type: 'online'
+            });
+
+        const courseId = courseResponse.body.courseId;
+
+        const response = await request(app)
+            .post('/api/payments')
+            .set('Authorization', `Bearer ${authToken}`)
+            .send({ course_id: courseId, amount: 100, method: 'stripe' });
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('message', 'Pago procesado exitosamente');
         expect(response.body).toHaveProperty('paymentId');
     });
 
-    //test por procesar un pago con un método inválido
     test('POST /api/payments - should return error for invalid payment method', async () => {
-        const response = await req(app)
-            .post('/api/payments/')
+        const response = await request(app)
+            .post('/api/payments')
             .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 16, amount: 100, method: 'invalid_method' }); // Método inválido
+            .send({ course_id: 16, amount: 100, method: 'invalid_method' });
         expect(response.statusCode).toBe(400);
         expect(response.body).toHaveProperty('error', 'Método de pago inválido');
         expect(response.body).toHaveProperty('validMethods');
     });
-    
+
     afterAll(async () => {
-        if (db && db.end) { // Asume que tu módulo db exporta un pool con un método .end()
-            await db.end(); // Cierra el pool de conexiones
+        if (db && db.end) {
+            await db.end();
             console.log('Database pool closed after tests.');
         }
     });

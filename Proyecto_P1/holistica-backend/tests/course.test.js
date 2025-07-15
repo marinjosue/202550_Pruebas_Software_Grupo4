@@ -31,7 +31,20 @@ describe('User Course API', () => {
 
     // Test para que apruebe el get con un query
     test('GET /courses/:id - should return a course by ID', async () => {
-        const courseId = 57; // Cambia esto al ID de un curso existente en tu base de datos
+        // Primero crear un curso para asegurar que existe
+        const createResponse = await req(app)
+            .post('/api/courses')
+            .set('Authorization', `Bearer ${authToken}`)
+            .send({
+                title: 'Curso de Prueba',
+                description: 'Curso creado para testing',
+                price: 99.99,
+                duration: 30,
+                category: 'Testing',
+                type: 'online'
+            });
+        
+        const courseId = createResponse.body.courseId;
         const response = await req(app).get(`/api/courses/${courseId}`);
         expect(response.statusCode).toBe(200);
         expect(response.body).toHaveProperty('id', courseId);

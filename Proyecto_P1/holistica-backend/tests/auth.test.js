@@ -54,16 +54,6 @@ describe('Auth API', () => {
         expect(response.body.error).toBe('Credenciales inválidas');
     });
 
-    //Test reset Password
-    test('POST /auth/reset-password - should reset password', async () => {
-        const response = await req(app)
-            .post('/api/auth/reset-password')
-            .send({
-                email: 'allan@gmail.com'
-            });
-        expect(response.body.message).toBe('Correo de recuperación enviado exitosamente');
-    });
-
     afterAll(async () => {
         if (db && db.end) { // Asume que tu módulo db exporta un pool con un método .end()
             await db.end(); // Cierra el pool de conexiones

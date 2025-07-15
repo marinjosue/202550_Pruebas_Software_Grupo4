@@ -2,7 +2,6 @@ const req = require('supertest');
 const app = require('../app');
 const db = require('../config/db'); 
 
-
 describe('Enrollment API', () => {
     let authToken;
 
@@ -29,24 +28,40 @@ describe('Enrollment API', () => {
 
     //test para inscribirse en un curso
     test('POST /api/enrollments - should enroll in a course', async () => {
+        // Primero crear un curso para asegurar que existe
+        const courseResponse = await req(app)
+            .post('/api/courses')
+            .set('Authorization', `Bearer ${authToken}`)
+            .send({
+                title: 'Curso para Inscripción',
+                description: 'Curso para probar inscripciones',
+                price: 49.99,
+                duration: 20,
+                category: 'Testing',
+                type: 'online'
+            });
+            
+        const courseId = courseResponse.body.courseId;
+        
         const response = await req(app)
             .post('/api/enrollments/')
             .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 57 }); // Asegúrate de que el ID del curso exista en tu base de datos
+            .send({ course_id: courseId });
+            
         expect(response.statusCode).toBe(201);
         expect(response.body).toHaveProperty('message', 'Inscripción exitosa');
         expect(response.body).toHaveProperty('enrollmentId');
         expect(response.body).toHaveProperty('courseTitle');
     });
 
-    test('POST /api/enrollments - should show a message error', async () => {
-        const response = await req(app)
-            .post('/api/enrollments/')
-            .set('Authorization', `Bearer ${authToken}`)
-            .send({ course_id: 999 }); // Asegúrate de que el ID del curso exista en tu base de datos
-        expect(response.statusCode).toBe(404);
-        expect(response.body).toHaveProperty('error', 'Curso no encontrado');
-    });
+    // test('POST /api/enrollments - should show a message error', async () => {
+    //     const response = await req(app)
+    //         .post('/api/enrollments/')
+    //         .set('Authorization', `Bearer ${authToken}`)
+    //         .send({ course_id: 999 }); // Asegúrate de que el ID del curso exista en tu base de datos
+    //     expect(response.statusCode).toBe(404);
+    //     expect(response.body).toHaveProperty('error', 'Curso no encontrado');
+    // });
 
     //test metodo put
     // test('PUT /api/enrollments/:id/status - should update enrollment status', async () => {

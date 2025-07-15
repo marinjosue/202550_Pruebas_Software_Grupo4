@@ -1,4 +1,4 @@
-import ApiClient from '../utils/apiClient.js';
+import ApiClient from '../utils/apiClient';
 
 class PaymentService extends ApiClient {
   constructor() {
