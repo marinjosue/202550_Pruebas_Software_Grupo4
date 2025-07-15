@@ -88,9 +88,34 @@ const createUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const usuario = await UserModel.findById(id);
+
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: "Usuario no encontrado"
+      });
+    }
+
+    await UserModel.delete(id);
+
+    res.json({
+      success: true,
+      message: "Usuario eliminado correctamente"
+    });
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar usuario', details: error.message });
+  }
+};
+
+
 module.exports = {
   getProfile,
   updateProfile,
   getAllUsers,
-  createUser
+  createUser,
+  deleteUser
 };

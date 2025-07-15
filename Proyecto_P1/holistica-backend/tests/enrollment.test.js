@@ -55,14 +55,14 @@ describe('Enrollment API', () => {
         expect(response.body).toHaveProperty('courseTitle');
     });
 
-    // test('POST /api/enrollments - should show a message error', async () => {
-    //     const response = await req(app)
-    //         .post('/api/enrollments/')
-    //         .set('Authorization', `Bearer ${authToken}`)
-    //         .send({ course_id: 999 }); // Asegúrate de que el ID del curso exista en tu base de datos
-    //     expect(response.statusCode).toBe(404);
-    //     expect(response.body).toHaveProperty('error', 'Curso no encontrado');
-    // });
+    test('POST /api/enrollments - should show a message error', async () => {
+        const response = await req(app)
+            .post('/api/enrollments/')
+            .set('Authorization', `Bearer ${authToken}`)
+            .send({ course_id: 10 }); // Asegúrate de que el ID del curso exista en tu base de datos
+        expect(response.statusCode).toBe(404);
+        expect(response.body).toHaveProperty('error', 'Curso no encontrado');
+    });
 
     //test metodo put
     // test('PUT /api/enrollments/:id/status - should update enrollment status', async () => {
