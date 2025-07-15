@@ -62,7 +62,7 @@ describe('User Course API', () => {
         const newCourse = {
             title: 'Curso de Prueba',
             description: 'Descripción del curso de prueba',
-            created_by: 1 // Cambia esto al ID de un usuario existente
+            created_by: 2 // Cambia esto al ID de un usuario existente
         };
         const response = await req(app)
             .post('/api/courses')
