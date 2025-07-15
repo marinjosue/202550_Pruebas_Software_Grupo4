@@ -4,27 +4,34 @@ const CourseModel = require('../models/course.model');
 const uploadContent = async (req, res) => {
     try {
         const { course_id, title, type, url } = req.body;
-        // Verify course exists
-        const course = await CourseModel.findById(course_id);
-        if (!course) {
+
+        // Validar datos requeridos
+        if (!course_id || !title || !type || !url) {
+            return res.status(400).json({ error: 'Faltan datos requeridos' });
+        }
+
+        // Verificar si el curso existe
+        const courseExists = await CourseModel.exists({ _id: course_id });
+        if (!courseExists) {
             return res.status(404).json({ error: 'Curso no encontrado' });
         }
 
-        const contentId = await MultimediaModel.upload({
-            course_id,
-            title,
-            type,
-            url
-        });
+        // Subir el contenido multimedia
+        const contentId = await MultimediaModel.upload({ course_id, title, type, url });
 
-        res.status(201).json({
+        return res.status(201).json({
             message: 'Contenido subido exitosamente',
             contentId
         });
     } catch (error) {
-        res.status(500).json({ error: 'Error al subir contenido', details: error.message });
+        console.error('Error en uploadContent:', error);
+        return res.status(500).json({
+            error: 'Error al subir contenido',
+            details: error.message
+        });
     }
 };
+
 
 const updateContent = async (req, res) => {
     try {
