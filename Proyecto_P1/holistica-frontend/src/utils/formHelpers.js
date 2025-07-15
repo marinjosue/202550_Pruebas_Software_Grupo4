@@ -1,4 +1,4 @@
-import { showError, showSuccess } from './commonHelpers';
+import { showError, showSuccess } from './commonHelpers.js';
 
 // Common form validation rules
 export const validationRules = {
