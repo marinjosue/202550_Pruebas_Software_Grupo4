@@ -50,7 +50,7 @@ describe('User API', () => {
         const existingUser = {
             name: 'Existing',
             lastname: 'User',
-            email: 'allangonzalez@example.com',
+            email: 'jimarin@gmail.com',
             phone: '0987654322',
             dni: '1234567891',
             address: 'Guayaquil, Ecuador',

@@ -24,7 +24,6 @@ const requiredEnvVars = [
     'MYSQL_HOST',
     'MYSQL_DB',
     'MYSQL_USER',
-    'MYSQL_PASSWORD',
     'JWT_SECRET'
 ];
 

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for holistica-backend/routes/schedule.routes.js</title>
+    <title>Code coverage report for holistica-backend/middlewares/role.middleware.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">holistica-backend/routes</a> schedule.routes.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">holistica-backend/middlewares</a> role.middleware.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/11</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">50% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>0/0</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">100% </span>
+                <span class="strong">75% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/11</span>
+                <span class='fraction'>6/8</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line high'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -82,53 +82,44 @@
 <a name='L17'></a><a href='#L17'>17</a>
 <a name='L18'></a><a href='#L18'>18</a>
 <a name='L19'></a><a href='#L19'>19</a>
-<a name='L20'></a><a href='#L20'>20</a>
-<a name='L21'></a><a href='#L21'>21</a>
-<a name='L22'></a><a href='#L22'>22</a>
-<a name='L23'></a><a href='#L23'>23</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-yes">11x</span>
+<a name='L20'></a><a href='#L20'>20</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">121x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">11x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
-const router = express.Router();
-const ScheduleController = require('../controllers/schedule.controller');
-const authenticateToken = require('../middlewares/auth.middleware');
-const allowRoles = require('../middlewares/role.middleware');
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const allowRoles = (...roles) =&gt; {
+  return (req, res, next) =&gt; {
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!req.user) {
+<span class="cstat-no" title="statement not covered" >      return res.status(401).json({ error: 'Usuario no autenticado' });</span>
+    }
 &nbsp;
-// Get all schedules (authenticated users)
-router.get('/', authenticateToken, ScheduleController.getAllSchedules);
+    <span class="missing-if-branch" title="if path not taken" >I</span>if (!roles.includes(req.user.role)) {
+<span class="cstat-no" title="statement not covered" >      return res.status(403).json({ </span>
+        error: 'No tienes permisos para acceder a este recurso',
+        requiredRole: roles,
+        userRole: req.user.role
+      });
+    }
 &nbsp;
-// Get schedule by course (authenticated users)
-router.get('/course/:courseId', authenticateToken, ScheduleController.getScheduleByCourse);
+    next();
+  };
+};
 &nbsp;
-// Create schedule (admin only)
-router.post('/', authenticateToken, allowRoles(1), ScheduleController.createSchedule);
-&nbsp;
-// Update schedule (admin only)
-router.put('/:id', authenticateToken, allowRoles(1), ScheduleController.updateSchedule);
-&nbsp;
-// Delete schedule (admin only)
-router.delete('/:id', authenticateToken, allowRoles(1), ScheduleController.deleteSchedule);
-&nbsp;
-module.exports = router;
+module.exports = allowRoles;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -136,11 +127,7 @@ module.exports = router;
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-<<<<<<< HEAD
-                at 2025-06-03T16:42:02.397Z
-=======
-                at 2025-07-13T07:11:06.967Z
->>>>>>> 8875302cf7bd828f3a65d1af6455a719f80aac88
+                at 2025-07-13T07:11:07.016Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

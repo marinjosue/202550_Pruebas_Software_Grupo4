@@ -57,7 +57,7 @@ export default function Login() {
         life: 1500 
       });
     }
-    setTimeout(() => navigate('/profile'), 2000);
+    setTimeout(() => navigate('/'), 2000);
   } catch (error) {
     let errorMessage;
     
@@ -147,7 +147,7 @@ export default function Login() {
                 label="¿Olvidaste tu contraseña?"
                 icon="pi pi-question-circle"
                 className="p-button-link"
-                onClick={() => navigate('/forgot-password')}
+                onClick={() => navigate('/')}
               />
             </div>
           </div>

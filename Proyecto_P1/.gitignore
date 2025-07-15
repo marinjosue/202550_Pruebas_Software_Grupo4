@@ -42,3 +42,7 @@ build/
 # Temporary files
 tmp/
 temp/
+
+# Coverage reports
+coverage/
+*.lcov

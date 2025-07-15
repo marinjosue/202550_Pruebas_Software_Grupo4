@@ -13,7 +13,5 @@ router.post('/login', validateLogin, AuthController.login);
 router.post('/logout', AuthController.logout);
 router.get('/logout', AuthController.logout);
 
-// Recuperación de contraseña
-router.post('/reset-password', AuthController.resetPassword);
 
 module.exports = router;

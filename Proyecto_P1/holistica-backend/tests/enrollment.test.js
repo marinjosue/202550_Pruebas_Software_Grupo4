@@ -7,6 +7,8 @@ describe('Enrollment API', () => {
     let authToken;
     const tokenInvalido = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Miwicm9sZSI6MSwiaWF0IjoxNzQ4NzU3MTcwLCJleHAiOjE3NDg4NDM1NzB9.HyiqAFXzmxEjkq-T_uXj0httP_aDNC_Cj7NeF4xfycA'
 
+
+
     beforeAll(async () => {
         const loginResponse = await req(app)
             .post('/api/auth/login') // Asumiendo una ruta de login

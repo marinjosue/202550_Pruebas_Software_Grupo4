@@ -1,4 +1,4 @@
-import { validationRules, showValidationErrors } from './formHelpers';
+import { validationRules, showValidationErrors } from './formHelpers.js';
 
 export const courseValidationSchema = {
   name: [
