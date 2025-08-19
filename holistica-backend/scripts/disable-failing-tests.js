@@ -33,7 +33,7 @@ async function renameFailingTests() {
     });
     
     return arrayOfFiles;
-  }
+  };
   
   const allTestFiles = getAllFiles(testsDir);
   

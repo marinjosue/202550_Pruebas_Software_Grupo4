@@ -324,7 +324,7 @@ describe('User Controller', () => {
       expect(UserModel.delete).toHaveBeenCalledWith(1);
       expect(res.json).toHaveBeenCalledWith({
         success: true,
-        message: "Usuario eliminado correctamente"
+        message: 'Usuario eliminado correctamente'
       });
     });
 
@@ -342,7 +342,7 @@ describe('User Controller', () => {
       expect(res.status).toHaveBeenCalledWith(404);
       expect(res.json).toHaveBeenCalledWith({
         success: false,
-        message: "Usuario no encontrado"
+        message: 'Usuario no encontrado'
       });
     });
 
