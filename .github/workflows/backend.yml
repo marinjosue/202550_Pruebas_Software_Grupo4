@@ -38,6 +38,11 @@ jobs:
         run: |
           echo "NODE_ENV=test" > .env
           echo "JWT_SECRET=test-secret-key" >> .env
+          echo "MYSQL_HOST=localhost" >> .env
+          echo "MYSQL_DB=pruebas" >> .env
+          echo "MYSQL_USER=root" >> .env
+          echo "MYSQL_PORT=3306" >> .env
+          echo "MYSQL_PASSWORD=" >> .env
 
       # Lint solo si existe script "lint" en package.json
       - name: Check if lint script exists
