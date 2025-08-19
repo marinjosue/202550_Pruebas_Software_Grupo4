@@ -32,7 +32,7 @@ describe('CourseCard', () => {
     expect(screen.getByText(/2025-10-01/)).toBeInTheDocument();
     expect(screen.getByText(/Duración:/)).toBeInTheDocument();
     expect(screen.getByText(/40 horas/)).toBeInTheDocument();
-    expect(screen.getByText(/Descripción:/)).toBeInTheDocument();
+    expect(screen.getByText(/Descripcion:/)).toBeInTheDocument(); // Corregido para usar "Descripcion" sin tilde
     expect(screen.getByText(/Learn React from scratch/)).toBeInTheDocument();
     expect(screen.getByText(/Precio:/)).toBeInTheDocument();
     expect(screen.getByText(/\$99.99/)).toBeInTheDocument();
