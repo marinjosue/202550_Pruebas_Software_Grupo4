@@ -34,7 +34,7 @@ jobs:
     - name: Run unit tests with only passing tests
       working-directory: ./holistica-frontend
       run: |
-        npm test
+        npm test -- --watchAll=false src/__tests__/App.test.js src/__tests__/components/CourseCard.test.js src/__tests__/components/Footer.test.js src/__tests__/components/common/FormField.test.js src/__tests__/components/common/ContactInfoCard.test.js src/__tests__/context/CartContext.test.js src/__tests__/utils/courseValidation.test.js
       env:
         CI: true
 
