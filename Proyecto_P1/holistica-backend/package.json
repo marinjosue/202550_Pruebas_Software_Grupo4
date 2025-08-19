@@ -4,6 +4,8 @@
   "main": "server.js",
   "scripts": {
     "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "eslint .",

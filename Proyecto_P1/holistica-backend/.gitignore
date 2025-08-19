@@ -1,0 +1,10 @@
+node_modules
+coverage
+.scannerwork
+logs
+.DS_Store
+.env
+*.log
+*.tmp
+*.bak
+

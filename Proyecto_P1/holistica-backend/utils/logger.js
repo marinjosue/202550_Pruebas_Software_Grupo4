@@ -1,80 +1,103 @@
+// filepath: c:\Desktop\ESPE\6-7 level\Pruebas\202550_Pruebas_Software_Grupo4\Proyecto_P1\holistica-backend\utils\logger.js
 const fs = require('fs');
 const path = require('path');
 
+// Crear directorio de logs si no existe
+const logDir = path.join(__dirname, '..', 'logs');
+if (!fs.existsSync(logDir)) {
+  fs.mkdirSync(logDir);
+}
+
 class Logger {
   constructor() {
-    this.logDir = path.join(__dirname, '../logs');
-    this.ensureLogDirectory();
+    this.appLog = path.join(logDir, 'app.log');
+    this.errorLog = path.join(logDir, 'error.log');
+    this.debugLog = path.join(logDir, 'debug.log');
   }
 
-  ensureLogDirectory() {
-    if (!fs.existsSync(this.logDir)) {
-      fs.mkdirSync(this.logDir, { recursive: true });
-    }
-  }
-
-  formatMessage(level, message, meta = {}) {
+  _writeLog(logPath, message, data = {}) {
     const timestamp = new Date().toISOString();
-    const metaString = Object.keys(meta).length > 0 ? JSON.stringify(meta) : '';
-    return `[${timestamp}] ${level.toUpperCase()}: ${message} ${metaString}\n`;
+    const logEntry = {
+      timestamp,
+      message,
+      ...data
+    };
+    
+    const logString = `${JSON.stringify(logEntry)}\n`;
+    
+    fs.appendFile(logPath, logString, (err) => {
+      if (err) console.error('Error writing to log file:', err);
+    });
+    
+    return logEntry;
   }
 
-  writeToFile(filename, content) {
-    const filePath = path.join(this.logDir, filename);
-    fs.appendFileSync(filePath, content);
+  info(message, data = {}) {
+    const logEntry = this._writeLog(this.appLog, message, data);
+    console.log(`[INFO] ${message}`, data);
+    return logEntry;
   }
 
-  info(message, meta = {}) {
-    const logMessage = this.formatMessage('info', message, meta);
-    this.writeToFile('app.log', logMessage);
+  error(message, data = {}) {
+    const logEntry = this._writeLog(this.errorLog, message, data);
+    console.error(`[ERROR] ${message}`, data);
+    return logEntry;
   }
 
-  error(message, meta = {}) {
-    const logMessage = this.formatMessage('error', message, meta);
-    this.writeToFile('error.log', logMessage);
+  warn(message, data = {}) {
+    const logEntry = this._writeLog(this.appLog, message, data);
+    console.warn(`[WARN] ${message}`, data);
+    return logEntry;
   }
 
-  warn(message, meta = {}) {
-    const logMessage = this.formatMessage('warn', message, meta);
-    this.writeToFile('app.log', logMessage);
-  }
-
-  debug(message, meta = {}) {
+  debug(message, data = {}) {
+    // Solo registrar debug en entorno de desarrollo
     if (process.env.NODE_ENV === 'development') {
-      const logMessage = this.formatMessage('debug', message, meta);
-      this.writeToFile('debug.log', logMessage);
+      const logEntry = this._writeLog(this.debugLog, message, data);
+      console.debug(`[DEBUG] ${message}`, data);
+      return logEntry;
     }
+    return null;
   }
 
-  // HTTP request logging
   logRequest(req, res, next) {
     const start = Date.now();
-    const { method, url, ip } = req;
     
+    // Una vez que la respuesta termine
     res.on('finish', () => {
       const duration = Date.now() - start;
-      const { statusCode } = res;
-      
-      this.info(`${method} ${url}`, {
-        statusCode,
+      const logData = {
+        method: req.method,
+        url: req.originalUrl,
+        status: res.statusCode,
         duration: `${duration}ms`,
-        ip,
-        userAgent: req.get('User-Agent')
-      });
+        ip: req.ip,
+        userAgent: req.get('user-agent') || 'unknown'
+      };
+      
+      // Log diferente según el código de estado
+      if (res.statusCode >= 500) {
+        this.error(`${req.method} ${req.originalUrl} ${res.statusCode}`, logData);
+      } else if (res.statusCode >= 400) {
+        this.warn(`${req.method} ${req.originalUrl} ${res.statusCode}`, logData);
+      } else {
+        this.info(`${req.method} ${req.originalUrl} ${res.statusCode}`, logData);
+      }
     });
     
     next();
   }
-
-  // Database operation logging
-  logDatabaseOperation(operation, table, meta = {}) {
-    this.debug(`Database ${operation} on ${table}`, meta);
+  
+  logDbOperation(operation, table, data = {}) {
+    this.debug(`DB ${operation} on ${table}`, data);
   }
-
-  // Authentication logging
-  logAuth(action, userId, meta = {}) {
-    this.info(`Auth ${action}`, { userId, ...meta });
+  
+  logAuthEvent(event, userId, data = {}) {
+    this.info(`AUTH ${event}`, { userId, ...data });
   }
 }
 
-module.exports = new Logger();
+// Singleton instance
+const logger = new Logger();
+
+module.exports = logger;

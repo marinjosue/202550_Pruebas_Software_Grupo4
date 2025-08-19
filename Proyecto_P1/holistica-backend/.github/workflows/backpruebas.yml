@@ -1,0 +1,62 @@
+name: Pruebas Automáticas
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - name: Obtener código
+      uses: actions/checkout@v3
+    
+    - name: Configurar Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Instalar dependencias
+      run: npm install
+      
+    - name: Crear archivo .env para pruebas
+      run: |
+        echo "NODE_ENV=test" > .env
+        echo "JWT_SECRET=test-secret-key" >> .env
+    
+    # El paso de lint solo si existe un script lint configurado en package.json
+    - name: Verificar si existe script de lint
+      id: check_lint
+      run: |
+        if grep -q '"lint"' package.json; then
+          echo "has_lint=true" >> $GITHUB_OUTPUT
+        else
+          echo "has_lint=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Lint del Código
+      if: steps.check_lint.outputs.has_lint == 'true'
+      run: npm run lint || echo "Problemas de linting encontrados, pero continuando con las pruebas"
+      
+    - name: Ejecutar pruebas
+      run: npx jest --coverage
+    
+    - name: Mostrar resumen de cobertura
+      run: |
+        echo "Resumen de cobertura:"
+        cat coverage/lcov-report/index.html | grep -o '<span class="strong">[^<]*%' | head -4 | sed 's/<span class="strong">//g'
+      continue-on-error: true
+      
+    - name: Subir informe de cobertura
+      uses: actions/upload-artifact@v3
+      with:
+        name: coverage-report
+        path: coverage

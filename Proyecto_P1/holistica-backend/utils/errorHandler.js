@@ -1,132 +1,83 @@
-const logger = require('./logger');
-
-class ErrorHandler extends Error {
-  constructor(message, statusCode = 500, isOperational = true) {
+class AppError extends Error {
+  constructor(message, statusCode) {
     super(message);
     this.statusCode = statusCode;
-    this.isOperational = isOperational;
-    this.timestamp = new Date().toISOString();
-    
+    this.status = `${statusCode}`.startsWith('4') ? 'fail' : 'error';
+    this.isOperational = true;
+
     Error.captureStackTrace(this, this.constructor);
   }
 }
 
-class ValidationError extends ErrorHandler {
-  constructor(message, field = null) {
-    super(message, 400);
-    this.field = field;
-    this.type = 'ValidationError';
-  }
-}
+const handleValidationError = (err) => {
+  const errors = Object.values(err.errors).map(el => el.message);
+  const message = `Datos inválidos: ${errors.join('. ')}`;
+  return new AppError(message, 400);
+};
 
-class AuthenticationError extends ErrorHandler {
-  constructor(message = 'Authentication failed') {
-    super(message, 401);
-    this.type = 'AuthenticationError';
-  }
-}
+const handleDuplicateFieldsDB = (err) => {
+  const value = err.errmsg.match(/(["'])(\\?.)*?\1/)[0];
+  const message = `Valor duplicado: ${value}. Por favor use otro valor`;
+  return new AppError(message, 400);
+};
 
-class AuthorizationError extends ErrorHandler {
-  constructor(message = 'Access denied') {
-    super(message, 403);
-    this.type = 'AuthorizationError';
-  }
-}
+const handleJWTError = () => new AppError('Token inválido. Por favor inicie sesión nuevamente', 401);
 
-class NotFoundError extends ErrorHandler {
-  constructor(resource = 'Resource') {
-    super(`${resource} not found`, 404);
-    this.type = 'NotFoundError';
-  }
-}
+const handleJWTExpiredError = () => new AppError('Su token ha expirado. Por favor inicie sesión nuevamente', 401);
 
-class DatabaseError extends ErrorHandler {
-  constructor(message = 'Database operation failed') {
-    super(message, 500);
-    this.type = 'DatabaseError';
-  }
-}
-
-// Global error handling middleware
-const globalErrorHandler = (err, req, res, next) => {
-  let error = { ...err };
-  error.message = err.message;
-
-  // Log error
-  logger.error('Error occurred', {
+const sendErrorDev = (err, res) => {
+  res.status(err.statusCode).json({
+    status: err.status,
+    error: err,
     message: err.message,
-    stack: err.stack,
-    url: req.originalUrl,
-    method: req.method,
-    ip: req.ip,
-    userAgent: req.get('User-Agent')
-  });
-
-  // Mongoose bad ObjectId
-  if (err.name === 'CastError') {
-    const message = 'Resource not found';
-    error = new NotFoundError(message);
-  }
-
-  // Mongoose duplicate key
-  if (err.code === 11000) {
-    const message = 'Duplicate field value entered';
-    error = new ValidationError(message);
-  }
-
-  // Mongoose validation error
-  if (err.name === 'ValidationError') {
-    const message = Object.values(err.errors).map(val => val.message);
-    error = new ValidationError(message.join(', '));
-  }
-
-  // JWT errors
-  if (err.name === 'JsonWebTokenError') {
-    error = new AuthenticationError('Invalid token');
-  }
-
-  if (err.name === 'TokenExpiredError') {
-    error = new AuthenticationError('Token expired');
-  }
-
-  // MySQL errors
-  if (err.code === 'ER_DUP_ENTRY') {
-    error = new ValidationError('Duplicate entry');
-  }
-
-  if (err.code === 'ER_NO_REFERENCED_ROW_2') {
-    error = new ValidationError('Referenced resource does not exist');
-  }
-
-  res.status(error.statusCode || 500).json({
-    success: false,
-    error: {
-      message: error.message || 'Server Error',
-      type: error.type || 'ServerError',
-      ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
-    }
+    stack: err.stack
   });
 };
 
-// Async error wrapper
-const asyncHandler = (fn) => (req, res, next) => {
-  Promise.resolve(fn(req, res, next)).catch(next);
+const sendErrorProd = (err, res) => {
+  // Errores operacionales, enviar mensaje al cliente
+  if (err.isOperational) {
+    res.status(err.statusCode).json({
+      status: err.status,
+      message: err.message
+    });
+  } 
+  // Errores de programación o desconocidos: no enviar detalles
+  else {
+    console.error('ERROR 💥', err);
+    res.status(500).json({
+      status: 'error',
+      message: 'Algo salió mal'
+    });
+  }
 };
 
-// 404 handler
 const notFoundHandler = (req, res, next) => {
-  const error = new NotFoundError(`Route ${req.originalUrl}`);
+  const error = new AppError(`No se encontró la ruta: ${req.originalUrl}`, 404);
   next(error);
 };
 
+const globalErrorHandler = (err, req, res, next) => {
+  err.statusCode = err.statusCode || 500;
+  err.status = err.status || 'error';
+
+  if (process.env.NODE_ENV === 'development') {
+    sendErrorDev(err, res);
+  } else if (process.env.NODE_ENV === 'production') {
+    let error = { ...err };
+    error.message = err.message;
+
+    if (error.name === 'ValidationError') error = handleValidationError(error);
+    if (error.code === 11000) error = handleDuplicateFieldsDB(error);
+    if (error.name === 'JsonWebTokenError') error = handleJWTError();
+    if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+
+    sendErrorProd(error, res);
+  }
+};
+
 module.exports = {
-  ErrorHandler,
-  ValidationError,
-  AuthenticationError,
-  AuthorizationError,
-  NotFoundError,
-  DatabaseError,
-  globalErrorHandler,
-  asyncHandler,
-  notFoundHandler
+  AppError,
+  notFoundHandler,
+  globalErrorHandler
 };
