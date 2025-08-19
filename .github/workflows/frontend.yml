@@ -1,0 +1,214 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'holistica-frontend/**'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'holistica-frontend/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: holistica-frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./holistica-frontend
+      run: npm ci
+
+    - name: Run linting
+      working-directory: ./holistica-frontend
+      run: npm run lint --if-present
+
+    - name: Run unit tests
+      working-directory: ./holistica-frontend
+      run: npm run test:ci
+      env:
+        CI: true
+
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        directory: ./holistica-frontend/coverage
+        flags: frontend
+        name: frontend-coverage
+        fail_ci_if_error: true
+
+  e2e-tests:
+    runs-on: ubuntu-latest
+    needs: test
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: holistica-frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./holistica-frontend
+      run: npm ci
+
+    - name: Build application
+      working-directory: ./holistica-frontend
+      run: npm run build
+
+    - name: Start application
+      working-directory: ./holistica-frontend
+      run: |
+        npm start &
+        sleep 30
+      env:
+        CI: true
+
+    - name: Run Cypress tests
+      uses: cypress-io/github-action@v6
+      with:
+        working-directory: ./holistica-frontend
+        start: npm start
+        wait-on: 'http://localhost:3000'
+        wait-on-timeout: 120
+        browser: chrome
+        record: false
+        parallel: false
+
+    - name: Upload Cypress screenshots
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-screenshots
+        path: holistica-frontend/cypress/screenshots
+
+    - name: Upload Cypress videos
+      uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: cypress-videos
+        path: holistica-frontend/cypress/videos
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test, e2e-tests]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: holistica-frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./holistica-frontend
+      run: npm ci
+
+    - name: Build for production
+      working-directory: ./holistica-frontend
+      run: npm run build
+
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-files
+        path: holistica-frontend/build
+
+  security-scan:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Run security audit
+      working-directory: ./holistica-frontend
+      run: npm audit --audit-level=moderate
+
+    - name: Run dependency check
+      working-directory: ./holistica-frontend
+      run: npx audit-ci --moderate
+
+  performance-test:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+
+    - name: Install dependencies
+      working-directory: ./holistica-frontend
+      run: npm ci
+
+    - name: Build application
+      working-directory: ./holistica-frontend
+      run: npm run build
+
+    - name: Run Lighthouse CI
+      working-directory: ./holistica-frontend
+      run: |
+        npm install -g @lhci/cli@0.12.x
+        lhci autorun
+      env:
+        LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [test, e2e-tests, build, security-scan]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: build-files
+        path: holistica-frontend/build
+
+    - name: Deploy to staging
+      run: |
+        echo "Deploying to staging environment..."
+        # Aquí irían los comandos de despliegue real
+        # Por ejemplo, despliegue a Netlify, Vercel, AWS S3, etc.
+        
+    - name: Run smoke tests
+      run: |
+        echo "Running smoke tests on staging..."
+        # Aquí irían las pruebas de smoke en el ambiente de staging
+
+    - name: Notify deployment status
+      if: always()
+      run: |
+        echo "Deployment completed with status: ${{ job.status }}"
+        # Aquí podrías enviar notificaciones a Slack, Discord, email, etc.

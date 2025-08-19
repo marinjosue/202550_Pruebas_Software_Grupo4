@@ -6,7 +6,6 @@
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^13.5.0",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
     "classnames": "^2.5.1",
@@ -20,11 +19,24 @@
     "sass": "^1.89.1",
     "web-vitals": "^2.1.4"
   },
+  "devDependencies": {
+    "@testing-library/user-event": "^14.6.1",
+    "cypress": "^13.17.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "msw": "^2.10.5"
+  },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:ci": "CI=true react-scripts test --coverage --watchAll=false",
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:headed": "cypress run --headed",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [

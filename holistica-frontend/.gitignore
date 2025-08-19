@@ -21,3 +21,28 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+# Testing Coverage Reports
+coverage/
+*.lcov
+
+# Cypress
+cypress/videos
+cypress/screenshots
+cypress/downloads
+
+# Jest
+jest-coverage/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test results
+test-results.xml
+junit.xml
+
+# Temporary files
+.tmp/
+temp/
