@@ -22,7 +22,7 @@ const PaymentDialog = ({
   const [selectedMethod, setSelectedMethod] = useState('');
   const [amount, setAmount] = useState(course?.price || 0);
   const [processing, setProcessing] = useState(false);
-  const [step, setStep] = useState('method'); // 'method', 'payment', 'confirmation'
+  const [step, setStep] = useState('method'); 
   const toast = useRef(null);
 
   const paymentMethods = paymentService.getPaymentMethods();
