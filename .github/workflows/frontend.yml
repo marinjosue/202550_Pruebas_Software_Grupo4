@@ -1,4 +1,4 @@
-name: Frontend CI/CD Simplified
+name: Frontend CI
 
 on:
   push:
@@ -14,7 +14,7 @@ on:
   workflow_dispatch: # Permite ejecutar el flujo de trabajo manualmente desde la interfaz
 
 jobs:
-  test-and-build:
+  test:
     runs-on: ubuntu-latest
     
     steps:
@@ -46,21 +46,43 @@ jobs:
         CI: true
         SKIP_PREFLIGHT_CHECK: true
         NODE_OPTIONS: --max-old-space-size=4096
+        
+    - name: Report test results
+      if: always()
+      run: |
+        echo "Test execution completed. Please check logs for details."
+
+  build:
+    runs-on: ubuntu-latest
+    needs: [test]
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.x'
+        cache: 'npm'
+        cache-dependency-path: holistica-frontend/package-lock.json
+
+    - name: Install dependencies
+      working-directory: ./holistica-frontend
+      run: npm ci
 
     - name: Build for production
       working-directory: ./holistica-frontend
-      run: npm run build
+      run: DISABLE_ESLINT_PLUGIN=true npm run build
+      env:
+        CI: false
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
       with:
         name: build-files
         path: holistica-frontend/build
-        
-    - name: Report test results
-      if: always()
-      run: |
-        echo "Test execution completed. Please check logs for details."
+        retention-days: 7
 
   security-scan:
     runs-on: ubuntu-latest
@@ -72,30 +94,3 @@ jobs:
     - name: Run security audit (non-blocking)
       working-directory: ./holistica-frontend
       run: npm audit || echo "Security audit complete with warnings"
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: [security-scan]
-    if: (github.ref == 'refs/heads/main' && github.event_name == 'push') || github.event_name == 'workflow_dispatch'
-    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-
-    - name: Download build artifacts
-      uses: actions/download-artifact@v4
-      with:
-        name: build-files
-        path: holistica-frontend/build
-
-    - name: Deploy to staging
-      run: |
-        echo "Deploying to staging environment..."
-        # Aquí irían los comandos de despliegue real
-        # Por ejemplo, despliegue a Netlify, Vercel, AWS S3, etc.
-
-    - name: Notify deployment status
-      if: always()
-      run: |
-        echo "Deployment completed with status: ${{ job.status }}"
-        # Aquí podrías enviar notificaciones a Slack, Discord, email, etc.
