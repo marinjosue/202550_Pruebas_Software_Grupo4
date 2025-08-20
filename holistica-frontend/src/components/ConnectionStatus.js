@@ -9,7 +9,7 @@ export default function ConnectionStatus() {
   useEffect(() => {
     const checkConnection = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_API_URL?.replace('/api', '') || 'http://localhost:3000');
+        const response = await fetch(process.env.REACT_APP_API_URL?.replace('/api', '') || 'https://two02550-pruebas-software-grupo4.onrender.com');
         setIsConnected(response.ok);
       } catch (error) {
         console.warn('Connection check failed:', error.message);

@@ -12,7 +12,7 @@ import 'primeicons/primeicons.css';
 
 // Configurar localización en español
 addLocale('es', {
-  firstDayOfWeek: 1,
+  firstDayOfWeek: 1,  
   dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
   dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
   dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
