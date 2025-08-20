@@ -10,6 +10,7 @@ on:
     branches: [ main ]
     paths:
       - 'holistica-backend/**'
+  workflow_call: # Makes this workflow reusable
 
 jobs:
   test:

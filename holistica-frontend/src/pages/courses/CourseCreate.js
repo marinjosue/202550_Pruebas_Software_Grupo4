@@ -196,11 +196,11 @@ export default function CourseCreate() {
           <Card title="Información Básica" className="form-card">
             <div className="form-row">
               <div className="form-field">
-                <label htmlFor="name">Nombre del Curso *</label>
+                <label htmlFor="title">Nombre del Curso *</label>
                 <InputText
-                  id="name"
-                  value={formData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
+                  id="title"
+                  value={formData.title}
+                  onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="Ej: Masaje Terapéutico Avanzado"
                 />
               </div>

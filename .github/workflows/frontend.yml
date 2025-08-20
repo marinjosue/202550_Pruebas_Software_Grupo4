@@ -12,6 +12,7 @@ on:
       - 'holistica-frontend/**'
       - '.github/workflows/frontend.yml' 
   workflow_dispatch: # Permite ejecutar el flujo de trabajo manualmente desde la interfaz
+  workflow_call: # Makes this workflow reusable
 
 jobs:
   test:
