@@ -23,7 +23,7 @@ app.disable('x-powered-by');
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  origin: process.env.FRONTEND_URL || 'https://202550-pruebas-software-grupo4.vercel.app',
   credentials: true,
   optionsSuccessStatus: 200
 };
