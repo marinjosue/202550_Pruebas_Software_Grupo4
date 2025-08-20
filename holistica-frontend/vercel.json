@@ -1,14 +1,17 @@
 {
   "version": 2,
-  "name": "holistica-frontend-prod",
+  "framework": "create-react-app",
   "buildCommand": "npm run build",
   "outputDirectory": "build",
   "installCommand": "npm install",
-  "framework": "create-react-app",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
   "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ],
+  "env": {
+    "REACT_APP_API_URL": "https://two02550-pruebas-software-grupo4.onrender.com/api"
+  }
 }

@@ -83,6 +83,11 @@ jobs:
         
         # Deploy directly using token (fixed format)
         echo "🌐 Deploying to production..."
+        
+        # Crear archivo .env.production para asegurarnos que Vercel tenga las variables
+        echo "REACT_APP_API_URL=https://two02550-pruebas-software-grupo4.onrender.com/api" > .env.production
+        
+        # Desplegar con las variables configuradas
         vercel deploy --prod --yes --token "$VERCEL_TOKEN"
         
         echo "✅ Vercel deployment successful!"
