@@ -68,23 +68,33 @@ jobs:
       working-directory: ./holistica-frontend
       run: |
         if [ -n "${VERCEL_TOKEN}" ]; then
-          echo "Installing Vercel CLI..."
+          echo "🚀 Starting Vercel deployment..."
+          
+          # Clean any existing .vercel config
+          rm -rf .vercel
+          
+          # Install latest Vercel CLI
           npm install -g vercel@latest
           
-          echo "Building project..."
+          # Build the project
+          echo "📦 Building project..."
           npm ci
           npm run build
           
-          echo "Setting up Vercel project configuration..."
+          # Configure Vercel project
+          echo "⚙️ Configuring Vercel..."
           mkdir -p .vercel
           echo "{\"orgId\":\"${VERCEL_ORG_ID}\",\"projectId\":\"${VERCEL_PROJECT_ID}\"}" > .vercel/project.json
           
-          echo "Deploying to Vercel production..."
-          npx vercel --prod --token "${VERCEL_TOKEN}" --yes
-          echo "✅ Vercel deployment successful"
+          # Deploy using npx to avoid path issues
+          echo "🌐 Deploying to Vercel..."
+          npx vercel build --prod --token="${VERCEL_TOKEN}"
+          npx vercel deploy --prebuilt --prod --token="${VERCEL_TOKEN}"
+          
+          echo "✅ Vercel deployment completed successfully!"
         else
-          echo "⚠️ VERCEL_TOKEN not configured - skipping Vercel deployment"
-          echo "Configure VERCEL_TOKEN secret to enable automatic deployment"
+          echo "⚠️ VERCEL_TOKEN not configured"
+          echo "🔧 Add VERCEL_TOKEN secret to enable deployment"
         fi
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}

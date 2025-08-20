@@ -9,12 +9,14 @@
   ],
   "routes": [
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg))",
+      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2))",
       "dest": "/build/$1"
     },
     {
       "src": "/(.*)",
       "dest": "/build/index.html"
     }
-  ]
+  ],
+  "functions": {},
+  "trailingSlash": false
 }
