@@ -65,7 +65,7 @@ jobs:
       with:
         node-version: '20.x'
 
-    # Deploy to Vercel
+    # Deploy to Vercel - Simplified approach
     - name: Deploy to Vercel
       working-directory: ./holistica-frontend
       run: |
@@ -78,32 +78,27 @@ jobs:
         # Install Vercel CLI
         npm install -g vercel@latest
         
-        # Clean any existing config and reset
+        # Clean any existing config
         rm -rf .vercel 2>/dev/null || true
         
-        # Create fresh configuration
-        mkdir -p .vercel
-        
-        # Use vercel link instead of manual config to avoid path issues
-        echo "🔗 Linking project to Vercel..."
-        echo "$VERCEL_TOKEN" | vercel link --scope="$VERCEL_ORG_ID" --yes --token="$VERCEL_TOKEN"
-        
-        # Deploy with explicit build output directory
+        # Deploy directly using token
         echo "🌐 Deploying to production..."
-        vercel --prod --token="$VERCEL_TOKEN" --yes
+        vercel deploy --prod --token=${VERCEL_TOKEN}
         
         echo "✅ Vercel deployment successful!"
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-        VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-        VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
     # Deploy to Render
     - name: Deploy to Render  
       run: |
         echo "🖥️ Triggering Render deployment..."
-        curl -X POST "$RENDER_DEPLOY_HOOK"
-        echo "✅ Render deployment triggered successfully!"
+        if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+          curl -X POST "$RENDER_DEPLOY_HOOK"
+          echo "✅ Render deployment triggered successfully!"
+        else
+          echo "❌ RENDER_DEPLOY_HOOK is not set. Skipping Render deployment."
+        fi
       env:
         RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
 
