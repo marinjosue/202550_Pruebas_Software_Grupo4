@@ -44,5 +44,5 @@ tmp/
 temp/
 
 # Coverage reports
-coverage/
+./coverage/
 *.lcov
