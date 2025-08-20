@@ -89,37 +89,15 @@ jobs:
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
 
-    # Deploy to Render
-    - name: Deploy to Render  
-      run: |
-        echo "🖥️ Triggering Render deployment..."
-        # Mostrar el valor del hook (ocultar en logs)
-        if [ -n "$RENDER_DEPLOY_HOOK" ] && [ "$RENDER_DEPLOY_HOOK" != "null" ] && [ "$RENDER_DEPLOY_HOOK" != "undefined" ]; then
-          echo "Calling webhook URL (first 10 chars): ${RENDER_DEPLOY_HOOK:0:10}..."
-          # Usar comillas simples para evitar expansión de variables
-          curl -X POST '$RENDER_DEPLOY_HOOK'
-          CURL_EXIT=$?
-          if [ $CURL_EXIT -eq 0 ]; then
-            echo "✅ Render deployment triggered successfully!"
-          else
-            echo "❌ Curl failed with exit code $CURL_EXIT"
-          fi
-        else
-          echo "❌ RENDER_DEPLOY_HOOK is not properly configured. Skipping Render deployment."
-          echo "➡️ Configure the webhook URL in GitHub secrets"
-        fi
-      env:
-        RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+    # No Render deployment - focusing only on Vercel
 
     # Status summary
     - name: Deployment Summary
       run: |
         echo "🎉 Deployment Pipeline Complete!"
         echo "✅ Frontend deployed to Vercel"
-        echo "✅ Backend deployed to Render"
         echo "✅ All tests passed"
         echo "✅ Performance checks passed"
         echo ""
         echo "🌐 Your application is now live!"
         echo "Frontend: https://202550-pruebas-software-grupo4.vercel.app"
-        echo "Backend: Check Render dashboard for URL"
