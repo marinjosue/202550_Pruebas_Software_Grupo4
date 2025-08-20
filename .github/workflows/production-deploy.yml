@@ -78,19 +78,17 @@ jobs:
         # Install Vercel CLI
         npm install -g vercel@latest
         
-        # Clean any existing config
+        # Clean any existing config and reset
         rm -rf .vercel 2>/dev/null || true
         
-        # Configure Vercel
+        # Create fresh configuration
         mkdir -p .vercel
-        cat > .vercel/project.json << EOF
-        {
-          "orgId": "$VERCEL_ORG_ID",
-          "projectId": "$VERCEL_PROJECT_ID"
-        }
-        EOF
         
-        # Deploy
+        # Use vercel link instead of manual config to avoid path issues
+        echo "🔗 Linking project to Vercel..."
+        echo "$VERCEL_TOKEN" | vercel link --scope="$VERCEL_ORG_ID" --yes --token="$VERCEL_TOKEN"
+        
+        # Deploy with explicit build output directory
         echo "🌐 Deploying to production..."
         vercel --prod --token="$VERCEL_TOKEN" --yes
         

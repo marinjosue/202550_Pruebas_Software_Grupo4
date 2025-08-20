@@ -1,22 +1,14 @@
 {
   "version": 2,
-  "name": "holistica-frontend",
-  "builds": [
-    {
-      "src": "build/**/*",
-      "use": "@vercel/static"
-    }
-  ],
+  "name": "holistica-frontend-prod",
+  "buildCommand": "npm run build",
+  "outputDirectory": "build",
+  "installCommand": "npm install",
+  "framework": "create-react-app",
   "routes": [
     {
-      "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2))",
-      "dest": "/build/$1"
-    },
-    {
       "src": "/(.*)",
-      "dest": "/build/index.html"
+      "dest": "/index.html"
     }
-  ],
-  "functions": {},
-  "trailingSlash": false
+  ]
 }
