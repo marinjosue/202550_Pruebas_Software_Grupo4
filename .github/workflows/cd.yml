@@ -176,7 +176,7 @@ jobs:
         echo "Render deployment triggered ✅"
 
     # Fallback notification if secrets are not configured
-    - name: Deployment Status
+    - name: Deployment Status FrontEnd
       run: |
         if [ -z "${{ secrets.VERCEL_TOKEN }}" ] && [ -z "${{ secrets.RENDER_DEPLOY_HOOK }}" ]; then
           echo "� Deployment secrets not configured. Please set up:"
