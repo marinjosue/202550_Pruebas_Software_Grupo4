@@ -1,0 +1,63 @@
+{
+  "name": "holistica-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "axios": "^1.9.0",
+    "chart.js": "^4.4.9",
+    "classnames": "^2.5.1",
+    "primeflex": "^4.0.0",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.9.5",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^6.30.1",
+    "react-scripts": "5.0.1",
+    "sass": "^1.89.1",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "@testing-library/user-event": "^14.6.1",
+    "cypress": "^13.17.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "msw": "^2.10.5"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "test:all": "react-scripts test --watchAll=true",
+    "test:working": "react-scripts test --watchAll=false src/__tests__/App.test.js src/__tests__/components/CourseCard.test.js",
+    "test:interactive": "node scripts/test-runner.js",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:ci": "CI=true node scripts/run-tests.js",
+    "test:stable": "node scripts/run-tests.js",
+    "eject": "react-scripts eject",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:headed": "cypress run --headed",
+    "test:e2e": "cypress run",
+    "test:e2e:open": "cypress open"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

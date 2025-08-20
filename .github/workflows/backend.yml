@@ -1,0 +1,79 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'holistica-backend/**'
+      - '.github/workflows/backend.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'holistica-backend/**'
+  workflow_call: # Makes this workflow reusable
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    # Hace que todos los "run" se ejecuten dentro de la carpeta del backend
+    defaults:
+      run:
+        working-directory: holistica-backend
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: holistica-backend/package-lock.json
+
+      - name: Install deps
+        run: npm ci
+
+      - name: Create .env for tests
+        run: |
+          echo "NODE_ENV=test" > .env
+          echo "JWT_SECRET=test-secret-key" >> .env
+          echo "MYSQL_HOST=localhost" >> .env
+          echo "MYSQL_DB=pruebas" >> .env
+          echo "MYSQL_USER=root" >> .env
+          echo "MYSQL_PORT=3306" >> .env
+          echo "MYSQL_PASSWORD=" >> .env
+
+      # Lint solo si existe script "lint" en package.json
+      - name: Check if lint script exists
+        id: check_lint
+        run: |
+          if grep -q '"lint"' package.json; then
+            echo "has_lint=true" >> $GITHUB_OUTPUT
+          else
+            echo "has_lint=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Lint
+        if: steps.check_lint.outputs.has_lint == 'true'
+        run: npm run lint
+
+      # Ejecuta pruebas con cobertura; si hay script test lo usa, si no, usa npx jest
+      - name: Test (with coverage)
+        run: |
+          if npm run -s | grep -q "^  test"; then
+            npm test -- --ci --coverage
+          else
+            npx jest --ci --coverage
+          fi
+
+      # Sube el reporte de cobertura (lcov + html)
+      - name: Upload coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage
+          path: |
+            holistica-backend/coverage
+            holistica-backend/coverage/lcov.info
