@@ -81,9 +81,9 @@ jobs:
         # Clean any existing config
         rm -rf .vercel 2>/dev/null || true
         
-        # Deploy directly using token
+        # Deploy directly using token (fixed format)
         echo "🌐 Deploying to production..."
-        vercel deploy --prod --token=${VERCEL_TOKEN}
+        vercel deploy --prod --token "$VERCEL_TOKEN"
         
         echo "✅ Vercel deployment successful!"
       env:
@@ -93,11 +93,14 @@ jobs:
     - name: Deploy to Render  
       run: |
         echo "🖥️ Triggering Render deployment..."
-        if [ -n "$RENDER_DEPLOY_HOOK" ]; then
+        # Solo verificar si el webhook está configurado
+        if [ -n "$RENDER_DEPLOY_HOOK" ] && [ "$RENDER_DEPLOY_HOOK" != "null" ] && [ "$RENDER_DEPLOY_HOOK" != "undefined" ]; then
+          echo "Calling webhook..."
           curl -X POST "$RENDER_DEPLOY_HOOK"
           echo "✅ Render deployment triggered successfully!"
         else
-          echo "❌ RENDER_DEPLOY_HOOK is not set. Skipping Render deployment."
+          echo "❌ RENDER_DEPLOY_HOOK is not properly configured. Skipping Render deployment."
+          echo "➡️ Configure the webhook URL in GitHub secrets"
         fi
       env:
         RENDER_DEPLOY_HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
