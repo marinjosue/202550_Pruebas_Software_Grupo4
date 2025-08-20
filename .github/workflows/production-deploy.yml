@@ -1,4 +1,4 @@
-name: CI/CD - Deploy to Production
+name: CI/CD - Production Deployment
 
 on:
   push:
@@ -6,18 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  #     # Status summary
-    - name: Deployment Summary
-      run: |
-        echo "🎉 Deployment Pipeline Complete!"
-        echo "✅ Frontend deployed to Vercel"
-        echo "✅ Backend deployed to Render"
-        echo "✅ All tests passed"
-        echo "✅ Performance checks passed"
-        echo ""
-        echo "🌐 Your application is now live!"
-        echo "Frontend: https://202550-pruebas-software-grupo4.vercel.app"
-        echo "Backend: Check Render dashboard for URL"s first
+  # Run CI tests first
   ci-tests:
     runs-on: ubuntu-latest
     steps:
@@ -123,11 +112,12 @@ jobs:
     # Status summary
     - name: Deployment Summary
       run: |
-        echo "🚀 Deployment Pipeline Complete!"
+        echo "🎉 Deployment Pipeline Complete!"
+        echo "✅ Frontend deployed to Vercel"
+        echo "✅ Backend deployed to Render"
         echo "✅ All tests passed"
         echo "✅ Performance checks passed"
-        echo "📝 Configure secrets for automatic deployment:"
-        echo "   - VERCEL_TOKEN"
-        echo "   - VERCEL_ORG_ID: team_TS8BZ3MlloyA2QCGIsLsnXfI" 
-        echo "   - VERCEL_PROJECT_ID: prj_0WhB22TOtUlpoZKmDiDw7lMu9dY5"
-        echo "   - RENDER_DEPLOY_HOOK"
+        echo ""
+        echo "🌐 Your application is now live!"
+        echo "Frontend: https://202550-pruebas-software-grupo4.vercel.app"
+        echo "Backend: Check Render dashboard for URL"
