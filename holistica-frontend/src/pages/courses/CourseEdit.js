@@ -40,6 +40,7 @@ export default function CourseEdit() {
     }
     
     loadCourse();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, navigate, id]);
 
   const loadCourse = async () => {

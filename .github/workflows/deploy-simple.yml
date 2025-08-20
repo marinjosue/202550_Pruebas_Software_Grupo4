@@ -1,4 +1,4 @@
-name: CD - Deploy to Production
+name: CI/CD - Deploy to Production
 
 on:
   push:
@@ -67,9 +67,25 @@ jobs:
     - name: Deploy to Vercel
       working-directory: ./holistica-frontend
       run: |
-        npm ci
-        npm run build
-        npx vercel --prod --token ${VERCEL_TOKEN} --yes || echo "Vercel deployment skipped (token not configured)"
+        if [ -n "${VERCEL_TOKEN}" ]; then
+          echo "Installing Vercel CLI..."
+          npm install -g vercel@latest
+          
+          echo "Building project..."
+          npm ci
+          npm run build
+          
+          echo "Setting up Vercel project configuration..."
+          mkdir -p .vercel
+          echo "{\"orgId\":\"${VERCEL_ORG_ID}\",\"projectId\":\"${VERCEL_PROJECT_ID}\"}" > .vercel/project.json
+          
+          echo "Deploying to Vercel production..."
+          npx vercel --prod --token "${VERCEL_TOKEN}" --yes
+          echo "✅ Vercel deployment successful"
+        else
+          echo "⚠️ VERCEL_TOKEN not configured - skipping Vercel deployment"
+          echo "Configure VERCEL_TOKEN secret to enable automatic deployment"
+        fi
       env:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}

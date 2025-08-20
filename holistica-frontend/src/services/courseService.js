@@ -47,4 +47,5 @@ class CourseService extends ApiClient {
   }
 }
 
-export default new CourseService();
+const courseService = new CourseService();
+export default courseService;

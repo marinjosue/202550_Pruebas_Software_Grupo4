@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from 'react';
+import React, { createContext, useContext, useState, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 const CartContext = createContext();
@@ -30,9 +30,9 @@ export const CartProvider = ({ children }) => {
     setCartItems([]);
   };
 
-  const getCartTotal = () => {
+  const getCartTotal = useCallback(() => {
     return cartItems.reduce((total, item) => total + item.price, 0);
-  };
+  }, [cartItems]);
 
   const value = useMemo(() => ({
     cartItems,
@@ -40,7 +40,7 @@ export const CartProvider = ({ children }) => {
     removeFromCart,
     clearCart,
     getCartTotal
-  }), [cartItems]);
+  }), [cartItems, getCartTotal]);
 
   return (
     <CartContext.Provider value={value}>

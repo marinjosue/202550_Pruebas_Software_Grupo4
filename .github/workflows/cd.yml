@@ -1,9 +1,8 @@
-name: Continuous Deployment
+name: CD - OLD (Disabled)
 
+# Disabled this workflow - use deploy-simple.yml instead
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch: # Allow manual deployment
+  workflow_dispatch: # Manual only
 
 jobs:
   # Frontend CI Job

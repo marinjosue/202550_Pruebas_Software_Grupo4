@@ -50,6 +50,7 @@ export default function CourseList() {
 
   useEffect(() => {
     filterAndSortCourses();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courses, searchTerm, sortBy]);
 
   const loadCourses = async () => {

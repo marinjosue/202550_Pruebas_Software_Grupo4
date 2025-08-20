@@ -26,4 +26,5 @@ class ContentService extends ApiClient {
   }
 }
 
-export default new ContentService();
+const contentService = new ContentService();
+export default contentService;

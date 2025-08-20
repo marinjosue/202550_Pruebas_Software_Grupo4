@@ -65,4 +65,5 @@ class PaymentService extends ApiClient {
   }
 }
 
-export default new PaymentService();
+const paymentService = new PaymentService();
+export default paymentService;

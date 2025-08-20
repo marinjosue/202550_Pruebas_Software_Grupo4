@@ -30,4 +30,5 @@ class EnrollmentService extends ApiClient {
   }
 }
 
-export default new EnrollmentService();
+const enrollmentService = new EnrollmentService();
+export default enrollmentService;

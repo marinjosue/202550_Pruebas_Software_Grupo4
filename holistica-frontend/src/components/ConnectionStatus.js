@@ -72,7 +72,7 @@ export default function ConnectionStatus() {
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [setIsOnline]);
 
   return <Toast ref={toast} position="top-right" />;
 }
