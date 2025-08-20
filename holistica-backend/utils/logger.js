@@ -1,4 +1,3 @@
-// filepath: c:\Desktop\ESPE\6-7 level\Pruebas\202550_Pruebas_Software_Grupo4\Proyecto_P1\holistica-backend\utils\logger.js
 const fs = require('fs');
 const path = require('path');
 
