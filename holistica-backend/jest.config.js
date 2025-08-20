@@ -4,11 +4,35 @@ module.exports = {
   
   // Collect coverage from all source files except node_modules
   collectCoverageFrom: [
-    '**/*.{js,jsx}',
+    'controllers/**/*.js',
+    'models/**/*.js',
+    'middlewares/**/*.js',
+    'services/**/*.js',
+    'utils/**/*.js',
+    'config/**/*.js',
+    'routes/**/*.js',
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/jest.config.js',
     '!**/scripts/**'
+  ],
+  
+  // Coverage thresholds - fail if below 90%
+  coverageThreshold: {
+    global: {
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
+    }
+  },
+  
+  // Coverage reporting
+  coverageReporters: [
+    'text',
+    'lcov',
+    'html',
+    'json'
   ],
   
   // The directories where Jest looks for tests
