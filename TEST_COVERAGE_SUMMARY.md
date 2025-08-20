@@ -1,4 +1,4 @@
-Resumen de la implementación de la cobertura de pruebas
+# Resumen de la implementación de la cobertura de pruebas
 
 ## ✅ Tareas completadas
 
