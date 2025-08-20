@@ -63,9 +63,18 @@ jobs:
       - name: Test (with coverage)
         run: |
           if npm run -s | grep -q "^  test"; then
-            npm test -- --ci --coverage
+            npm test -- --ci --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html --coverageReporters=json
           else
-            npx jest --ci --coverage
+            npx jest --ci --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html --coverageReporters=json
+          fi
+
+      # Verifica que la cobertura sea >= 90%
+      - name: Check coverage threshold
+        run: |
+          if npm run -s | grep -q "^  test"; then
+            npm test -- --ci --coverage --passWithNoTests --coverageThreshold='{"global":{"branches":90,"functions":90,"lines":90,"statements":90}}'
+          else
+            npx jest --ci --coverage --passWithNoTests --coverageThreshold='{"global":{"branches":90,"functions":90,"lines":90,"statements":90}}'
           fi
 
       # Sube el reporte de cobertura (lcov + html)
@@ -73,7 +82,16 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: backend-coverage
+          name: backend-coverage-report
           path: |
-            holistica-backend/coverage
-            holistica-backend/coverage/lcov.info
+            holistica-backend/coverage/
+          retention-days: 7
+
+      # Sube específicamente el reporte HTML para fácil visualización
+      - name: Upload HTML coverage report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-coverage-html
+          path: holistica-backend/coverage/lcov-report/
+          retention-days: 7
