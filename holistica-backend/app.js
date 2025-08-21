@@ -36,6 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 // Request logging
 app.use(logger.logRequest.bind(logger));
 
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.status(200).json({

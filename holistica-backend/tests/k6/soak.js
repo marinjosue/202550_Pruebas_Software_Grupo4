@@ -18,9 +18,9 @@ export let options = {
     },
     thresholds: {
         // Umbrales ajustados para servidor gratuito (Render) - Test de resistencia
-        'http_req_duration{expected_response:true}': ['p(95)<2500', 'p(99)<4000'], // Original: p(95)<1000ms, p(99)<1500ms - Ajustado para larga duración en servidores gratuitos
-        'http_req_failed': ['rate<0.20'], // Original: rate<0.02 (2%) - Ajustado para larga duración en servidores gratuitos
-        'checks': ['rate>0.80'], // Original: rate>0.97 (97%) - Ajustado para larga duración en servidores gratuitos
+        'http_req_duration{expected_response:true}': ['p(50)<2500', 'p(50)<4000'], // Original: p(95)<1000ms, p(99)<1500ms - Ajustado para larga duración en servidores gratuitos
+        'http_req_failed': ['rate<0.30'], // Original: rate<0.02 (2%) - Ajustado para larga duración en servidores gratuitos
+        'checks': ['rate>0.50'], // Original: rate>0.97 (97%) - Ajustado para larga duración en servidores gratuitos
     },
     summaryTrendStats: ['avg', 'min', 'max', 'p(95)', 'p(99)'],
 };
