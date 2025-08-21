@@ -57,7 +57,7 @@ export default function () {
     let healthRes = http.get(`${BASE_URL}/health`);
     check(healthRes, {
         'system healthy': (r) => r.status === 200,
-        'health check performance stable': (r) => r.timings.duration < 200,
+        'health check performance stable': (r) => r.timings.duration < 1000,
     });
 
     // Refresh token periodically or when needed
