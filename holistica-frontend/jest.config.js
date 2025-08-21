@@ -7,15 +7,19 @@ module.exports = {
     '!src/setupTests.js',
     '!src/**/*.test.{js,jsx}',
     '!src/**/*.spec.{js,jsx}',
-    '!src/**/__tests__/**',
-    '!src/**/node_modules/**'
+    '!src/__tests__/utils',
+    '!src/__tests__/components/**/',
+    '!src/**/node_modules/**',
+    // Archivos adicionales a excluir
+    '!src/constants/**',
+    '!src/assets/**'
   ],
   coverageThreshold: {
     global: {
-      branches: 70,
-      functions: 70,
-      lines: 70,
-      statements: 70
+      branches: 90,
+      functions: 90,
+      lines: 90,
+      statements: 90
     }
   },
   coverageReporters: [

@@ -12,7 +12,7 @@ const config = {
     MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
 
     // JWT
-    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_SECRET: process.env.JWT_SECRET, 
     JWT_EXPIRE: process.env.JWT_EXPIRE || '24h',
 
     // Frontend
