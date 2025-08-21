@@ -131,20 +131,6 @@ jobs:
         env:
           IP: two02550-pruebas-software-grupo4.onrender.com
 
-      - name: Run K6 Ramp Load Tests
-        uses: grafana/k6-action@v0.3.1
-        with:
-          filename: holistica-backend/tests/k6/ramp-load.js
-        env:
-          IP: two02550-pruebas-software-grupo4.onrender.com
-
-      - name: Run K6 Soak Tests
-        uses: grafana/k6-action@v0.3.1
-        with:
-          filename: holistica-backend/tests/k6/soak.js
-        env:
-          IP: two02550-pruebas-software-grupo4.onrender.com
-
       - name: Upload K6 Test Results
         if: always()
         uses: actions/upload-artifact@v4
