@@ -8,7 +8,10 @@ module.exports = {
     '!src/**/*.test.{js,jsx}',
     '!src/**/*.spec.{js,jsx}',
     '!src/**/__tests__/**',
-    '!src/**/node_modules/**'
+    '!src/**/node_modules/**',
+    // Archivos adicionales a excluir
+    '!src/constants/**',
+    '!src/assets/**'
   ],
   coverageThreshold: {
     global: {

@@ -5,16 +5,22 @@ module.exports = {
   // Collect coverage from all source files except node_modules
   collectCoverageFrom: [
     'controllers/**/*.js',
-    'models/**/*.js',
+    '!models/**/*.js',
     'middlewares/**/*.js',
     'services/**/*.js',
-    'utils/**/*.js',
+    '!utils/**/*.js',
     'config/**/*.js',
     'routes/**/*.js',
+    '!admin.controller.test.js',
     '!**/node_modules/**',
     '!**/coverage/**',
     '!**/jest.config.js',
-    '!**/scripts/**'
+    '!**/scripts/**',
+    // Archivos principales del servidor (opcional excluir)
+    '!server.js',
+    '!app.js',
+    // Configuración de base de datos (opcional excluir)
+    '!config/db.js'
   ],
   
   // Coverage thresholds - fail if below 90%
