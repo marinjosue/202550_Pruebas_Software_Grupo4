@@ -324,8 +324,9 @@
 }
 
 /* Botón principal con efectos avanzados */
+/* Botón principal con efectos avanzados */
 .register-button {
-  width: 100%;
+  width: 60%;
   padding: 0.75rem 1rem;
   font-size: 1rem;
   font-weight: 800;
@@ -337,9 +338,14 @@
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
-  margin-bottom: 1rem;
+
+  /* centrado + más espacio arriba */
+  display: block;
+  margin: 3rem auto 1.5rem; /* ↑ top 2rem (≈ dos líneas), bottom 1.5rem */
+
   animation: registerButtonSlideIn 0.8s ease-out 0.6s both;
 }
+
 
 @keyframes registerButtonSlideIn {
   from {
@@ -444,18 +450,23 @@
   color: #059669;
 }
 
-/* Botón de volver */
+/* Botón de volver (compacto, centrado y alineado) */
 .register-back-button {
-  width: 100%;
+  width: 60%;
   padding: 0.65rem 1rem;
   border-radius: 10px;
   border: 2px solid #E5E7EB;
-  background: white;
+  background: #fff;
   color: #6B7280;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 0.75rem;
+
+  /* centra y baja un poco el botón */
+  display: block;
+  margin: 2rem auto 0;   /* top 2rem ≈ dos “enters”, centrado */
+
   font-size: 0.95rem;
+  text-align: center;
 }
 
 .register-back-button:hover {

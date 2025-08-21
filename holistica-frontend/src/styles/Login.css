@@ -368,3 +368,98 @@
 .p-toast .p-toast-message.p-toast-message-error {
   background: rgba(239, 68, 68, 0.95);
 }
+
+/* === Email y Password del mismo tamaño === */
+
+/* Asegura base consistente para todos los inputs del formulario */
+.login-field .p-inputtext {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  border: 2px solid #E5E7EB;
+  font-size: 1rem;
+  line-height: 1.25;
+  min-height: 52px;            /* altura uniforme */
+  background: #FAFAFA;
+}
+
+/* El wrapper del Password ocupa todo el ancho */
+.login-field .p-password {
+  width: 100%;
+  display: block;
+}
+
+/* Input interno del Password: mismo alto y más padding a la derecha para el icono */
+.login-field .p-password .p-inputtext {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.875rem 2.75rem 0.875rem 1rem; /* ⇒ espacio para el ojo */
+  border-radius: 12px;
+  border: 2px solid #E5E7EB;
+  font-size: 1rem;
+  min-height: 52px;            /* mismo alto que email */
+  background: #FAFAFA;
+}
+
+/* Coloca el icono del ojo centrado verticalmente y sin alterar el alto */
+.login-field .p-password .p-password-icon {
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Mismos estilos de focus para ambos */
+.login-field .p-inputtext:focus,
+.login-field .p-password .p-inputtext:focus {
+  border-color: #3B82F6;
+  box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
+  background: #fff;
+  transform: translateY(-1px);
+}
+
+
+/* === Botones más cortos, iguales y centrados === */
+:root {
+  --auth-btn-width: 180px;   /* ajusta 240–300px si quieres */
+  --auth-btn-min-h: 48px;    /* alto mínimo igual para ambos */
+}
+
+/* Ingresar (soporta .auth-button o .login-button) */
+.auth-button,
+.p-button.auth-button,
+.login-button,
+.p-button.login-button {
+  display: block !important;                 /* vence inline-flex de PrimeReact */
+  width: var(--auth-btn-width) !important;   /* mismo ancho */
+  min-height: var(--auth-btn-min-h) !important;
+  padding: 0.7rem 1rem !important;           /* mismo alto visual */
+  margin: 2rem auto 1rem !important;       /* centrado */
+  text-align: center;
+  align-self: center;                         /* por si el padre es flex */
+}
+
+/* Volver al Inicio */
+.login-back-button,
+.p-button.login-back-button {
+  display: block !important;
+  width: var(--auth-btn-width) !important;
+  min-height: var(--auth-btn-min-h) !important;
+  padding: 0.7rem 1rem !important;
+  margin: 1rem auto 0 !important;            /* centrado */
+  text-align: center;
+  align-self: center;
+}
+
+/* Móvil: a 100% por usabilidad */
+@media (max-width: 599px) {
+  .auth-button,
+  .p-button.auth-button,
+  .login-button,
+  .p-button.login-button,
+  .login-back-button,
+  .p-button.login-back-button {
+    width: 100% !important;
+    max-width: none !important;
+  }
+}

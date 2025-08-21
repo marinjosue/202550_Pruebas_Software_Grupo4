@@ -155,11 +155,13 @@ export default function Login() {
           <Button 
             label="Ingresar" 
             icon="pi pi-sign-in" 
-            className="auth-button"
+            className="login-button"   // ← usa la clase que ya estilizas en CSS
             type="submit"
             loading={loading}
             disabled={loading}
           />
+
+
         </form>
 
         <hr className="login-divider" />
