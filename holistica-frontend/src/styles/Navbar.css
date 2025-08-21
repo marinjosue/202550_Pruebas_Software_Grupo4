@@ -489,3 +489,23 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Login del NAVBAR: más compacto y un poco a la derecha */
+.navbar-container .login-button,
+.navbar-container .p-button.login-button {
+  padding: 0.4rem 0.9rem !important;   /* menos alto/ancho visual */
+  font-size: 0.9rem !important;         /* texto un poquito más chico */
+  margin-left: 3.75rem !important;      /* empuje a la derecha (ajusta 0.5–1rem) */
+  min-width: unset !important;          /* evita anchos mínimos de PrimeReact */
+}
+
+/* asegúrate que el label también reduzca */
+.navbar-container .login-button .p-button-label {
+  font-size: 0.9rem !important;
+}
+
+/* si ves que todavía queda muy grande por el ícono, reduce su margen/tamaño */
+.navbar-container .login-button .p-button-icon {
+  font-size: 0.95rem !important;
+  margin-right: 0.5rem !important;
+}

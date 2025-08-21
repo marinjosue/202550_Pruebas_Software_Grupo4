@@ -220,7 +220,7 @@
 
 /* Botón principal con efectos avanzados */
 .login-button {
-  width: 100%;
+  width: 40px;
   padding: 0.875rem 1rem;
   font-size: 1.1rem;
   font-weight: 700;
