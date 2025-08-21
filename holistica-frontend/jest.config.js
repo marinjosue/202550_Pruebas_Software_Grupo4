@@ -7,7 +7,8 @@ module.exports = {
     '!src/setupTests.js',
     '!src/**/*.test.{js,jsx}',
     '!src/**/*.spec.{js,jsx}',
-    '!src/**/__tests__/**',
+    '!src/__tests__/utils',
+    '!src/__tests__/components/**/',
     '!src/**/node_modules/**',
     // Archivos adicionales a excluir
     '!src/constants/**',

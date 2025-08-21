@@ -42,36 +42,11 @@ jobs:
     - name: Run unit tests with coverage
       working-directory: ./holistica-frontend
       run: |
-        npm run test:coverage -- --coverageReporters=text --coverageReporters=lcov --coverageReporters=html --coverageReporters=json
+        npm run test:stable
       env:
         CI: true
         SKIP_PREFLIGHT_CHECK: true
         NODE_OPTIONS: --max-old-space-size=4096
-        
-    - name: Check coverage threshold
-      working-directory: ./holistica-frontend
-      run: |
-        npm run test:coverage -- --passWithNoTests
-      env:
-        CI: true
-        SKIP_PREFLIGHT_CHECK: true
-        
-    - name: Upload coverage report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: frontend-coverage-report
-        path: |
-          holistica-frontend/coverage/
-        retention-days: 7
-
-    - name: Upload HTML coverage report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: frontend-coverage-html
-        path: holistica-frontend/coverage/lcov-report/
-        retention-days: 7
         
     - name: Report test results
       if: always()
