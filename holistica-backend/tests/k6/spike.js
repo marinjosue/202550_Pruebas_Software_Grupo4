@@ -4,6 +4,8 @@ import { check, sleep } from 'k6';
 import { textSummary, jUnit } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 
+const RESULT_DIR = __ENV.K6_RESULTS_DIR || 'results';
+const IP = __ENV.IP || '192.168.18.8';
 
 export let options = {
     scenarios: {
@@ -25,24 +27,8 @@ export let options = {
     summaryTrendStats: ['avg', 'min', 'max', 'p(95)', 'p(99)'],
 };
 
-const BASE_URL = 'http://192.168.18.8:3000';
+const BASE_URL = `http://${IP}:3000`;
 const HEADERS = { 'Content-Type': 'application/json' };
-
-// Generate unique user data for each iteration
-function generateUniqueUser() {
-    const timestamp = Date.now();
-    const vuId = __VU;
-    const iteration = __ITER;
-    return {
-        name: `TestUser${vuId}`,
-        lastname: `LastName${iteration}`,
-        email: `test.user.${vuId}.${iteration}.${timestamp}@example.com`,
-        phone: `123456${String(vuId).padStart(4, '0')}`,
-        dni: `${timestamp}${vuId}`.slice(-8),
-        address: `Test Address ${vuId}-${iteration}`,
-        password: 'testpassword123'
-    };
-}
 
 export default function () {
     // Focus on lightweight operations during spike - only working endpoints
@@ -78,9 +64,9 @@ export default function () {
 
 export function handleSummary(data) {
   return {
-    '/results/spike-test-summary.json': JSON.stringify(data, null, 2),
-    '/results/spike-test-summary.html': htmlReport(data),
-    '/results/spike-test-junit.xml': jUnit(data, { name: 'spike-test' }),
+    [`/${RESULT_DIR}/spike-test-summary.json`]: JSON.stringify(data, null, 2),
+    [`/${RESULT_DIR}/spike-test-summary.html`]: htmlReport(data),
+    [`/${RESULT_DIR}/spike-test-junit.xml`]: jUnit(data, { name: 'spike-test' }),
     stdout: textSummary(data, { indent: ' ', enableColors: true }),
   };
 }
