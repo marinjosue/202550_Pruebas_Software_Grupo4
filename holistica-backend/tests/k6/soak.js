@@ -4,6 +4,9 @@ import { check, sleep } from 'k6';
 import { textSummary, jUnit } from 'https://jslib.k6.io/k6-summary/0.0.2/index.js';
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 
+const RESULT_DIR = __ENV.K6_RESULTS_DIR || 'results';
+const IP = __ENV.IP || '192.168.18.8';
+
 
 export let options = {
     scenarios: {
@@ -21,7 +24,7 @@ export let options = {
     summaryTrendStats: ['avg', 'min', 'max', 'p(95)', 'p(99)'],
 };
 
-const BASE_URL = 'http://192.168.18.8:3000';
+const BASE_URL = `http://${IP}:3000`;
 const HEADERS = { 'Content-Type': 'application/json' };
 
 // Generate unique user data for each iteration
@@ -238,9 +241,9 @@ export default function () {
 
 export function handleSummary(data) {
   return {
-    '/results/soak-test-summary.json': JSON.stringify(data, null, 2),
-    '/results/soak-test-summary.html': htmlReport(data),
-    '/results/soak-test-junit.xml': jUnit(data, { name: 'soak-test' }),
+    [`/${RESULT_DIR}/soak-test-summary.json`]: JSON.stringify(data, null, 2),
+    [`/${RESULT_DIR}/soak-test-summary.html`]: htmlReport(data),
+    [`/${RESULT_DIR}/soak-test-junit.xml`]: jUnit(data, { name: 'soak-test' }),
     stdout: textSummary(data, { indent: ' ', enableColors: true }),
   };
 }
