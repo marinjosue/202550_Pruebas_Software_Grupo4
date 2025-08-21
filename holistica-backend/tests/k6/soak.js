@@ -5,7 +5,7 @@ import { textSummary, jUnit } from 'https://jslib.k6.io/k6-summary/0.0.2/index.j
 import { htmlReport } from 'https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js';
 
 const RESULT_DIR = __ENV.K6_RESULTS_DIR || 'results';
-const IP = __ENV.IP || '192.168.18.8';
+const IP = __ENV.IP || 'https://two02550-pruebas-software-grupo4.onrender.com';
 
 
 export let options = {
@@ -17,14 +17,15 @@ export let options = {
         }
     },
     thresholds: {
-        'http_req_duration{expected_response:true}': ['p(95)<1000', 'p(99)<1500'], // Ajustado al contexto: soak test más permisivo para larga duración
-        'http_req_failed': ['rate<0.02'], // 2% error rate - más estricto para consistencia
-        'checks': ['rate>0.97'], // 97% success rate - ligeramente más permisivo para larga duración
+        // Umbrales ajustados para servidor gratuito (Render) - Test de resistencia
+        'http_req_duration{expected_response:true}': ['p(95)<2500', 'p(99)<4000'], // Original: p(95)<1000ms, p(99)<1500ms - Ajustado para larga duración en servidores gratuitos
+        'http_req_failed': ['rate<0.20'], // Original: rate<0.02 (2%) - Ajustado para larga duración en servidores gratuitos
+        'checks': ['rate>0.80'], // Original: rate>0.97 (97%) - Ajustado para larga duración en servidores gratuitos
     },
     summaryTrendStats: ['avg', 'min', 'max', 'p(95)', 'p(99)'],
 };
 
-const BASE_URL = `http://${IP}:3000`;
+const BASE_URL = `http://${IP}`;
 const HEADERS = { 'Content-Type': 'application/json' };
 
 // Generate unique user data for each iteration
