@@ -19,6 +19,7 @@ module.exports = defineConfig([
   },
   {
     files: ['tests/**/*.js'],
+    ignores: ['tests/k6/**/*.js'], // Exclude k6 files from this config
     languageOptions: {
       globals: {
         ...globals.node,
@@ -28,6 +29,22 @@ module.exports = defineConfig([
     rules: {
       'no-console': 'off',
       'no-unused-vars': ['warn']
+    }
+  },
+  {
+    files: ['tests/k6/**/*.js'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        __VU: 'readonly',
+        __ITER: 'readonly'
+      },
+      sourceType: 'module' // Enable ES6 modules for k6 files
+    },
+    rules: {
+      'no-console': 'off',
+      'no-unused-vars': ['warn'],
+      'import/no-unresolved': 'off' // Disable for k6 imports from URLs
     }
   }
 ]);
