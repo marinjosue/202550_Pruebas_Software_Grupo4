@@ -333,13 +333,17 @@
   text-decoration: line-through;
   opacity: 0.7;
   font-size: 1rem;
+  color: #fbbf24;
 }
 
 .current-price {
   font-size: 1.8rem;
   font-weight: 700;
-  color: #10b981;
+  color: #dde7e2;          /* verde más claro que resalta */
+  /* opcional: mejora contraste sobre el gradiente */
+  text-shadow: 0 1px 0 rgba(0,0,0,.15);
 }
+
 
 .discount-badge {
   background: #ef4444 !important;
@@ -928,4 +932,35 @@
   .enrollment-content p {
     font-size: 0.9rem;
   }
+}
+
+
+/* --- Override de colores en el header de la tarjeta del curso --- */
+.course-title {
+  color: #ffffff !important;
+}
+
+.course-description {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.course-students {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+.course-card.course-presencial .course-title { color: #ffffff !important; }
+.course-card.course-presencial .course-description { color: rgba(255,255,255,0.88) !important; }
+.course-card.course-presencial .course-students { color: rgba(255,255,255,0.75) !important; }
+
+
+/* ---- Precios más claros (override) ---- */
+.course-pricing .original-price {
+  /* gris claro para el precio original tachado */
+  color: #e9d70e !important; /* slate-300 */
+  opacity: 0.95 !important;  /* un poco más visible que el default */
+}
+
+.course-pricing .current-price {
+  /* verde más claro y vibrante para el precio actual */
+  color: hsl(111, 100%, 45%) !important; /* green A400 */
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.12); /* mejora legibilidad sobre el azul */
 }
