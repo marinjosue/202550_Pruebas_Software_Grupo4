@@ -9,6 +9,13 @@ class AppError extends Error {
   }
 }
 
+class ValidationError extends AppError {
+  constructor(message) {
+    super(message, 400);
+    this.name = 'ValidationError';
+  }
+}
+
 const handleValidationError = (err) => {
   const errors = Object.values(err.errors).map(el => el.message);
   const message = `Datos inválidos: ${errors.join('. ')}`;
@@ -78,6 +85,7 @@ const globalErrorHandler = (err, req, res, next) => {
 
 module.exports = {
   AppError,
+  ValidationError,
   notFoundHandler,
   globalErrorHandler
 };

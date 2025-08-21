@@ -1,0 +1,367 @@
+{
+  "root_group": {
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [],
+    "checks": [
+        {
+          "name": "system healthy",
+          "path": "::system healthy",
+          "id": "9e049c8525f3a3874af62536bea06604",
+          "passes": 13563,
+          "fails": 0
+        },
+        {
+          "path": "::health check performance stable",
+          "id": "9b6dcb7978abc9beba4252ce79c2d7c1",
+          "passes": 13563,
+          "fails": 0,
+          "name": "health check performance stable"
+        },
+        {
+          "fails": 0,
+          "name": "register status acceptable",
+          "path": "::register status acceptable",
+          "id": "0ed4a216ab89c62474a30ac1cadcf6bd",
+          "passes": 160
+        },
+        {
+          "name": "register response time",
+          "path": "::register response time",
+          "id": "503991bcfe4ab183b6702a4b308b687a",
+          "passes": 160,
+          "fails": 0
+        },
+        {
+          "fails": 0,
+          "name": "login successful",
+          "path": "::login successful",
+          "id": "72410831cb1258cbc9a2391f92e33c94",
+          "passes": 160
+        },
+        {
+          "path": "::login response time",
+          "id": "c2e1818e90527d99244ddaa3125bb738",
+          "passes": 160,
+          "fails": 0,
+          "name": "login response time"
+        },
+        {
+          "name": "token received",
+          "path": "::token received",
+          "id": "368319c81099ad9d5a41e8878a8d1826",
+          "passes": 160,
+          "fails": 0
+        },
+        {
+          "fails": 0,
+          "name": "user data received",
+          "path": "::user data received",
+          "id": "1c37bf08eb34fd8c47f3baeba1172634",
+          "passes": 160
+        },
+        {
+          "name": "courses endpoint stable",
+          "path": "::courses endpoint stable",
+          "id": "cc45cdf6efb1ba26fd7901bd5739d58c",
+          "passes": 13563,
+          "fails": 0
+        },
+        {
+          "id": "c0cd78ed31905764277a4e0a366b89f0",
+          "passes": 13563,
+          "fails": 0,
+          "name": "courses performance consistent",
+          "path": "::courses performance consistent"
+        },
+        {
+          "name": "course details stable",
+          "path": "::course details stable",
+          "id": "70b8ee59a9058315ee970c7a800f9b6e",
+          "passes": 13563,
+          "fails": 0
+        },
+        {
+          "passes": 13563,
+          "fails": 0,
+          "name": "course details performance",
+          "path": "::course details performance",
+          "id": "ddc7e7097af6ffbade34f401cf58ae60"
+        },
+        {
+          "name": "profile access stable",
+          "path": "::profile access stable",
+          "id": "b6bac6f91b557a0a6dcc51e6a576d94e",
+          "passes": 13563,
+          "fails": 0
+        },
+        {
+          "path": "::authentication persists",
+          "id": "ce710c53e33d65360aafdf7ef6ad7652",
+          "passes": 13563,
+          "fails": 0,
+          "name": "authentication persists"
+        },
+        {
+          "path": "::profile response time stable",
+          "id": "c5d5e4fbde065c31ffac3fc5ad34c6e3",
+          "passes": 13563,
+          "fails": 0,
+          "name": "profile response time stable"
+        },
+        {
+          "name": "/api/enrollments/my-enrollments endpoint stable",
+          "path": "::/api/enrollments/my-enrollments endpoint stable",
+          "id": "25c5d24ee3f97c1874e11311a2ed708c",
+          "passes": 6793,
+          "fails": 0
+        },
+        {
+          "passes": 6793,
+          "fails": 0,
+          "name": "/api/enrollments/my-enrollments performance consistent",
+          "path": "::/api/enrollments/my-enrollments performance consistent",
+          "id": "229323f70b049dc651d081cb407e10b0"
+        },
+        {
+          "path": "::admin endpoint handles requests",
+          "id": "1d55061813a9654cef38b6c79c4dfa3c",
+          "passes": 2730,
+          "fails": 0,
+          "name": "admin endpoint handles requests"
+        },
+        {
+          "path": "::admin endpoint response time",
+          "id": "bf52e101ae31bac4d1db93c18c5549b4",
+          "passes": 2730,
+          "fails": 0,
+          "name": "admin endpoint response time"
+        },
+        {
+          "name": "database connection stable",
+          "path": "::database connection stable",
+          "id": "565d50a22b57cbc12c4ca50843e0c19d",
+          "passes": 1341,
+          "fails": 0
+        },
+        {
+          "path": "::/api/payments/history endpoint stable",
+          "id": "e6b98732197929b892299379e10a0fa9",
+          "passes": 6770,
+          "fails": 0,
+          "name": "/api/payments/history endpoint stable"
+        },
+        {
+          "name": "/api/payments/history performance consistent",
+          "path": "::/api/payments/history performance consistent",
+          "id": "3158eb0528cb87d703da1986e4e182a1",
+          "passes": 6770,
+          "fails": 0
+        }
+      ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "max",
+      "p(95)",
+      "p(99)"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": false,
+    "isStdErrTTY": false,
+    "testRunDurationMs": 1203782.161368
+  },
+  "metrics": {
+    "http_reqs": {
+      "values": {
+        "count": 72206,
+        "rate": 59.98261339738062
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.0378084923690552,
+        "passes": 2730,
+        "fails": 69476
+      },
+      "thresholds": {
+        "rate<0.02": {
+          "ok": false
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 13563,
+        "rate": 11.26698869219557
+      }
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 1,
+        "passes": 156954,
+        "fails": 0
+      },
+      "thresholds": {
+        "rate>0.97": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.0041459932969559335,
+        "min": 0,
+        "max": 10.461343,
+        "p(95)": 0,
+        "p(99)": 0
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "rate": 10452.642848354542,
+        "count": 12582705
+      }
+    },
+    "http_req_blocked": {
+      "values": {
+        "min": 0.002735,
+        "max": 10.568325,
+        "p(95)": 0.0177825,
+        "p(99)": 0.055019399999999906,
+        "avg": 0.014818361078026653
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "vus": {
+      "values": {
+        "value": 10,
+        "min": 10,
+        "max": 40
+      },
+      "type": "gauge",
+      "contains": "default"
+    },
+    "http_req_tls_handshaking": {
+      "values": {
+        "avg": 0,
+        "min": 0,
+        "max": 0,
+        "p(95)": 0,
+        "p(99)": 0
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0.009449,
+        "max": 6.985916,
+        "p(95)": 0.11606775,
+        "p(99)": 0.16492249999999972,
+        "avg": 0.05484984865523553
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 26.756327,
+        "p(95)": 0.37660575,
+        "p(99)": 0.949986549999999,
+        "avg": 0.23155870854222657,
+        "min": -2.071813
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 6.489878456014705,
+        "min": 0.228985,
+        "max": 1167.128959,
+        "p(95)": 9.45888075,
+        "p(99)": 15.37996014999998
+      }
+    },
+    "iteration_duration": {
+      "contains": "time",
+      "values": {
+        "p(99)": 5011.39822824,
+        "avg": 3544.6722898562516,
+        "min": 2025.789491,
+        "max": 6857.409638,
+        "p(95)": 4885.924951
+      },
+      "type": "trend"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 14.931157399999975,
+        "avg": 6.20346989881722,
+        "min": 0,
+        "max": 1166.833725,
+        "p(95)": 9.07490275
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "min": 40,
+        "max": 40,
+        "value": 40
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 6.574809788689613,
+        "min": 0.228985,
+        "max": 1167.128959,
+        "p(95)": 9.5383885,
+        "p(99)": 15.6172935
+      },
+      "thresholds": {
+        "p(95)<1000": {
+          "ok": true
+        },
+        "p(99)<1500": {
+          "ok": true
+        }
+      }
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 123374930,
+        "rate": 102489.41541033842
+      }
+    }
+  }
+}
