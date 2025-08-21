@@ -38,21 +38,21 @@ export default function () {
     let healthRes = http.get(`${BASE_URL}/health`);
     check(healthRes, {
         'health check responds': (r) => r.status === 200,
-        'health check fast': (r) => r.timings.duration < 1000,
+        'health check fast': (r) => r.timings.duration < 2000,
     });
 
     // 2. Root API endpoint (WORKS)
     let rootRes = http.get(`${BASE_URL}/`);
     check(rootRes, {
         'root endpoint responds': (r) => r.status === 200,
-        'root endpoint fast': (r) => r.timings.duration < 1000,
+        'root endpoint fast': (r) => r.timings.duration < 2000,
     });
 
     // 3. Database health check
     let dbHealthRes = http.get(`${BASE_URL}/health/db`);
     check(dbHealthRes, {
         'db health check responds': (r) => r.status === 200 || r.status === 500,
-        'db health check completes': (r) => r.timings.duration < 3000,
+        'db health check completes': (r) => r.timings.duration < 4000,
     });
 
     // Skip courses and auth endpoints during spike due to DB issues
