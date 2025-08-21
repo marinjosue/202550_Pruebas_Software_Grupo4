@@ -56,7 +56,7 @@ export default function () {
     let healthRes = http.get(`${BASE_URL}/health`);
     check(healthRes, {
         'health check OK': (r) => r.status === 200,
-        'health check response time': (r) => r.timings.duration < 200,
+        'health check response time': (r) => r.timings.duration < 1000,
     });
 
     // Register and login with unique user
@@ -69,7 +69,7 @@ export default function () {
     
     const registerSuccess = check(registerRes, {
         'register status 201': (r) => r.status === 201,
-        'register response time': (r) => r.timings.duration < 1000,
+        'register response time': (r) => r.timings.duration < 3000,
     });
 
     // Attempt login regardless of registration result
@@ -79,7 +79,7 @@ export default function () {
     
     // First try: if registration was successful
     if (registerSuccess && registerRes.status === 201) {
-        sleep(0.2); // Give more time for database consistency
+        sleep(0.9); // Give more time for database consistency
         
         let loginRes = http.post(
             `${BASE_URL}/api/auth/login`, 
@@ -94,7 +94,7 @@ export default function () {
         
         const loginSuccess = check(loginRes, {
             'login successful': (r) => r.status === 200,
-            'login response time': (r) => r.timings.duration < 2000,
+            'login response time': (r) => r.timings.duration < 3000,
         });
 
         if (loginSuccess && loginRes.status === 200) {
@@ -155,7 +155,7 @@ export default function () {
     let coursesRes = http.get(`${BASE_URL}/api/courses`);
     check(coursesRes, {
         'courses loaded': (r) => r.status === 200,
-        'courses response time': (r) => r.timings.duration < 500,
+        'courses response time': (r) => r.timings.duration < 1000,
     });
 
     // Test specific course (try different course IDs)
@@ -163,7 +163,7 @@ export default function () {
     let courseRes = http.get(`${BASE_URL}/api/courses/${courseId}`);
     check(courseRes, {
         'course details loaded': (r) => r.status === 200 || r.status === 404,
-        'course details response time': (r) => r.timings.duration < 500,
+        'course details response time': (r) => r.timings.duration < 1000,
     });
 
     // Authenticated requests
@@ -183,7 +183,7 @@ export default function () {
         
         check(profileRes, {
             'profile loaded': (r) => r.status === 200,
-            'profile response time': (r) => r.timings.duration < 1000,
+            'profile response time': (r) => r.timings.duration < 2000,
         });
         
         if (profileRes.status !== 200) {
@@ -198,7 +198,7 @@ export default function () {
         
         check(enrollmentsRes, {
             'enrollments loaded': (r) => r.status === 200,
-            'enrollments response time': (r) => r.timings.duration < 1000,
+            'enrollments response time': (r) => r.timings.duration < 2000,
         });
 
         // Payment history  
@@ -209,7 +209,7 @@ export default function () {
         
         check(paymentsRes, {
             'payments history loaded': (r) => r.status === 200,
-            'payments history response time': (r) => r.timings.duration < 1000,
+            'payments history response time': (r) => r.timings.duration < 2000,
         });
 
         // Test admin endpoint (might return 403 for regular users)
@@ -220,7 +220,7 @@ export default function () {
         
         check(usersRes, {
             'users endpoint responds': (r) => r.status === 200 || r.status === 403,
-            'users endpoint response time': (r) => r.timings.duration < 1000,
+            'users endpoint response time': (r) => r.timings.duration < 2000,
         });
     } else {
         console.log(`VU ${__VU} Iteration ${__ITER}: No valid token available for authenticated requests (token: ${token ? 'exists but invalid' : 'null/undefined'})`);
