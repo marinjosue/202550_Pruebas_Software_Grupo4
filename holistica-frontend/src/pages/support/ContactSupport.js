@@ -126,7 +126,7 @@ export default function ContactSupport() {
             label={social.label}
             icon={social.icon}
             className="social-button rounded-lg hover-lift"
-            style={{ '--social-color': social.color, borderColor: social.color, color: social.color }}
+            style={{ '--social-color': social.color }}
             onClick={() => window.open(social.url, '_blank', 'noopener')}
           />
         ))}
