@@ -10,6 +10,7 @@ on:
     branches: [ main ]
     paths:
       - 'holistica-backend/**'
+    types: [opened, synchronize, reopened, labeled]
   workflow_call: # Makes this workflow reusable
 
 jobs:
@@ -101,7 +102,7 @@ jobs:
     needs: test # Ejecuta después de que las pruebas unitarias pasen
     
     # Solo ejecuta si las pruebas unitarias fueron exitosas
-    if: success()
+    if: ${{ github.ref == 'refs/heads/main' || (github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'perf')) }}
 
     defaults:
       run:
@@ -133,7 +134,7 @@ jobs:
       - name: Run K6 Ramp Load Tests
         uses: grafana/k6-action@v0.3.1
         with:
-          filename: holistica-backend/tests/k6/ramp-load..js
+          filename: holistica-backend/tests/k6/ramp-load.js
         env:
           IP: two02550-pruebas-software-grupo4.onrender.com
 
